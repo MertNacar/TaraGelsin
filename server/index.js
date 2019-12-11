@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import graphqlHTTP from "express-graphql";
-import { schema, root } from "./graphql/index"
+import { schema, root } from "./src/graphql/index"
 
 const app = express();
 
