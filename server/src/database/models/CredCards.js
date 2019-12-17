@@ -1,7 +1,7 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 
-export const CredCards = db.define(
+export default CredCards = db.define(
     "tblCredCards",
     {
         cardID: {
@@ -33,6 +33,3 @@ export const CredCards = db.define(
         freezeTableName: true
     }
 );
-
-Orders.hasMany(CredCards, { foreignKey: 'orderID' });
-CredCards.belongsTo(Orders, { foreignKey: 'countryCode' });

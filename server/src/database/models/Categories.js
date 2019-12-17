@@ -1,20 +1,21 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 import Cafes from './Cafes'
-export default Tables = db.define(
-    "tblTables",
+
+export default Categories = db.define(
+    "tblCategories",
     {
-        tableID: {
+        categoryID: {
             primaryKey: true,
             type: Sequelize.UUIDV4
         },
 
-        tableName: {
+        categoryName: {
             type: Sequelize.STRING,
             allowNull: false
         },
 
-        qrCodeImage: {
+        categoryImage: {
             type: Sequelize.STRING,
             allowNull: false
         }
@@ -24,5 +25,5 @@ export default Tables = db.define(
     }
 );
 
-Cafes.hasMany(Tables, { foreignKey: 'cafeID' });
-Tables.belongsTo(Cafes, { foreignKey: 'cafeID' });
+Cafes.hasMany(Categories, { foreignKey: 'cafeID' });
+Categories.belongsTo(Cafes, { foreignKey: 'cafeID' });

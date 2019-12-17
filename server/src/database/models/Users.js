@@ -1,7 +1,7 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 
-export const Users = db.define(
+export default Users = db.define(
     "tblUsers",
     {
         userID: {
