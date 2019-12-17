@@ -5,30 +5,30 @@ import QrScreen from './QrScreens/QrScreen'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
 export default createBottomTabNavigator({
-    Qr: {
-        screen: QrScreen, navigationOptions: {
-            tabBarIcon: ({ tintColor }) => (
-                <Icon name='home' color={tintColor} size={24} />
-            )
+  Qr: {
+    screen: QrScreen, navigationOptions: {
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name='home' color={tintColor} size={24} />
+      )
 
-        }
-    },
-    Profile: {
-        screen: ProfileStack,
-        navigationOptions: {
-            tabBarIcon: ({ tintColor }) => (
-                <Icon name='user' color={tintColor} size={24} />
-            )
-        }
     }
-}, {
-    initialRouteName: 'Qr',
-    order: ['Qr', 'Profile'],
+  },
+  Profile: {
+    screen: ProfileStack,
     navigationOptions: {
-        tabBarVisible: true
-    },
-    tabBarOptions: {
-        activeTintColor: "blue",
-        inactiveTintColor: "gray"
+      tabBarIcon: ({ tintColor }) => (
+        <Icon name='user' color={tintColor} size={24} />
+      )
     }
+  }
+}, {
+  initialRouteName: 'Qr',
+  order: ['Qr', 'Profile'],
+  navigationOptions: {
+    tabBarVisible: true
+  },
+  tabBarOptions: {
+    activeTintColor: "blue",
+    inactiveTintColor: "gray"
+  }
 });

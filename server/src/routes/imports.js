@@ -7,12 +7,12 @@ import jwt from "../tokenize/index"
 const Op = Sequelize.Op
 
 export {
-    Sequelize,
-    express,
-    jwt,
-    Op,
-    models,
-    hashPassword,
-    verifyPassword
+  Sequelize,
+  express,
+  jwt,
+  Op,
+  models,
+  hashPassword,
+  verifyPassword
 }
 

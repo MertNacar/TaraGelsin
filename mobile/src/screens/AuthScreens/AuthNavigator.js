@@ -4,7 +4,7 @@ import SignupScreen from './SignupScreens/SignupScreen'
 import ForgetPasswordScreen from './ForgetPasswordScreens/ForgetPasswordScreen'
 //login hariç stackler gelcek
 export default createStackNavigator({
-    Login: LoginScreen,
-    Signup: SignupScreen,
-    Forget: ForgetPasswordScreen
+  Login: LoginScreen,
+  Signup: SignupScreen,
+  Forget: ForgetPasswordScreen
 });

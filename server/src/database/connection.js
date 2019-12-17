@@ -12,13 +12,4 @@ Sequelize.DATE.prototype._stringify = function _stringify(date, options) {
   return date.format("YYYY-MM-DD HH:mm:ss.SSS");
 };
 
-db
-  .authenticate()
-  .then(() => {
-    console.log("Bağlantı başarıyla kuruldu.");
-  })
-  .catch(err => {
-    console.error("Bağlanılamıyor:", err);
-  });
-
 export default db;

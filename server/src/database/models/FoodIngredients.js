@@ -4,16 +4,16 @@ import Foods from './Foods'
 import Ingredients from './Ingredients'
 
 const FoodIngredients = db.define(
-    "tblFoodIngredients",
-    {
-        ingredientQty: {
-            type: Sequelize.STRING,
-            allowNull: false
-        },
+  "tblFoodIngredients",
+  {
+    ingredientQty: {
+      type: Sequelize.CHAR,
+      allowNull: false
     },
-    {
-        freezeTableName: true
-    }
+  },
+  {
+    freezeTableName: true
+  }
 );
 
 Foods.belongsToMany(Ingredients, { through: FoodIngredients, sourceKey: 'foodID' });

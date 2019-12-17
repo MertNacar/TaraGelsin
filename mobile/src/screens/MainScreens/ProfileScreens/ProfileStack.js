@@ -5,8 +5,8 @@ import CredCardScreen from './CredCardScreen/CredCardScreen'
 import AddCredCardScreen from './CredCardScreen/AddCredCardScreen/AddCredCardScreen'
 //login hariç stackler gelcek
 export default createStackNavigator({
-    Profile: ProfileScreen,
-    UpdateProfile: ProfileUpdateScreen,
-    CredCard: CredCardScreen,
-    AddCredCard: AddCredCardScreen
+  Profile: ProfileScreen,
+  UpdateProfile: ProfileUpdateScreen,
+  CredCard: CredCardScreen,
+  AddCredCard: AddCredCardScreen
 });

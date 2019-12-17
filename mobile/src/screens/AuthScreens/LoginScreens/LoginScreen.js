@@ -38,8 +38,8 @@ const App = () => {
     setUserSaveValue(value)
   }
 
-  changeText = (value,type) => {
-    if(type === "username")
+  changeText = (value, type) => {
+    if (type === "username")
       setUsername(value)
     else {
       setPassword(value)
@@ -58,13 +58,13 @@ const App = () => {
       <Input
         placeholder='Kullanıcı Adı'
         leftIcon={{ type: 'font-awesome', name: 'user' }}
-        onChangeText={(value) => changeText(value,'username')}
+        onChangeText={(value) => changeText(value, 'username')}
       />
-  
+
       <Input
         placeholder='Şifre'
         leftIcon={{ type: 'font-awesome', name: 'lock' }}
-        onChangeText={(value) => changeText(value,'password')}
+        onChangeText={(value) => changeText(value, 'password')}
       />
 
       <CheckBox

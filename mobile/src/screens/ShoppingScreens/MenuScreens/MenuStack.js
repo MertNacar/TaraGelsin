@@ -4,7 +4,7 @@ import FoodScreen from './FoodScreen/FoodScreen'
 import FoodDetailScreen from './FoodDetailScreen/FoodDetailScreen'
 
 export default createStackNavigator({
-    Category: CategoryScreen,
-    Foods: FoodScreen,
-    FoodDetail: FoodDetailScreen,
+  Category: CategoryScreen,
+  Foods: FoodScreen,
+  FoodDetail: FoodDetailScreen,
 });
