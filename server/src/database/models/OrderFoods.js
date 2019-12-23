@@ -6,15 +6,23 @@ import Foods from './Foods'
 const OrderFoods = db.define(
   "tblOrderFoods",
   {
-    foodCount: {
+    foodQuantity: {
       type: Sequelize.SMALLINT,
       allowNull: false
     },
+
+    foodDiscount: {
+      type: Sequelize.SMALLINT,
+      allowNull: false
+    },
+
   },
   {
-    freezeTableName: true
+    timestamps: false
   }
 );
 
-Orders.belongsToMany(Foods, { through: OrderFoods, sourceKey: 'orderID' });
-Foods.belongsToMany(Orders, { through: OrderFoods, sourceKey: 'foodID' });
+Orders.belongsToMany(Foods, { through: "tblOrderFoods", foreignKey: 'orderID', otherKey: 'foodID' });
+Foods.belongsToMany(Orders, { through: "tblOrderFoods", foreignKey: 'foodID', otherKey: 'orderID' });
+
+export default OrderFoods

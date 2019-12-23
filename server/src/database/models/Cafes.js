@@ -1,12 +1,13 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 
-export default Cafes = db.define(
+const Cafes = db.define(
   "tblCafes",
   {
     cafeID: {
       primaryKey: true,
-      type: Sequelize.UUIDV4
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
 
     cafeOwner: {
@@ -14,41 +15,60 @@ export default Cafes = db.define(
       allowNull: false
     },
 
-    cafeName: {
+    fullname: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    cafeUserName: {
+
+    username: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    cafePassword: {
+
+    email: {
       type: Sequelize.STRING,
       allowNull: false
     },
-    cafePhone: {
+
+    password: {
       type: Sequelize.STRING,
       allowNull: false
     },
+
+    cafePoint: Sequelize.DECIMAL,
+
+    phone: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+
     cafeCountry: {
       type: Sequelize.CHAR,
       allowNull: false
     },
+
     cafeCity: {
       type: Sequelize.STRING,
       allowNull: false
     },
+
     cafeZIP: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    cafeImage: {
+    isSubscriber: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false
+    },
+
+    SubscribtionEndDate: Sequelize.DATE,
+
+    cafeImagePath: {
       type: Sequelize.STRING,
       allowNull: false
     }
-  },
-  {
-    freezeTableName: true
   }
 );
+
+export default Cafes

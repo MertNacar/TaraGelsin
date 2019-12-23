@@ -1,16 +1,15 @@
 import db from "../connection"
 import Sequelize from "sequelize"
-import CredCards from './CredCards'
 import Users from './Users'
-import Cafes from './Cafes'
 import Tables from './Tables'
 
-export default Orders = db.define(
+const Orders = db.define(
   "tblOrders",
   {
     orderID: {
       primaryKey: true,
-      type: Sequelize.UUIDV4
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
 
     orderStatus: {
@@ -28,26 +27,26 @@ export default Orders = db.define(
       allowNull: false
     },
 
+    orderPoint: Sequelize.DECIMAL,
+
     orderNote: Sequelize.STRING,
 
-    orderCal: {
+    orderCalorie: {
       type: Sequelize.SMALLINT,
       allowNull: false
+    },
+
+    discount: {
+      type: Sequelize.SMALLINT,
+      defaultValue: 0
     }
-  },
-  {
-    freezeTableName: true
   }
 );
-
-CredCards.hasMany(Orders, { foreignKey: 'cardID' });
-Orders.belongsTo(CredCards, { foreignKey: 'cardID' });
 
 Users.hasMany(Orders, { foreignKey: 'userID' });
 Orders.belongsTo(Users, { foreignKey: 'userID' });
 
-Cafes.hasMany(Orders, { foreignKey: 'cafeID' });
-Orders.belongsTo(Cafes, { foreignKey: 'cafeID' });
-
 Tables.hasMany(Orders, { foreignKey: 'tableID' });
 Orders.belongsTo(Tables, { foreignKey: 'tableID' });
+
+export default Orders

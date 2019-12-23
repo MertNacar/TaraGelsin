@@ -1,16 +1,19 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 import Categories from './Categories'
+import Ingredients from './Ingredients'
+import Extras from './Extras'
 
-export default Foods = db.define(
+const Foods = db.define(
   "tblFoods",
   {
     foodID: {
       primaryKey: true,
-      type: Sequelize.UUIDV4
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
 
-    foodName: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false
     },
@@ -20,7 +23,19 @@ export default Foods = db.define(
       allowNull: false
     },
 
-    foodImage: {
+    foodPreperationTime: {
+      type: Sequelize.SMALLINT,
+      allowNull: false
+    },
+
+    foodDescription: Sequelize.STRING,
+
+    isNewFood: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false
+    },
+
+    imagePath: {
       type: Sequelize.STRING,
       allowNull: false
     },
@@ -31,9 +46,17 @@ export default Foods = db.define(
     }
   },
   {
-    freezeTableName: true
+    timestamps: false
   }
 );
 
 Categories.hasMany(Foods, { foreignKey: 'categoryID' });
 Foods.belongsTo(Categories, { foreignKey: 'categoryID' });
+
+Foods.belongsToMany(Ingredients, { through: "tblFoodIngredients" });
+Ingredients.belongsToMany(Foods, { through: "tblFoodIngredients" });
+
+Foods.belongsToMany(Extras, { through: "tblFoodExtras" });
+Extras.belongsToMany(Foods, { through: "tblFoodExtras" });
+
+export default Foods

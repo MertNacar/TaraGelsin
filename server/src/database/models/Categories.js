@@ -2,28 +2,31 @@ import db from "../connection"
 import Sequelize from "sequelize"
 import Cafes from './Cafes'
 
-export default Categories = db.define(
+const Categories = db.define(
   "tblCategories",
   {
     categoryID: {
       primaryKey: true,
-      type: Sequelize.UUIDV4
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
 
-    categoryName: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    categoryImage: {
+    imagePath: {
       type: Sequelize.STRING,
       allowNull: false
     }
   },
   {
-    freezeTableName: true
+    timestamps: false
   }
 );
 
 Cafes.hasMany(Categories, { foreignKey: 'cafeID' });
 Categories.belongsTo(Cafes, { foreignKey: 'cafeID' });
+
+export default Categories

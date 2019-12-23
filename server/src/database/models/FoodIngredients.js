@@ -1,4 +1,4 @@
-import db from "../connection"
+/*import db from "../connection"
 import Sequelize from "sequelize"
 import Foods from './Foods'
 import Ingredients from './Ingredients'
@@ -11,10 +11,9 @@ const FoodIngredients = db.define(
       allowNull: false
     },
   },
-  {
-    freezeTableName: true
-  }
+  { freezeTableName: true,
+    timestamps: false }
 );
 
 Foods.belongsToMany(Ingredients, { through: FoodIngredients, sourceKey: 'foodID' });
-Ingredients.belongsToMany(Foods, { through: FoodIngredients, sourceKey: 'ingredientID' });
+Ingredients.belongsToMany(Foods, { through: FoodIngredients, sourceKey: 'ingredientID' });*/

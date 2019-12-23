@@ -1,21 +1,23 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 
-export default Ingredients = db.define(
+const Ingredients = db.define(
   "tblIngredients",
   {
-    IngredientID: {
+    ingredientID: {
       primaryKey: true,
-      type: Sequelize.UUIDV4
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
 
-    IngredientName: {
+    ingredientName: {
       type: Sequelize.STRING,
       allowNull: false
     },
   },
   {
-    freezeTableName: true
+    timestamps: false
   }
 );
 
+export default Ingredients

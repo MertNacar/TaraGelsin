@@ -1,12 +1,14 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 import Cafes from './Cafes'
-export default Tables = db.define(
+
+const Tables = db.define(
   "tblTables",
   {
     tableID: {
       primaryKey: true,
-      type: Sequelize.UUIDV4
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
 
     tableName: {
@@ -14,15 +16,19 @@ export default Tables = db.define(
       allowNull: false
     },
 
-    qrCodeImage: {
+    qrCodeImagePath: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
+
+    qrCodeImageString: {
       type: Sequelize.STRING,
       allowNull: false
     }
-  },
-  {
-    freezeTableName: true
   }
 );
 
 Cafes.hasMany(Tables, { foreignKey: 'cafeID' });
 Tables.belongsTo(Cafes, { foreignKey: 'cafeID' });
+
+export default Tables

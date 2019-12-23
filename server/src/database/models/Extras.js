@@ -1,25 +1,28 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 
-export default Extras = db.define(
+const Extras = db.define(
   "tblExtras",
   {
-    ExtraID: {
+    extraID: {
       primaryKey: true,
-      type: Sequelize.UUIDV4
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
 
-    ExtraName: {
+    extraName: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    ExtraCost: {
+    extraCost: {
       type: Sequelize.DECIMAL,
       allowNull: false
     },
   },
   {
-    freezeTableName: true
+    timestamps: false
   }
 );
+
+export default Extras

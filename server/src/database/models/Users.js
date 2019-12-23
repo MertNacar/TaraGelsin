@@ -1,12 +1,13 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 
-export default Users = db.define(
+const Users = db.define(
   "tblUsers",
   {
     userID: {
       primaryKey: true,
-      type: Sequelize.UUIDV4
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
 
     username: {
@@ -42,8 +43,7 @@ export default Users = db.define(
       type: Sequelize.SMALLINT,
       defaultValue: 0
     },
-  },
-  {
-    freezeTableName: true
   }
 );
+
+export default Users

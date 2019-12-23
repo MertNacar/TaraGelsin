@@ -1,12 +1,13 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 
-export default CredCards = db.define(
+const CredCards = db.define(
   "tblCredCards",
   {
     cardID: {
       primaryKey: true,
-      type: Sequelize.UUIDV4
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
 
     cardName: {
@@ -28,8 +29,7 @@ export default CredCards = db.define(
       type: Sequelize.CHAR,
       allowNull: false
     },
-  },
-  {
-    freezeTableName: true
   }
 );
+
+export default CredCards
