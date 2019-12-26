@@ -1,35 +1,33 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 
-const CredCards = db.define(
-  "tblCredCards",
+const CafeOwners = db.define(
+  "tblCafeOwners",
   {
-    cardID: {
+    cafeOwnerID: {
       primaryKey: true,
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4
     },
 
-    cardName: {
+    fullname: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    cardNumber: {
+    phone: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    cardCvv: {
-      type: Sequelize.CHAR(3),
+    email: {
+      type: Sequelize.STRING,
       allowNull: false
-    },
-
-    cardDate: {
-      type: Sequelize.CHAR(4),
-      allowNull: false
-    },
+    }
+  },
+  {
+    timestamps: false
   }
 );
 
-export default CredCards
+export default CafeOwners

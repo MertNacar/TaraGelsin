@@ -1,5 +1,9 @@
 import db from "../connection"
 import Sequelize from "sequelize"
+import Subscriptions from './Subscriptions'
+import CafeOwners from './CafeOwners'
+import Countries from './Countries'
+import Cities from './Cities'
 
 const Cafes = db.define(
   "tblCafes",
@@ -10,49 +14,34 @@ const Cafes = db.define(
       defaultValue: Sequelize.UUIDV4
     },
 
-    cafeOwner: {
+    cafeName: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    fullname: {
+    cafeUsername: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    username: {
+    cafePassword: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    email: {
+    cafePoint: Sequelize.DECIMAL(2, 1),
+
+    cafePhone: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    password: {
-      type: Sequelize.STRING,
+    cafeAddress: {
+      type: Sequelize.STRING(120),
       allowNull: false
     },
 
-    cafePoint: Sequelize.DECIMAL,
-
-    phone: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-
-    cafeCountry: {
-      type: Sequelize.CHAR,
-      allowNull: false
-    },
-
-    cafeCity: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-
-    cafeZIP: {
+    cafeImagePath: {
       type: Sequelize.STRING,
       allowNull: false
     },
@@ -62,13 +51,24 @@ const Cafes = db.define(
       allowNull: false
     },
 
-    SubscribtionEndDate: Sequelize.DATE,
+    subscriptionEndDate: Sequelize.DATE,
 
-    cafeImagePath: {
-      type: Sequelize.STRING,
-      allowNull: false
-    }
   }
 );
+
+
+Subscriptions.hasMany(Cafes, { foreignKey: 'subscriptionID' });
+Cafes.belongsTo(Subscriptions, { foreignKey: 'subscriptionID' });
+
+CafeOwners.hasMany(Cafes, { foreignKey: 'cafeOwnerID', allowNull: false });
+Cafes.belongsTo(CafeOwners, { foreignKey: 'cafeOwnerID', allowNull: false });
+
+Countries.hasMany(Cafes, { foreignKey: 'countryID', allowNull: false });
+Cafes.belongsTo(Countries, { foreignKey: 'countryID', allowNull: false });
+
+Cities.hasMany(Cafes, { foreignKey: 'cityID', allowNull: false });
+Cafes.belongsTo(Cities, { foreignKey: 'cityID', allowNull: false });
+
+
 
 export default Cafes

@@ -26,9 +26,18 @@ app.get("/test", async (req, res) => {
     let Orders = await models.Orders.findAll()
     let Tables = await models.Tables.findAll()
     let Users = await models.Users.findAll()
+    let Subscriptions = await models.Subscriptions.findAll()
+    let PaymentMethods = await models.PaymentMethods.findAll()
+    let Countries = await models.Countries.findAll()
+    let Cities = await models.Cities.findAll()
+    let CafeOwners = await models.CafeOwners.findAll()
     let FoodExtras = await db.query(`SELECT * FROM "tblFoodExtras"`)
     let FoodIngredients = await db.query(`SELECT * FROM "tblFoodIngredients"`)
-    res.send({ err: false, Cafes, Categories, CredCards, Extras, Foods, Ingredients, OrderFoods, Orders, Tables, Users, Waiters, FoodExtras, FoodIngredients })
+    res.send({
+      err: false, Cafes, Categories, CredCards, Extras, Foods,
+      Ingredients, OrderFoods, Orders, Tables, Users, Subscriptions,
+      PaymentMethods, Countries, Cities, CafeOwners, FoodExtras, FoodIngredients
+    })
   } catch (err) {
     res.send({ err: true, err: err.message })
   }

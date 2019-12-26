@@ -6,7 +6,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 
 export default createBottomTabNavigator({
   Qr: {
-    screen: QrScreen, navigationOptions: {
+    screen: QrScreen,
+    navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon name='home' color={tintColor} size={24} />
       )

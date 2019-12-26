@@ -8,6 +8,11 @@ import Ingredients from './Ingredients'
 import OrderFoods from './OrderFoods'
 import Orders from './Orders'
 import Tables from './Tables'
+import CafeOwners from './CafeOwners'
+import Cities from './Cities'
+import Countries from './Countries'
+import PaymentMethods from './PaymentMethods'
+import Subscriptions from './Subscriptions'
 
 const models = {
   Users,
@@ -19,7 +24,12 @@ const models = {
   Ingredients,
   OrderFoods,
   Orders,
-  Tables
+  Tables,
+  CafeOwners,
+  Cities,
+  Countries,
+  PaymentMethods,
+  Subscriptions
 }
 
 export default models

@@ -32,10 +32,10 @@ const Users = db.define(
       allowNull: false
     },
 
-    birthday: Sequelize.DATE,
+    birthday: Sequelize.DATEONLY,
 
     gender: {
-      type: Sequelize.CHAR,
+      type: Sequelize.CHAR(1),
       defaultValue: "u"
     },
 

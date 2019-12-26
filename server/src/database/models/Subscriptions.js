@@ -1,22 +1,21 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 
-const Extras = db.define(
-  "tblExtras",
+const Subscriptions = db.define(
+  "tblSubscriptions",
   {
-    extraID: {
+    subscriptionID: {
       primaryKey: true,
-      type: Sequelize.UUID,
-      defaultValue: Sequelize.UUIDV4
+      type: Sequelize.SMALLINT
     },
 
-    extraName: {
+    subscriptionName: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    extraCost: {
-      type: Sequelize.DECIMAL(6, 2),
+    subscriptionPriceYear: {
+      type: Sequelize.DECIMAL(12, 2),
       allowNull: false
     },
   },
@@ -25,4 +24,4 @@ const Extras = db.define(
   }
 );
 
-export default Extras
+export default Subscriptions

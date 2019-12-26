@@ -16,10 +16,12 @@ const App = () => {
 
   useEffect(() => {
     const token = await AsyncStorage.getItem('jwtToken');
-    setIsSigned(!token.err)
-    setLoading(false)
+    if (!token.err) {
+      //user atama context API
+      setIsSigned(true)
+      setLoading(false)
+    } else setLoading(false)
   }, [loading])
-
 
   if (loading) {
     return (
@@ -47,8 +49,5 @@ const createRootNavigator = userIsSigned => {
     }
   );
 };
-
-const styles = StyleSheet.create({
-});
 
 export default App;

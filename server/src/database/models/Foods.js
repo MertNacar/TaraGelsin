@@ -13,13 +13,20 @@ const Foods = db.define(
       defaultValue: Sequelize.UUIDV4
     },
 
-    name: {
+    foodName: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
     foodCost: {
-      type: Sequelize.DECIMAL,
+      type: Sequelize.DECIMAL(10, 4),
+      allowNull: false
+    },
+
+    foodDescription: Sequelize.STRING(120),
+
+    isNewFood: {
+      type: Sequelize.BOOLEAN,
       allowNull: false
     },
 
@@ -28,14 +35,7 @@ const Foods = db.define(
       allowNull: false
     },
 
-    foodDescription: Sequelize.STRING,
-
-    isNewFood: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false
-    },
-
-    imagePath: {
+    foodImagePath: {
       type: Sequelize.STRING,
       allowNull: false
     },
@@ -43,20 +43,23 @@ const Foods = db.define(
     foodCal: {
       type: Sequelize.SMALLINT,
       allowNull: false
+    },
+
+    foodOnSale: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true
     }
-  },
-  {
-    timestamps: false
+
   }
 );
 
-Categories.hasMany(Foods, { foreignKey: 'categoryID' });
-Foods.belongsTo(Categories, { foreignKey: 'categoryID' });
+Categories.hasMany(Foods, { foreignKey: 'categoryID', allowNull: false });
+Foods.belongsTo(Categories, { foreignKey: 'categoryID', allowNull: false });
 
-Foods.belongsToMany(Ingredients, { through: "tblFoodIngredients" });
-Ingredients.belongsToMany(Foods, { through: "tblFoodIngredients" });
+Foods.belongsToMany(Ingredients, { through: "tblFoodIngredients", allowNull: false });
+Ingredients.belongsToMany(Foods, { through: "tblFoodIngredients", allowNull: false });
 
-Foods.belongsToMany(Extras, { through: "tblFoodExtras" });
-Extras.belongsToMany(Foods, { through: "tblFoodExtras" });
+Foods.belongsToMany(Extras, { through: "tblFoodExtras", allowNull: false });
+Extras.belongsToMany(Foods, { through: "tblFoodExtras", allowNull: false });
 
 export default Foods

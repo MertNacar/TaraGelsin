@@ -11,12 +11,12 @@ const Categories = db.define(
       defaultValue: Sequelize.UUIDV4
     },
 
-    name: {
+    categoryName: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    imagePath: {
+    categoryImagePath: {
       type: Sequelize.STRING,
       allowNull: false
     }
@@ -26,7 +26,7 @@ const Categories = db.define(
   }
 );
 
-Cafes.hasMany(Categories, { foreignKey: 'cafeID' });
-Categories.belongsTo(Cafes, { foreignKey: 'cafeID' });
+Cafes.hasMany(Categories, { foreignKey: 'cafeID', allowNull: false });
+Categories.belongsTo(Cafes, { foreignKey: 'cafeID', allowNull: false });
 
 export default Categories
