@@ -7,4 +7,8 @@ export default createStackNavigator({
   Login: LoginScreen,
   Signup: SignupScreen,
   Forget: ForgetPasswordScreen
-});
+},
+  {
+    initialRouteName: "Login"
+  }
+);

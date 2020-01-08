@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import {
   View,
   StyleSheet,
-  View,
   Switch,
 } from 'react-native';
-import { Button, Text, Input } from 'react-native-elements'
+import { Button, Text, Input, CheckBox } from 'react-native-elements'
 import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-community/google-signin';
 
 const App = () => {
