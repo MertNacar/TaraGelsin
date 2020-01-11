@@ -1,7 +1,7 @@
 import { URL, API } from "react-native-dotenv";
 
 const url = endpoint => {
-  return `${URL}/${API}${endpoint}`;
+  return `${URL}/${API}/${endpoint}`;
 };
 
 const get = async (endpoint, token) => {
@@ -14,7 +14,7 @@ const get = async (endpoint, token) => {
     });
     return await res.json();
   } catch {
-    return null;
+    return { err: false };
   }
 };
 
@@ -23,7 +23,7 @@ const getWithoutToken = async (endpoint) => {
     let res = await fetch(url(endpoint))
     return await res.json();
   } catch {
-    return null;
+    return { err: false };
   }
 };
 
@@ -41,7 +41,7 @@ const post = async (endpoint, body = {}, token) => {
     });
     return await res.json();
   } catch {
-    return null;
+    return { err: false };
   }
 };
 
@@ -58,7 +58,7 @@ const postWithoutToken = async (endpoint, body = {}) => {
     });
     return await res.json();
   } catch {
-    return null;
+    return { err: false };
   }
 };
 
@@ -76,7 +76,7 @@ const put = async (endpoint, body = {}, token) => {
     });
     return await res.json();
   } catch {
-    return null;
+    return { err: false };
   }
 };
 

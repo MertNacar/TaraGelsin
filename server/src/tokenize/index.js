@@ -12,4 +12,4 @@ const createToken = username => {
   return jwt.sign({ username }, PRIVATE_KEY, options.signOptions());
 };
 
-export { validateToken, createToken }
+export default { validateToken, createToken }

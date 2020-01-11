@@ -5,7 +5,7 @@ function hashPassword(password) {
   return new Promise((resolve, reject) => {
     // set iteration value / get byte and digest value from config
     let userPassword;
-    let byte = process.env.HASH_BYTE;
+    let byte = Number(process.env.HASH_BYTE);
     let digest = process.env.HASH_DIGEST;
     let iteration = Math.ceil((1 + Math.random()) * 280000);
 
@@ -38,7 +38,7 @@ function verifyPassword(password, hashed) {
     let IndexIteration = process.env.HASH_ITERATION;
     let IndexSalt = process.env.HASH_SALT;
     let IndexHash = process.env.HASH_HASHING;
-    let byte = process.env.HASH_BYTE;
+    let byte = Number(process.env.HASH_BYTE);
     let digest = process.env.HASH_DIGEST;
 
     //divide hash that will assign to values

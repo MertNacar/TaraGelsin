@@ -1,10 +1,11 @@
 import "dotenv/config";
 import db from "./src/database/connection";
-import http, { get } from "http";
+import http from "http";
 import express from "express";
 import bodyParser from "body-parser";
 import models from "./src/database/models/index";
 import morgan from "morgan";
+import auth from "./src/routes/Auth/index"
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
+
+app.use(`/${process.env.API}/login`, auth.login)
 
 app.get("/test", async (req, res) => {
   try {

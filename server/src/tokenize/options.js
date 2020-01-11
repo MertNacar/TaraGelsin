@@ -20,4 +20,4 @@ const verifyOptions = () => {
   };
 };
 
-export { signOptions, verifyOptions }
+export default { signOptions, verifyOptions }

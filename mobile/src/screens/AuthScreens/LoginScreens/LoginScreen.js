@@ -1,110 +1,95 @@
-import React, {useState,useEffect} from 'react';
-import {
-  View,
-  StyleSheet,
-  Switch,
-} from 'react-native';
-import { Button, Text, Input, CheckBox } from 'react-native-elements'
-import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-community/google-signin';
+import React, { useState } from 'react';
+import { View, SafeAreaView } from 'react-native';
+import { Button, Text, Input } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/Ionicons'
+import { validateRegex, usernameRegex, passwordRegex } from '../../../regex/regex'
+import { storeTokenStorage, storeUserStorage } from '../../../AsyncStorage'
+import { getWithoutToken, postWithoutToken } from '../../../utils/httpHelper'
+import styles from './style'
 
-const App = () => {
-  const [checkInformations, setCheckInformations] = useState(false)
-  const [checkConditions, setCheckConditions] = useState(false)
-  const [GoogleProgress, setGoogleProgress] = useState(false)
-  const [userSaveValue, setUserSaveValue] = useState(false)
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+const App = props => {
 
-  signInGoogle = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      this.setState({ userInfo });
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-      } else {
-        // some other error happened
-      }
-    }
-  };
-
-  userSaveSwitch = value => {
-    setUserSaveValue(value)
-  }
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [err, setErr] = useState(false);
 
   changeText = (value, type) => {
-    if (type === "username")
-      setUsername(value)
-    else {
-      setPassword(value)
+    if (type === 'username') setUsername(value)
+    else setPassword(value);
+  };
+
+  goSignupScreen = () => {
+    props.navigation.navigate("Signup")
+  };
+
+  goForgetScreen = () => {
+    props.navigation.navigate("Forget")
+  };
+
+  login = async () => {
+    try {
+      validateUsername = validateRegex(usernameRegex, username)
+      validatePassword = validateRegex(passwordRegex, password)
+
+      if (validateUsername && validatePassword) {
+        setErr(false)
+        let result = await postWithoutToken('login', { username, password })
+
+        if (!result.err) {
+          await storeUserStorage(username)
+          await storeTokenStorage(result.token)
+          props.navigation.navigate("Initial")
+
+        } else throw new Error()
+      } else throw new Error()
+    } catch {
+      setErr(true)
     }
   }
 
-  /*logIn = () => {
-    if()
-  }*/
-
   return (
-    <View>
-      <Text h3>LOGO GELECEK</Text>
+    <SafeAreaView style={styles.container}>
       <Text h3>GİRİŞ</Text>
 
-      <Input
-        placeholder='Kullanıcı Adı'
-        leftIcon={{ type: 'font-awesome', name: 'user' }}
-        onChangeText={(value) => changeText(value, 'username')}
-      />
+      <View style={{ display: err ? "flex" : "none" }}>
+        <Text style={{ color: "red" }}>
+          Kullanıcı adı veya şifreniz yanlıştır.
+          </Text>
+      </View>
 
-      <Input
-        placeholder='Şifre'
-        leftIcon={{ type: 'font-awesome', name: 'lock' }}
-        onChangeText={(value) => changeText(value, 'password')}
-      />
+      <View style={styles.form}>
 
-      <CheckBox
-        center
-        title='Kullanım Koşulları ve Şartlarını Okudum'
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
-        checked={checkConditions}
-      />
+        <View style={styles.inputs}>
+          <Input
+            placeholder="Kullanıcı Adı"
+            textContentType="username"
+            inputStyle={{ marginLeft: 5 }}
+            leftIcon={<Icon name="md-person" size={24} color="black" />}
+            onChangeText={value => changeText(value, 'username')}
+          />
 
-      <CheckBox
-        center
-        title='KVKK Verilerimin işlenmesini onaylıyorum.'
-        checkedIcon='dot-circle-o'
-        uncheckedIcon='circle-o'
-        checked={checkInformations}
-      />
+          <Input
+            placeholder="Şifre"
+            secureTextEntry={true}
+            textContentType="password"
+            inputStyle={{ marginLeft: 5 }}
+            leftIcon={<Icon name="md-lock" size={24} color="black" />}
+            onChangeText={value => changeText(value, 'password')}
+          />
+        </View>
 
-      <Switch
-        style={{ marginTop: 30 }}
-        onValueChange={userSaveSwitch}
-        value={userSaveValue}
-      />
+        <Button containerStyle={styles.link} title="Giriş Yap" onPress={() => login()} />
 
-      <Button
-        title="Giriş Yap"
-        onPress={() => logIn()}
-      />
+      </View>
+      <View style={styles.link}>
 
-      <Button
-        title="Şifreni mi unuttun ?"
-        type="clear"
-      />
+        <Button title="Şifremi unuttum ?" type="clear" onPress={() => goForgetScreen()} />
 
-      <GoogleSigninButton
-        size={GoogleSigninButton.Size.Standard}
-        color={GoogleSigninButton.Color.Dark}
-        onPress={signInGoogle}
-        disabled={GoogleProgress} />
+        <Button title="Kayıt Ol" type="clear" onPress={() => goSignupScreen()} />
 
-    </View>
+      </View>
+
+    </SafeAreaView>
   );
 };
 
