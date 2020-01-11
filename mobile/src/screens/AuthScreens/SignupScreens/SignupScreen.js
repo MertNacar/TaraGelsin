@@ -15,10 +15,14 @@ const SignupScreen = props => {
     setUser(newUser)
   };
 
+  
   continueSign = () => {
     props.navigation.navigate("Signup2")
   };
 
+  goLoginScreen = () => {
+    props.navigation.navigate("Login")
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -79,7 +83,7 @@ const SignupScreen = props => {
 
         </View>
 
-
+        <Button title="Zaten üye misin ?" type="clear" onPress={() => goLoginScreen()} />
 
       </View>
     </SafeAreaView>

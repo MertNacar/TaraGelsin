@@ -1,17 +1,12 @@
-import { createStackNavigator } from 'react-navigation-stack'
+import { createSwitchNavigator } from 'react-navigation'
 import LoginScreen from './LoginScreens/LoginScreen'
 import SignupStack from './SignupScreens/SignupStack'
-import ForgetPasswordScreen from './ForgetPasswordScreens/ForgetPasswordScreen'
+import ForgetStack from './ForgetPasswordScreens/ForgetStack'
 //login hariç stackler gelcek
-export default createStackNavigator({
-  Login: {
-    screen: LoginScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
+export default createSwitchNavigator({
+  Login: LoginScreen,
   Signup: SignupStack,
-  Forget: ForgetPasswordScreen
+  Forget: ForgetStack,
 },
   {
     initialRouteName: "Login"

@@ -1,0 +1,12 @@
+{
+  "Auth" : {
+    "LoginTitle":"s",
+    "LoginError":"s"
+  },
+  "Main" : {
+    "QrTitle":"t"
+  },
+  "Shopping" : {
+    "Restaurant":"s"
+  }
+}
