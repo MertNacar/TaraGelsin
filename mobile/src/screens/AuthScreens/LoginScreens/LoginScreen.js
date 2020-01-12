@@ -36,13 +36,16 @@ const App = props => {
         let result = await postWithoutToken('login', { username, password })
 
         if (!result.err) {
-          await storeUserStorage(username)
-          await storeTokenStorage(result.token)
+          console.log(result)
+          let a = await storeUserStorage(username)
+          let b = await storeTokenStorage(result.user.token)
+          console.log(a.err + " " + b.err)
           props.navigation.navigate("Initial")
 
         } else throw new Error()
       } else throw new Error()
-    } catch {
+    } catch (err) {
+      console.log(err)
       setErr(true)
     }
   }

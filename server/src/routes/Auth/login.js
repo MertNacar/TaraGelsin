@@ -25,22 +25,15 @@ router.post("/immediately", async (req, res) => {
           "phone",
           "gender",
           "birthday",
+          "deviceID"
         ],
         where: {
           username
         },
-        include: [
-          {
-            model: models.Cities,
-            attributes: ["cityName"]
-          }
-        ]
       });
       if (data === null) throw new Error();
       else {
         let user = data.dataValues;
-        user.city = data.tblCities ? data.tblCities.city : "";
-        delete user.tblCity;
         user.token = token;
         user.loginDate = Date(Date.now()).toString();
         res.json({ err: false, user });
@@ -65,6 +58,7 @@ router.post("/", async (req, res) => {
         "phone",
         "gender",
         "birthday",
+        "deviceID"
       ],
       where: {
         username

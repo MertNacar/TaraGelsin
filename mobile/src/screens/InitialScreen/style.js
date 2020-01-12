@@ -1,6 +1,9 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import { StyleSheet } from 'react-native'
 
-const styles = StyleSheet.create({
-  style
+export default StyleSheet.create({
+  loading:{
+    flex:1,
+    justifyContent:"center",
+    alignItems:"center"
+  }
 })

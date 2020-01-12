@@ -4,31 +4,43 @@ import {
   StyleSheet,
   ActivityIndicator
 } from 'react-native';
+import styles from './style'
+import { COLOR_PRIMARY } from '../../constStyle/constStyle'
+import { getTokenStorage, getUserStorage } from "../../AsyncStorage/index";
+import { post } from '../../utils/httpHelper'
 
-import { getTokenStorage } from "../../AsyncStorage/index";
+const InitialScreen = props => {
 
-const InitialScreen = ({navigation}) => {
-  
   init = async () => {
     try {
       const token = await getTokenStorage();
-      console.warn(token)
-      if (!token.err) {
-        //user atama context API
-        navigation.navigate("Main")
-      } else throw new Error()
-    } catch { navigation.navigate("Auth") }
+
+      if (token.err) throw new Error()
+      else {
+        let username = await getUserStorage()
+        let result = await post("immediately", username, token)
+
+        if(result.err) throw new Error()
+        else{
+          //context user kaydet ve main git
+          props.navigation.navigate("Main")
+        }
+      }
+    } catch {
+      props.navigation.navigate("Auth")
+    }
   }
 
   useEffect(() => {
+
     init()
   })
 
-    return (
-      <View>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    )
+  return (
+    <View style={styles.loading}>
+      <ActivityIndicator size="large" color={COLOR_PRIMARY} />
+    </View>
+  )
 }
 
 export default InitialScreen;

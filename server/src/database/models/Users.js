@@ -34,6 +34,8 @@ const Users = db.define(
 
     birthday: Sequelize.DATEONLY,
 
+    deviceID: Sequelize.STRING,
+
     gender: {
       type: Sequelize.CHAR(1),
       defaultValue: "u"
