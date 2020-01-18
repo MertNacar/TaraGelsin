@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
-  StyleSheet,
   ActivityIndicator
 } from 'react-native';
 import styles from './style'
 import { COLOR_PRIMARY } from '../../constStyle/constStyle'
 import { getTokenStorage, getUserStorage } from "../../AsyncStorage/index";
 import { post } from '../../utils/httpHelper'
+//import { UserContext } from '../../store/user/context'
+//import { updateUser } from '../../store/user/actionCreator'
+//import UserProvider from '../../store/user/context';
 
 const InitialScreen = props => {
 
@@ -18,21 +20,19 @@ const InitialScreen = props => {
       if (token.err) throw new Error()
       else {
         let username = await getUserStorage()
-        let result = await post("immediately", username, token)
+        let result = await post("login/immediately", username.value, token.value)
 
-        if(result.err) throw new Error()
-        else{
-          //context user kaydet ve main git
+        if (result.err) throw new Error()
+        else {
           props.navigation.navigate("Main")
         }
       }
-    } catch {
+    } catch{
       props.navigation.navigate("Auth")
     }
   }
 
   useEffect(() => {
-
     init()
   })
 

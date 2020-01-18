@@ -4,10 +4,12 @@ import { Button, Text, Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { validateRegex, usernameRegex, passwordRegex } from '../../../regex/regex'
 import { storeTokenStorage, storeUserStorage } from '../../../AsyncStorage'
-import { getWithoutToken, postWithoutToken } from '../../../utils/httpHelper'
+import { postWithoutToken } from '../../../utils/httpHelper'
+//import { UserContext } from '../../../store/user/context'
+//import { updateUser } from '../../../store/user/actionCreator'
 import styles from './style'
 
-const App = props => {
+const LoginScreen = props => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -36,11 +38,9 @@ const App = props => {
         let result = await postWithoutToken('login', { username, password })
 
         if (!result.err) {
-          console.log(result)
-          let a = await storeUserStorage(username)
-          let b = await storeTokenStorage(result.user.token)
-          console.log(a.err + " " + b.err)
-          props.navigation.navigate("Initial")
+          await storeUserStorage(username)
+          await storeTokenStorage(result.user.token)
+          props.navigation.navigate("Main")
 
         } else throw new Error()
       } else throw new Error()
@@ -96,4 +96,4 @@ const App = props => {
   );
 };
 
-export default App;
+export default LoginScreen;

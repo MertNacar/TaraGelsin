@@ -2,14 +2,14 @@ import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import ProfileStack from './ProfileScreens/ProfileStack'
 import QrScreen from './QrScreens/QrScreen'
-import Icon from 'react-native-vector-icons/FontAwesome5'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 export default createBottomTabNavigator({
   Qr: {
     screen: QrScreen,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <Icon name='home' color={tintColor} size={24} />
+        <Icon name='md-qr-scanner' color={tintColor} size={24} />
       )
 
     }
@@ -18,7 +18,7 @@ export default createBottomTabNavigator({
     screen: ProfileStack,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <Icon name='user' color={tintColor} size={24} />
+        <Icon name='md-person' color={tintColor} size={24} />
       )
     }
   }
@@ -29,6 +29,7 @@ export default createBottomTabNavigator({
     tabBarVisible: true
   },
   tabBarOptions: {
+    showLabel:false,
     activeTintColor: "blue",
     inactiveTintColor: "gray"
   }

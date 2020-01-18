@@ -20,6 +20,15 @@ export const storeTokenStorage = async token => {
   }
 };
 
+export const removeTokenStorage = async () => {
+  try {
+    await AsyncStorage.removeItem("tokenJWT");
+    return { err: false };
+  } catch {
+    return { err: true };
+  }
+};
+
 export const getUserStorage = async () => {
   try {
     let value;
@@ -34,6 +43,15 @@ export const getUserStorage = async () => {
 export const storeUserStorage = async username => {
   try {
     await AsyncStorage.setItem("username", username);
+    return { err: false };
+  } catch {
+    return { err: true };
+  }
+};
+
+export const removeUserStorage = async () => {
+  try {
+    await AsyncStorage.removeItem("username");
     return { err: false };
   } catch {
     return { err: true };

@@ -1,7 +1,7 @@
 import { URL, API } from "react-native-dotenv";
 
 const url = endpoint => {
-  return `${URL}/${API}/${endpoint}`;
+  return `${URL}/${API}/${endpoint}/`;
 };
 
 const get = async (endpoint, token) => {
@@ -12,18 +12,21 @@ const get = async (endpoint, token) => {
         Accept: "application/json"
       }
     });
-    return await res.json();
+    if (res.status !== 200) throw new Error()
+    else return await res.json();
+
   } catch {
-    return { err: false };
+    return { err: true };
   }
 };
 
 const getWithoutToken = async (endpoint) => {
   try {
     let res = await fetch(url(endpoint))
-    return await res.json();
+    if (res.status !== 200) throw new Error()
+    else return await res.json();
   } catch {
-    return { err: false };
+    return { err: true };
   }
 };
 
@@ -39,9 +42,10 @@ const post = async (endpoint, body = {}, token) => {
         data: body
       })
     });
-    return await res.json();
+    if (res.status !== 200) throw new Error()
+    else return await res.json();
   } catch {
-    return { err: false };
+    return { err: true };
   }
 };
 
@@ -56,9 +60,10 @@ const postWithoutToken = async (endpoint, body = {}) => {
         data: body
       })
     });
-    return await res.json();
+    if (res.status !== 200) throw new Error()
+    else return await res.json();
   } catch {
-    return { err: false };
+    return { err: true };
   }
 };
 
@@ -74,9 +79,10 @@ const put = async (endpoint, body = {}, token) => {
         data: body
       })
     });
-    return await res.json();
+    if (res.status !== 200) throw new Error()
+    else return await res.json();
   } catch {
-    return { err: false };
+    return { err: true };
   }
 };
 
