@@ -1,15 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, SafeAreaView } from 'react-native'
 import { CheckBox, Input, Text, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { validateRegex, nameRegex, usernameRegex } from '../../../regex/regex'
 import styles from './style'
+import { updateUser } from '../../../store/user/actionCreator'
+import { connect } from 'react-redux'
+import * as Http from '../../../utils/httpHelper'
+
 const SignupScreen = props => {
 
   const [informations, setInformations] = useState(false);
   const [conditions, setConditions] = useState(false);
   const [user, setUser] = useState({ username: "", firstname: "", surname: "" });
   const [err, setErr] = useState(false)
+  const [errMessage, setErrMessage] = useState("")
+  const [disable, setDisable] = useState(false)
 
   changeText = (value, type) => {
     let newUser = Object.assign({}, user, { [type]: value })
@@ -24,20 +30,29 @@ const SignupScreen = props => {
     setConditions(!conditions)
   };
 
-
   continueSign = async () => {
-    userValidation = validateRegex(usernameRegex, user.username)
-    firstValidation = validateRegex(nameRegex, user.firstname)
-    surValidation = validateRegex(nameRegex, user.surname)
-    console.log("user",user)
-    console.log("cond",conditions)
-    console.log("info",informations)
-    console.log("err",user)
-    if (userValidation && firstValidation && surValidation && conditions && informations) {
+    try {
+      setDisable(true)
+      setErrMessage("")
       setErr(false)
-      //redux user ekleme
-      props.navigation.navigate("Signup2")
-    } else {
+      userValidation = validateRegex(usernameRegex, user.username)
+      firstValidation = validateRegex(nameRegex, user.firstname)
+      surValidation = validateRegex(nameRegex, user.surname)
+
+      if (userValidation && firstValidation && surValidation && conditions && informations) {
+        let checkUsername = await Http.postWithoutToken("signup/validateUsername", user.username)
+
+        if (checkUsername.err) throw new Error("Girdiğiniz kullanıcı adı kullanılmaktadır.")
+        else {
+          props.updateUser(user)
+          setDisable(false)
+          props.navigation.navigate("Signup2")
+        }
+
+      } else throw new Error("Girdiğiniz bilgiler uygun değildir.")
+    } catch (err) {
+      setDisable(false)
+      setErrMessage(err.message)
       setErr(true)
     }
   };
@@ -49,12 +64,10 @@ const SignupScreen = props => {
   return (
     <SafeAreaView style={styles.container}>
 
-      <Text h3>SignupScreen</Text>
-
       <View style={{ display: err ? "flex" : "none" }}>
         <Text style={{ color: "red" }}>
-          Bilgilerinizi kontrol ediniz.
-          </Text>
+          {errMessage}
+        </Text>
       </View>
 
       <View style={styles.form}>
@@ -107,11 +120,11 @@ const SignupScreen = props => {
             onPress={() => changeInformation()}
           />
 
-          <Button containerStyle={styles.button} title="Devam et" onPress={() => continueSign()} />
+          <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} containerStyle={styles.button} title="Devam et" onPress={() => continueSign()} />
 
         </View>
 
-        <Button title="Zaten üye misin ?" type="clear" onPress={() => goLoginScreen()} />
+        <Button disabled={disable} disabledTitleStyle={{ opacity: 0.8 }} title="Zaten üye misin ?" type="clear" onPress={() => goLoginScreen()} />
 
       </View>
     </SafeAreaView>
@@ -119,4 +132,10 @@ const SignupScreen = props => {
   )
 }
 
-export default SignupScreen
+mapDispatchToProps = dispatch => {
+  return {
+    updateUser: user => dispatch(updateUser(user))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SignupScreen);

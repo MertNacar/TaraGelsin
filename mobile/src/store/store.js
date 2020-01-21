@@ -3,7 +3,6 @@ import createSagaMiddleware from 'redux-saga'
 import { userReducer } from "./user/reducer";
 import { foodReducer } from "./food/reducer";
 import { categoryReducer } from "./category/reducer";
-import { composeWithDevTools } from 'redux-devtools-extension'
 import { logger } from 'redux-logger'
 import rootSaga from './index'
 
@@ -15,7 +14,7 @@ const rootReducer = combineReducers({
 
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware()
-  const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware, logger)))
+  const store = createStore(rootReducer, applyMiddleware(sagaMiddleware, logger))
 
   sagaMiddleware.run(rootSaga)
   return store

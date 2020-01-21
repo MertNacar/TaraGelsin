@@ -3,7 +3,9 @@ import { View, SafeAreaView } from 'react-native'
 import { Input, Text, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { validateRegex, passwordRegex } from '../../../regex/regex'
-import styles from './style'
+import styles from './style2'
+import { updateUser } from '../../../store/user/actionCreator'
+import { connect } from 'react-redux'
 
 const SignupScreen2 = props => {
   const [passwords, setPasswords] = useState({ password: "", rePassword: "" })
@@ -21,19 +23,19 @@ const SignupScreen2 = props => {
     } else return false
   }
 
-  continueSign = async () => {
+  continueSign2 = async () => {
+    setErrMessage("")
+    setErr(false)
     validate = validatePassword()
-    if(validate){
-      setErr(false)
-      setErrMessage("")
-      passValidation = validateRegex(passwordRegex, passwords.password)
-      if (passValidation) {
-        setErr(false)
-        setErrMessage("")
-        //redux user çek ekleme
-        //redux password ekle geri gönder
 
+    if (validate) {
+      passValidation = validateRegex(passwordRegex, passwords.password)
+
+      if (passValidation) {
+        let user = Object.assign({}, props.getUser, { password: passwords.password })
+        props.updateUser(user)
         props.navigation.navigate("Signup3")
+
       } else {
         setErr(true)
         setErrMessage("Girdiğiniz şifre uygun değildir, lütfen başka bir şifre deneyiniz")
@@ -46,35 +48,50 @@ const SignupScreen2 = props => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Signup2</Text>
-
       <View style={{ display: err ? "flex" : "none" }}>
         <Text style={{ color: "red" }}>
           {errMessage}
-          </Text>
+        </Text>
       </View>
 
-      <Input
-        placeholder="Şifre"
-        secureTextEntry={true}
-        textContentType="password"
-        inputStyle={{ marginLeft: 5 }}
-        leftIcon={<Icon name="md-lock" size={24} color="black" />}
-        onChangeText={value => changeText(value, 'password')}
-      />
+      <View style={styles.form}>
 
-      <Input
-        placeholder="Şifre Tekrar"
-        secureTextEntry={true}
-        inputStyle={{ marginLeft: 5 }}
-        leftIcon={<Icon name="md-lock" size={24} color="black" />}
-        onChangeText={value => changeText(value, 'rePassword')}
-      />
+        <Input
+          placeholder="Şifre"
+          secureTextEntry={true}
+          textContentType="password"
+          inputStyle={{ marginLeft: 5 }}
+          containerStyle={{ paddingBottom: 15 }}
+          leftIcon={<Icon name="md-lock" size={24} color="black" />}
+          onChangeText={value => changeText(value, 'password')}
+        />
 
-      <Button containerStyle={styles.button} title="Devam et" onPress={() => continueSign()} />
+        <Input
+          placeholder="Şifre Tekrar"
+          secureTextEntry={true}
+          inputStyle={{ marginLeft: 5 }}
+          containerStyle={{ paddingBottom: 15 }}
+          leftIcon={<Icon name="md-lock" size={24} color="black" />}
+          onChangeText={value => changeText(value, 'rePassword')}
+        />
+
+        <Button containerStyle={styles.button} title="Devam et" onPress={() => continueSign2()} />
+      </View>
 
     </SafeAreaView>
   )
 }
 
-export default SignupScreen2
+mapStateToProps = state => {
+  return {
+    getUser: state.user
+  };
+};
+
+mapDispatchToProps = dispatch => {
+  return {
+    updateUser: user => dispatch(updateUser(user))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignupScreen2);

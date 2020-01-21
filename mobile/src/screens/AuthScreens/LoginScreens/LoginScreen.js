@@ -15,6 +15,8 @@ const LoginScreen = props => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [err, setErr] = useState(false);
+  const [errMessage, setErrMessage] = useState("")
+  const [disable, setDisable] = useState(false)
 
   changeText = (value, type) => {
     if (type === 'username') setUsername(value)
@@ -31,23 +33,28 @@ const LoginScreen = props => {
 
   login = async () => {
     try {
+      setDisable(true)
+      setErrMessage("")
+      setErr(false)
+
       validateUsername = validateRegex(usernameRegex, username)
       validatePassword = validateRegex(passwordRegex, password)
 
       if (validateUsername && validatePassword) {
-        setErr(false)
         let result = await postWithoutToken('login', { username, password })
 
         if (!result.err) {
           await storeUserStorage(username)
           await storeTokenStorage(result.user.token)
           //REDUX EKLE
+          setDisable(false)
           props.navigation.navigate("Main")
 
-        } else throw new Error()
-      } else throw new Error()
+        } else throw new Error("Yanlış kullanıcı adı veya şifre girdiniz.")
+      } else throw new Error("Girdiğiniz bilgiler uygun değildir.")
     } catch (err) {
-      console.log(err)
+      setDisable(false)
+      setErrMessage(err.message)
       setErr(true)
     }
   }
@@ -58,8 +65,8 @@ const LoginScreen = props => {
 
       <View style={{ display: err ? "flex" : "none" }}>
         <Text style={{ color: "red" }}>
-          Kullanıcı adı veya şifreniz yanlıştır.
-          </Text>
+          {errMessage}
+        </Text>
       </View>
 
       <View style={styles.form}>
@@ -88,9 +95,9 @@ const LoginScreen = props => {
       </View>
       <View style={styles.link}>
 
-        <Button title="Şifremi unuttum ?" type="clear" onPress={() => goForgetScreen()} />
+        <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} title="Şifremi unuttum ?" type="clear" onPress={() => goForgetScreen()} />
 
-        <Button title="Kayıt Ol" type="clear" onPress={() => goSignupScreen()} />
+        <Button disabled={disable} disabledTitleStyle={{ opacity: 0.8 }} title="Kayıt Ol" type="clear" onPress={() => goSignupScreen()} />
 
       </View>
 

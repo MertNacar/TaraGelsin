@@ -3,7 +3,11 @@ import { View, SafeAreaView } from 'react-native'
 import { Input, Text, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { validateRegex, phoneRegex } from '../../../regex/regex'
-import styles from './style'
+import styles from './style3'
+import { updateUser } from '../../../store/user/actionCreator'
+import * as Http from '../../../utils/httpHelper'
+import { connect } from 'react-redux'
+
 const SignupScreen3 = props => {
   const [phone, setPhone] = useState("")
   const [err, setErr] = useState("")
@@ -16,12 +20,21 @@ const SignupScreen3 = props => {
 
   }
 
-  signUp = () => {
-    //get redux user
-    //addition phone redux
-    //post request 
-    //create token
-    props.navigation.navigate("Initial")
+  signUp = async () => {
+    try {
+
+      let user = Object.assign({}, props.getUser, { phone })
+      user.deviceID = "STATIC DEVICEID"
+      let res = Http.postWithoutToken('signup', user)
+      if (res.err) throw new Error()
+      else {
+        Object.assign(user, res.user)
+        props.updateUser(user)
+        props.navigation.navigate("Main")
+      }
+    } catch {
+
+    }
   }
 
   return (
@@ -42,10 +55,22 @@ const SignupScreen3 = props => {
         onChangeText={value => changeNumber(value)}
       />
 
-      <Button containerStyle={styles.button} title="Devam et" onPress={() => continueSign()} />
+      <Button containerStyle={styles.button} title="Kayıt Ol" onPress={() => signUp()} />
 
     </SafeAreaView>
   )
 }
 
-export default SignupScreen3
+mapStateToProps = state => {
+  return {
+    getUser: state.user
+  };
+};
+
+mapDispatchToProps = dispatch => {
+  return {
+    updateUser: user => dispatch(updateUser(user))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignupScreen3);

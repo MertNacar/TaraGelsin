@@ -3,33 +3,25 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop:"10%",
-    justifyContent:"center",
-    alignItems:"center"
+    paddingTop: "10%",
+    justifyContent: "center",
+    alignItems: "center"
   },
   form: {
-    flex:2,
+    flex: 2,
     width: "70%",
-    justifyContent:"flex-start",
-    alignItems:"center"
+    justifyContent: "flex-start",
+    alignItems: "center"
   },
 
-  inputs:{
-    flex:6,
-    width:"100%",
-    justifyContent:"space-evenly",
-    alignItems:"center"
-  },
-
-  switch:{
-    flex:3,
-    flexDirection:"row",
-    justifyContent:"space-evenly",
-    alignItems:"center"
-  },
   link: {
     flex: 3,
-    justifyContent:"flex-start"
+    justifyContent: "flex-start"
+  },
+  button: {
+    marginTop: "10%",
+    alignSelf: "center",
+    width: "50%"
   }
 })
 export default styles 
