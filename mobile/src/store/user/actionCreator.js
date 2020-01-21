@@ -13,4 +13,19 @@ const removeUser = () => {
   };
 };
 
-export { updateUser, removeUser };
+const successUser = data => {
+  return {
+    type: actions.USER_SUCCEEDED,
+    data
+  };
+};
+
+const failUser = error => {
+  return {
+    type: actions.USER_FAILED,
+    error
+  };
+};
+
+
+export { updateUser, removeUser, successUser, failUser };

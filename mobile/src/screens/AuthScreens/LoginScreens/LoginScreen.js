@@ -7,6 +7,7 @@ import { storeTokenStorage, storeUserStorage } from '../../../AsyncStorage'
 import { postWithoutToken } from '../../../utils/httpHelper'
 //import { UserContext } from '../../../store/user/context'
 //import { updateUser } from '../../../store/user/actionCreator'
+
 import styles from './style'
 
 const LoginScreen = props => {
@@ -40,6 +41,7 @@ const LoginScreen = props => {
         if (!result.err) {
           await storeUserStorage(username)
           await storeTokenStorage(result.user.token)
+          //REDUX EKLE
           props.navigation.navigate("Main")
 
         } else throw new Error()

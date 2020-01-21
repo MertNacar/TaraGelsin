@@ -6,18 +6,40 @@ import { validateRegex, nameRegex, usernameRegex } from '../../../regex/regex'
 import styles from './style'
 const SignupScreen = props => {
 
-  const [checkInformations, setCheckInformations] = useState(false);
-  const [checkConditions, setCheckConditions] = useState(false);
+  const [informations, setInformations] = useState(false);
+  const [conditions, setConditions] = useState(false);
   const [user, setUser] = useState({ username: "", firstname: "", surname: "" });
+  const [err, setErr] = useState(false)
 
   changeText = (value, type) => {
-    let newUser = Object.assign({}, ...user, { [type]: value })
+    let newUser = Object.assign({}, user, { [type]: value })
     setUser(newUser)
   };
 
-  
-  continueSign = () => {
-    props.navigation.navigate("Signup2")
+  changeInformation = () => {
+    setInformations(!informations)
+  };
+
+  changeCondition = () => {
+    setConditions(!conditions)
+  };
+
+
+  continueSign = async () => {
+    userValidation = validateRegex(usernameRegex, user.username)
+    firstValidation = validateRegex(nameRegex, user.firstname)
+    surValidation = validateRegex(nameRegex, user.surname)
+    console.log("user",user)
+    console.log("cond",conditions)
+    console.log("info",informations)
+    console.log("err",user)
+    if (userValidation && firstValidation && surValidation && conditions && informations) {
+      setErr(false)
+      //redux user ekleme
+      props.navigation.navigate("Signup2")
+    } else {
+      setErr(true)
+    }
   };
 
   goLoginScreen = () => {
@@ -29,10 +51,15 @@ const SignupScreen = props => {
 
       <Text h3>SignupScreen</Text>
 
+      <View style={{ display: err ? "flex" : "none" }}>
+        <Text style={{ color: "red" }}>
+          Bilgilerinizi kontrol ediniz.
+          </Text>
+      </View>
+
       <View style={styles.form}>
 
         <View style={styles.row}>
-
           <Input
             placeholder="İsim"
             textContentType="name"
@@ -48,7 +75,6 @@ const SignupScreen = props => {
             inputStyle={{ marginLeft: 5 }}
             onChangeText={value => changeText(value, 'surname')}
           />
-
         </View>
 
 
@@ -67,7 +93,8 @@ const SignupScreen = props => {
             textStyle={{ width: "90%" }}
             checkedIcon={<Icon name="md-checkbox" size={24} color="black" />}
             uncheckedIcon={<Icon name="md-checkbox-outline" size={24} color="black" />}
-            checked={checkConditions}
+            checked={conditions}
+            onPress={() => changeCondition()}
           />
 
           <CheckBox
@@ -76,7 +103,8 @@ const SignupScreen = props => {
             textStyle={{ width: "90%" }}
             checkedIcon={<Icon name="md-checkbox" size={24} color="black" />}
             uncheckedIcon={<Icon name="md-checkbox-outline" size={24} color="black" />}
-            checked={checkInformations}
+            checked={informations}
+            onPress={() => changeInformation()}
           />
 
           <Button containerStyle={styles.button} title="Devam et" onPress={() => continueSign()} />
