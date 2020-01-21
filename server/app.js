@@ -17,6 +17,8 @@ app.use(
 );
 
 app.use(`/${process.env.API}/login`, auth.login)
+app.use(`/${process.env.API}/signup`, auth.signup)
+app.use(`/${process.env.API}/forget`, auth.forget)
 
 app.get("/test", async (req, res) => {
   try {
