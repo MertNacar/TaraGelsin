@@ -1,5 +1,6 @@
 module.exports = {
   "assets": [
-   "fonts"
+   "fonts",
+   "images"
   ]
 }
