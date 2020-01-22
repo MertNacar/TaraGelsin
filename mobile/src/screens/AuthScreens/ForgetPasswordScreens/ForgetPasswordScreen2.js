@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { View, SafeAreaView } from 'react-native'
 import { CheckBox, Input, Text, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { validateRegex, phoneRegex, usernameRegex } from '../../../regex/regex'
+import { validateRegex, passwordRegex } from '../../../regex/regex'
 import styles from './style2'
 import { updateUser } from '../../../store/user/actionCreator'
 import { connect } from 'react-redux'
 import * as Http from '../../../utils/httpHelper'
 
-const ForgetPasswordScreen2 = () => {
+const ForgetPasswordScreen2 = props => {
 
   const [passwords, setPasswords] = useState({ password: "", rePassword: "" })
   const [err, setErr] = useState(false)
@@ -37,12 +37,12 @@ const ForgetPasswordScreen2 = () => {
         passValidation = validateRegex(passwordRegex, passwords.password)
 
         if (passValidation) {
-          let user = { username: props.getUser.username, password: password }
+          let user = { username: props.getUser.username, password: passwords.password }
           let changingPassword = await Http.postWithoutToken("forget/changePassword", user)
 
           if (!changingPassword.err) {
             setDisable(false)
-            props.navigation.popToTop()
+            props.navigation.navigate("Login")
 
           } else throw new Error("Şifreyi değiştirirken bir hatayla karşılaştık tekrar deneyiniz.")
 
@@ -86,15 +86,13 @@ const ForgetPasswordScreen2 = () => {
           onChangeText={value => changeText(value, 'rePassword')}
         />
 
-        <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} containerStyle={styles.button} title="Şifreni Al" onPress={() => takeBackPassword()} />
-
-        <Button disabled={disable} disabledTitleStyle={{ opacity: 0.8 }} type="clear" containerStyle={styles.buttonClear} title="Şifren aklınamı geldi ?" onPress={() => goLoginScreen()} />
+        <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} containerStyle={styles.button} title="Şifreni Al" onPress={() => getNewPassword()} />
 
       </View>
 
     </SafeAreaView>
   )
-}
+} 
 
 mapStateToProps = state => {
   return {

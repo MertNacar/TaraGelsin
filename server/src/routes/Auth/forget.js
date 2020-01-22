@@ -32,18 +32,16 @@ router.post("/changePassword", async (req, res) => {
   try {
     let user = req.body.data;
     let data = await models.Users.findOne({
-      attributes: ["username"],
+      attributes: ["userID"],
       where: {
         username: user.username,
       }
     });
     if (data !== null) {
-      let hashPassword = await hashPassword(user.password)
-      data.password = hashPassword;
-      await data.save();
+      let hash = await hashPassword(user.password)
+      await data.update({ password: hash }, { where: { userID: data.userID } });
       res.json({ err: false });
-    }
-    else res.json({ err: true });
+    } else throw new Error()
   } catch {
     res.json({ err: true });
   }

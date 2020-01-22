@@ -47,11 +47,9 @@ router.post("/validateUsername", async (req, res) => {
         username
       }
     });
-    console.log(data)
     if (data === null) res.json({ err: false });
     else res.json({ err: true });
   } catch (err) {
-    console.log(err)
     res.json({ err: true });
   }
 });

@@ -10,7 +10,7 @@ import * as Http from '../../../utils/httpHelper'
 
 const ForgetPasswordScreen = props => {
 
-  const [user, setUser] = useState([{ username: "", phone: "" }])
+  const [user, setUser] = useState({ username: "", phone: "" })
   const [err, setErr] = useState(false)
   const [errMessage, setErrMessage] = useState("")
   const [disable, setDisable] = useState(false)
@@ -29,9 +29,9 @@ const ForgetPasswordScreen = props => {
       setDisable(true)
       setErrMessage("")
       setErr(false)
-
+      // phone validate düzenlenecek
       userValidation = validateRegex(usernameRegex, user.username)
-      phoneValidation = validateRegex(phoneRegex, user.phone)
+      phoneValidation = validateRegex(usernameRegex, user.phone)
 
       if (userValidation && phoneValidation) {
         let checkUser = await Http.postWithoutToken("forget/password", user)
@@ -76,7 +76,7 @@ const ForgetPasswordScreen = props => {
           containerStyle={{ paddingBottom: 15 }}
           inputStyle={{ marginLeft: 5 }}
           leftIcon={<Icon name="md-call" size={24} color="black" />}
-          onChangeText={value => changeText(value, 'username')}
+          onChangeText={value => changeText(value, 'phone')}
         />
 
         <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} containerStyle={styles.button} title="Şifreni Al" onPress={() => goForgetScreen2()} />
