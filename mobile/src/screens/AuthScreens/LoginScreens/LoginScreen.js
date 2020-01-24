@@ -5,9 +5,8 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import { validateRegex, usernameRegex, passwordRegex } from '../../../regex/regex'
 import { storeTokenStorage, storeUserStorage } from '../../../AsyncStorage'
 import { postWithoutToken } from '../../../utils/httpHelper'
-//import { UserContext } from '../../../store/user/context'
-//import { updateUser } from '../../../store/user/actionCreator'
-
+import { updateUser } from '../../../store/user/actionCreator'
+import {connect} from 'react-redux'
 import styles from './style'
 
 const LoginScreen = props => {
@@ -46,7 +45,7 @@ const LoginScreen = props => {
         if (!result.err) {
           await storeUserStorage(username)
           await storeTokenStorage(result.user.token)
-          //REDUX EKLE
+          props.updateUser(result.user)
           setDisable(false)
           props.navigation.navigate("Main")
 
@@ -105,4 +104,11 @@ const LoginScreen = props => {
   );
 };
 
-export default LoginScreen;
+
+mapDispatchToProps = dispatch => {
+  return {
+    updateUser: user => dispatch(updateUser(user))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(LoginScreen);

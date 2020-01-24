@@ -7,9 +7,8 @@ import styles from './style'
 import { COLOR_PRIMARY } from '../../constStyle/constStyle'
 import { getTokenStorage, getUserStorage } from "../../AsyncStorage/index";
 import { post } from '../../utils/httpHelper'
-//import { UserContext } from '../../store/user/context'
-//import { updateUser } from '../../store/user/actionCreator'
-//import UserProvider from '../../store/user/context';
+import { updateUser } from '../../store/user/actionCreator'
+import { connect } from 'react-redux'
 
 const InitialScreen = props => {
 
@@ -24,6 +23,7 @@ const InitialScreen = props => {
 
         if (result.err) throw new Error()
         else {
+          props.updateUser(result.user)
           props.navigation.navigate("Main")
         }
       }
@@ -43,5 +43,11 @@ const InitialScreen = props => {
   )
 }
 
-export default InitialScreen;
+mapDispatchToProps = dispatch => {
+  return {
+    updateUser: user => dispatch(updateUser(user))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(InitialScreen);
 

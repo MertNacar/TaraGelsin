@@ -7,6 +7,7 @@ import styles from './style3'
 import { updateUser } from '../../../store/user/actionCreator'
 import * as Http from '../../../utils/httpHelper'
 import { connect } from 'react-redux'
+import { storeUserStorage, storeTokenStorage } from '../../../AsyncStorage/index'
 
 const SignupScreen3 = props => {
   const [phone, setPhone] = useState("")
@@ -28,6 +29,8 @@ const SignupScreen3 = props => {
       let res = Http.postWithoutToken('signup', user)
       if (res.err) throw new Error()
       else {
+        await storeUserStorage(res.user.username)
+        await storeTokenStorage(res.user.token)
         Object.assign(user, res.user)
         props.updateUser(user)
         props.navigation.navigate("Main")

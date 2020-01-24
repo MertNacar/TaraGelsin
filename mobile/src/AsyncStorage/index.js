@@ -11,6 +11,9 @@ export const getTokenStorage = async () => {
   }
 };
 
+/**
+ * @param {JsonWebKey} token - UserToken
+ */
 export const storeTokenStorage = async token => {
   try {
     await AsyncStorage.setItem("tokenJWT", token);
@@ -40,6 +43,9 @@ export const getUserStorage = async () => {
   }
 };
 
+/**
+ * @param {string} username - UserToken
+ */
 export const storeUserStorage = async username => {
   try {
     await AsyncStorage.setItem("username", username);
