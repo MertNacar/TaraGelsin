@@ -22,7 +22,7 @@ router.post("/password", async (req, res) => {
       }
     });
     if (data !== null) res.json({ err: false, user: data });
-    else res.json({ err: true });
+    else throw new Error()
   } catch {
     res.json({ err: true });
   }

@@ -4,7 +4,7 @@ import ProfileStack from './ProfileScreens/ProfileStack'
 import QrStack from './QrScreens/QrStack'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-export default createBottomTabNavigator({
+const MainNavigator = createBottomTabNavigator({
   Qr: {
     screen: QrStack,
     navigationOptions: {
@@ -29,8 +29,21 @@ export default createBottomTabNavigator({
     tabBarVisible: true
   },
   tabBarOptions: {
-    showLabel:false,
+    showLabel: false,
     activeTintColor: "blue",
     inactiveTintColor: "gray"
   }
 });
+
+QrStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible,
+  };
+};
+
+export default MainNavigator

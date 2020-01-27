@@ -11,39 +11,32 @@ var express = require("express");
 var router = express.Router();
 
 //validate for inputs
-router.post("/password", async (req, res) => {
+router.get("/scan", async (req, res) => {
   try {
-    let user = req.body.data;
-    let data = await models.Users.findOne({
-      attributes: ["userID", "gender", "taraPoint", "username", "fullname", "phone", "deviceID", "email", "birthday"],
-      where: {
-        username: user.username,
-        phone: user.phone
-      }
-    });
-    if (data !== null) res.json({ err: false, user: data });
-    else res.json({ err: true });
-  } catch {
-    res.json({ err: true });
-  }
-});
+    let qrCode = req.query.qrCode.split("/");
 
-router.post("/changePassword", async (req, res) => {
-  try {
-    let user = req.body.data;
-    let data = await models.Users.findOne({
-      attributes: ["userID"],
+    let data = await models.Cafes.findOne({
+      attributes: ["cafeID", "cafeName", "cafePoint", "cafeDescription", "cafeImagePath"],
       where: {
-        username: user.username,
-      }
+        cafeID: qrCode[0]
+      },
+      include: [{
+        required: true,
+        model: models.Tables,
+        attributes: ["tableName"],
+        where: {
+          tableID: qrCode[1]
+        },
+      }]
     });
     if (data !== null) {
-      let hash = await hashPassword(user.password)
-      await data.update({ password: hash }, { where: { userID: data.userID } });
-      res.json({ err: false });
+      delete data.dataValues.tblTables
+      let cafe = { ...data.dataValues, tableName: data.tblTables[0].tableName }
+      res.json({ err: false, cafe });
+      
     } else throw new Error()
-  } catch {
-    res.json({ err: true });
+  } catch (err) {
+    res.json({ err: true, mess: err.message });
   }
 });
 

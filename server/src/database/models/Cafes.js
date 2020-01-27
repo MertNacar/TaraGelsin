@@ -41,6 +41,10 @@ const Cafes = db.define(
       allowNull: false
     },
 
+    cafeDescription: {
+      type: Sequelize.STRING(120),
+    },
+
     cafeImagePath: {
       type: Sequelize.STRING,
       allowNull: false

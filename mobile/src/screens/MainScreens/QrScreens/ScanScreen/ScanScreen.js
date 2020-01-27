@@ -9,29 +9,24 @@ import { updateCategory } from '../../../../store/category/actionCreator'
 import { connect } from 'react-redux'
 const ScanScreen = props => {
   onSuccess = async (e) => {
-    /* try {
-       let qrCodeString = "04b304c9-3298-4d29-94dd-aeae409b8aa3/6c6b11f8-1cf5-497d-aaff-b513558338b1/1".split("/")
-       let request = { cafeID: qrCodeString[0], tableID: qrCodeString[1], cityID: qrCodeString[2] }
-       let res = await Http.post("main/qrCode/scan", request, props.getUser.token)
- 
-       if (!res.err) {
-         props.updateCafe(res.cafe)
-         props.updateCategory(res.category)
-        
-       } else throw new Error()
-     } catch{
- 
-     }*/
-    props.navigation.navigate("Shop")
-  }
+    try {
+      let qrCodeString = "04b304c9-3298-4d29-94dd-aeae409b8aa3/6c6b11f8-1cf5-497d-aaff-b513558338b1" // QR CODE string yakala
+      let res = await Http.get(`main/qrCode/scan?qrCode=${qrCodeString}`, props.getUser.token)
 
-  backQrScreen = () => {
-    props.navigation.goBack()
+      if (!res.err) {
+        props.updateCafe(res.cafe)
+        props.navigation.navigate("Shop")
+      } else throw new Error()
+    } catch{
+      // Kullanıcıya Hata Göster
+      props.navigation.goBack()
+    }
   }
-
+  
   return (
     <QRCodeScanner
       onRead={onSuccess}
+      cameraType="back"
       cameraStyle={{ overflow: "hidden" }}
       topContent={
         <Text style={styles.qrCodeText}>

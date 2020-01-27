@@ -48,7 +48,7 @@ router.post("/validateUsername", async (req, res) => {
       }
     });
     if (data === null) res.json({ err: false });
-    else res.json({ err: true });
+    else throw new Error()
   } catch (err) {
     res.json({ err: true });
   }
@@ -66,7 +66,7 @@ router.post("/validateEmail", async (req, res) => {
     });
 
     if (data === null) res.json({ err: false });
-    else res.json({ err: true });
+    else throw new Error()
   } catch {
     res.json({ err: true });
   }
@@ -83,7 +83,7 @@ router.post("/validatePhone", async (req, res) => {
     });
 
     if (data === null) res.json({ err: false });
-    else res.json({ err: true });
+    else throw new Error()
   } catch {
     res.json({ err: true });
   }
