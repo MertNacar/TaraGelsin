@@ -12,7 +12,7 @@ var router = express.Router();
 
 
 //SIGNUP
-router.post("/", async (req, res) => {
+router.post("", async (req, res) => {
   try {
     let user = req.body.data;
     var token = jwt.createToken(user.username);

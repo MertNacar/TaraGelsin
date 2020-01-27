@@ -1,5 +1,5 @@
 import { createStackNavigator } from 'react-navigation-stack'
-import ProfileScreen from './ProfileScreen'
+import ProfileScreen from './ProfileScreen/ProfileScreen'
 import ProfileUpdateScreen from './ProfileUpdateScreen/ProfileUpdateScreen'
 import CredCardScreen from './CredCardScreen/CredCardScreen'
 import AddCredCardScreen from './CredCardScreen/AddCredCardScreen/AddCredCardScreen'
@@ -9,4 +9,7 @@ export default createStackNavigator({
   UpdateProfile: ProfileUpdateScreen,
   CredCard: CredCardScreen,
   AddCredCard: AddCredCardScreen
-});
+},
+  {
+    initialRouteName: "Profile"
+  });

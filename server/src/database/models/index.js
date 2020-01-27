@@ -14,6 +14,9 @@ import Countries from './Countries'
 import PaymentMethods from './PaymentMethods'
 import Subscriptions from './Subscriptions'
 import OrderDetailExtras from './OrderDetailExtras'
+import CafeTables from './CafeTables'
+import FoodExtras from './FoodExtras'
+import FoodIngredients from './FoodIngredients'
 
 const models = {
   Users,
@@ -31,7 +34,10 @@ const models = {
   Countries,
   PaymentMethods,
   Subscriptions,
-  OrderDetailExtras
+  OrderDetailExtras,
+  CafeTables,
+  FoodExtras,
+  FoodIngredients
 }
 
 export default models

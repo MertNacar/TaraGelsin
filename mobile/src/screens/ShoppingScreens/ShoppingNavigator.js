@@ -4,13 +4,14 @@ import CafeScreen from './CafeScreen/CafeScreen'
 import CartStack from './CartScreens/CartStack'
 import MenuStack from './MenuScreens/MenuStack'
 import WaiterScreen from './WaiterScreens/WaiterScreen'
-import Icon from 'react-native-vector-icons/FontAwesome5'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 export default createBottomTabNavigator({
   Menu: {
-    screen: MenuStack, navigationOptions: {
+    screen: MenuStack,
+    navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <Icon name='home' color={tintColor} size={24} />
+        <Icon name='md-book' color={tintColor} size={30} />
       )
 
     }
@@ -19,7 +20,7 @@ export default createBottomTabNavigator({
     screen: CafeScreen,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <Icon name='user' color={tintColor} size={24} />
+        <Icon name='md-home' color={tintColor} size={30} />
       )
     }
   },
@@ -27,7 +28,7 @@ export default createBottomTabNavigator({
     screen: WaiterScreen,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <Icon name='user' color={tintColor} size={24} />
+        <Icon name='md-notifications' color={tintColor} size={30} />
       )
     }
   }
@@ -36,17 +37,18 @@ export default createBottomTabNavigator({
     screen: CartStack,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <Icon name='user' color={tintColor} size={24} />
+        <Icon name='md-cart' color={tintColor} size={30} />
       )
     }
   }
 }, {
   initialRouteName: 'Menu',
-  order: ['Menu', 'Cafe', "Waiter", "Profile"],
+  order: ['Menu', 'Cafe', "Waiter", "Cart"],
   navigationOptions: {
     tabBarVisible: true
   },
   tabBarOptions: {
+    showLabel: false,
     activeTintColor: "blue",
     inactiveTintColor: "gray"
   }

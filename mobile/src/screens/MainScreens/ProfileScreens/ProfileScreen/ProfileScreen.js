@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text } from 'react-native'
 import { Button } from 'react-native-elements'
-import { removeTokenStorage, removeUserStorage } from '../../../AsyncStorage/index'
-import { removeUser } from '../../../store/user/actionCreator'
+import { removeTokenStorage, removeUserStorage } from '../../../../AsyncStorage/index'
+import { removeUser } from '../../../../store/user/actionCreator'
 import { connect } from 'react-redux'
 const ProfileScreen = props => {
 

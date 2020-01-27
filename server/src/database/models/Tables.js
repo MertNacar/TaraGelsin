@@ -1,6 +1,5 @@
 import db from "../connection"
 import Sequelize from "sequelize"
-import Cafes from './Cafes'
 
 const Tables = db.define(
   "tblTables",
@@ -15,20 +14,8 @@ const Tables = db.define(
       type: Sequelize.STRING,
       allowNull: false
     },
-
-    qrCodeImagePath: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-
-    qrCodeImageString: {
-      type: Sequelize.STRING,
-      allowNull: false
-    }
-  }
+  },
+  { timestamps: false }
 );
-
-Cafes.hasMany(Tables, { foreignKey: 'cafeID' });
-Tables.belongsTo(Cafes, { foreignKey: 'cafeID' });
 
 export default Tables

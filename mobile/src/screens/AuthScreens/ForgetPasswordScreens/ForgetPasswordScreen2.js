@@ -38,7 +38,7 @@ const ForgetPasswordScreen2 = props => {
 
         if (passValidation) {
           let user = { username: props.getUser.username, password: passwords.password }
-          let changingPassword = await Http.postWithoutToken("forget/changePassword", user)
+          let changingPassword = await Http.postWithoutToken("auth/forget/changePassword", user)
 
           if (!changingPassword.err) {
             setDisable(false)

@@ -6,7 +6,7 @@ import {
 import styles from './style'
 import { COLOR_PRIMARY } from '../../constStyle/constStyle'
 import { getTokenStorage, getUserStorage } from "../../AsyncStorage/index";
-import { post } from '../../utils/httpHelper'
+import * as Http from '../../utils/httpHelper'
 import { updateUser } from '../../store/user/actionCreator'
 import { connect } from 'react-redux'
 
@@ -19,7 +19,7 @@ const InitialScreen = props => {
       if (token.err) throw new Error()
       else {
         let username = await getUserStorage()
-        let result = await post("login/immediately", username.value, token.value)
+        let result = await Http.post("auth/login/immediately", username.value, token.value)
 
         if (result.err) throw new Error()
         else {

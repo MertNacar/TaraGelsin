@@ -28,7 +28,7 @@ const OrderDetails = db.define(
   }
 );
 
-Orders.belongsToMany(Foods, { through: "tblOrderDetails", foreignKey: 'orderID', otherKey: 'foodID' });
-Foods.belongsToMany(Orders, { through: "tblOrderDetails", foreignKey: 'foodID', otherKey: 'orderID' });
+Orders.belongsToMany(Foods, { through: OrderDetails, foreignKey: 'orderID', otherKey: 'foodID' });
+Foods.belongsToMany(Orders, { through: OrderDetails, foreignKey: 'foodID', otherKey: 'orderID' });
 
 export default OrderDetails

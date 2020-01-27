@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import { View, SafeAreaView, Text, ImageBackground, Image } from 'react-native'
 import { Button } from 'react-native-elements'
-import QrBackground from '../../../assets/images/QrCodebackground.png'
-import QrCode from '../../../assets/images/QR-Code.png'
+import QrBackground from '../../../../assets/images/QrCodebackground.png'
+import QrCode from '../../../../assets/images/QR-Code.png'
 import styles from './style'
-import { updateUser } from '../../../store/user/actionCreator'
 import { connect } from 'react-redux'
 
 const QrScreen = props => {
   scanQrCode = () => {
-
+    props.navigation.navigate("Scan")
   }
 
   return (
@@ -21,7 +20,7 @@ const QrScreen = props => {
         <Button containerStyle={styles.buttonContainer} buttonStyle={styles.button} title="Tara Gelsin" onPress={() => scanQrCode()} />
       </ImageBackground>
     </SafeAreaView>
-  )
+  ) 
 }
 
 mapStateToProps = state => {
@@ -30,12 +29,5 @@ mapStateToProps = state => {
   };
 };
 
-mapDispatchToProps = dispatch => {
-  return {
-    updateUser: user => dispatch(updateUser(user)),
-    //updateRestaurant: restaurant() => dispatch(updateRestaurant(restaurant))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(QrScreen);
+export default connect(mapStateToProps)(QrScreen);
 

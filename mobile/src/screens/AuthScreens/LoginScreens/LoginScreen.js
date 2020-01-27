@@ -4,7 +4,7 @@ import { Button, Text, Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { validateRegex, usernameRegex, passwordRegex } from '../../../regex/regex'
 import { storeTokenStorage, storeUserStorage } from '../../../AsyncStorage'
-import { postWithoutToken } from '../../../utils/httpHelper'
+import * as Http from '../../../utils/httpHelper'
 import { updateUser } from '../../../store/user/actionCreator'
 import {connect} from 'react-redux'
 import styles from './style'
@@ -40,7 +40,7 @@ const LoginScreen = props => {
       validatePassword = validateRegex(passwordRegex, password)
 
       if (validateUsername && validatePassword) {
-        let result = await postWithoutToken('login', { username, password })
+        let result = await Http.postWithoutToken('auth/login', { username, password })
 
         if (!result.err) {
           await storeUserStorage(username)

@@ -1,7 +1,7 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 import Users from './Users'
-import Tables from './Tables'
+import Cafes from './Cafes'
 import PaymentMethods from './PaymentMethods'
 
 const Orders = db.define(
@@ -47,8 +47,8 @@ const Orders = db.define(
 Users.hasMany(Orders, { foreignKey: 'userID', allowNull: false });
 Orders.belongsTo(Users, { foreignKey: 'userID', allowNull: false });
 
-Tables.hasMany(Orders, { foreignKey: 'tableID', allowNull: false });
-Orders.belongsTo(Tables, { foreignKey: 'tableID', allowNull: false });
+Cafes.hasMany(Orders, { foreignKey: 'cafeID', allowNull: false });
+Orders.belongsTo(Cafes, { foreignKey: 'cafeID', allowNull: false });
 
 PaymentMethods.hasMany(Orders, { foreignKey: 'methodID', allowNull: false });
 Orders.belongsTo(PaymentMethods, { foreignKey: 'methodID', allowNull: false });

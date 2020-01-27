@@ -4,7 +4,12 @@ import PaymentScreen from './PaymentScreens/PaymentScreen'
 import ChoosePaymentScreen from './ChoosePaymentScreen/ChoosePaymentScreen'
 
 export default createStackNavigator({
-  Cart: CartScreen,
+  Cart: {
+    screen: CartScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
   ChoosePayment: ChoosePaymentScreen,
   Payment: PaymentScreen,
 });

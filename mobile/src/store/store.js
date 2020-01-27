@@ -3,11 +3,13 @@ import createSagaMiddleware from 'redux-saga'
 import { userReducer } from "./user/reducer";
 import { foodReducer } from "./food/reducer";
 import { categoryReducer } from "./category/reducer";
+import { cafeReducer } from "./cafe/reducer";
 import { logger } from 'redux-logger'
 import rootSaga from './index'
 
 const rootReducer = combineReducers({
   user: userReducer,
+  cafe: cafeReducer,
   categories: categoryReducer,
   foods: foodReducer
 });

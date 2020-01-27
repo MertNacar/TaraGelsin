@@ -34,7 +34,7 @@ const ForgetPasswordScreen = props => {
       phoneValidation = validateRegex(usernameRegex, user.phone)
 
       if (userValidation && phoneValidation) {
-        let checkUser = await Http.postWithoutToken("forget/password", user)
+        let checkUser = await Http.postWithoutToken("auth/forget/password", user)
 
         if (checkUser.err) throw new Error("Böyle bir kullanıcı adı kullanılmamaktadır.")
         else {

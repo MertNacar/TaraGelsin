@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import models from "./src/database/models/index";
 import morgan from "morgan";
 import auth from "./src/routes/Auth/index"
+import main from "./src/routes/Main/index";
 
 const app = express();
 
@@ -16,9 +17,11 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms")
 );
 
-app.use(`/${process.env.API}/login`, auth.login)
-app.use(`/${process.env.API}/signup`, auth.signup)
-app.use(`/${process.env.API}/forget`, auth.forget)
+app.use(`/${process.env.API}/auth/login`, auth.login)
+app.use(`/${process.env.API}/auth/signup`, auth.signup)
+app.use(`/${process.env.API}/auth/forget`, auth.forget)
+app.use(`/${process.env.API}/main/profile`, main.profile)
+app.use(`/${process.env.API}/main/qrCode`, main.qrCode)
 
 app.get("/test", async (req, res) => {
   try {
@@ -38,8 +41,10 @@ app.get("/test", async (req, res) => {
     let Cities = await models.Cities.findAll();
     let CafeOwners = await models.CafeOwners.findAll();
     let OrderDetailExtras = await models.OrderDetailExtras.findAll();
-    let FoodExtras = await db.query(`SELECT * FROM "tblFoodExtras"`);
-    let FoodIngredients = await db.query(`SELECT * FROM "tblFoodIngredients"`);
+    let CafeTables = await models.CafeTables.findAll();
+    let FoodExtras = await models.FoodExtras.findAll();
+    let FoodIngredients = await models.FoodIngredients.findAll();
+
     res.send({
       err: false,
       Cafes,
@@ -58,6 +63,7 @@ app.get("/test", async (req, res) => {
       Cities,
       CafeOwners,
       OrderDetailExtras,
+      CafeTables,
       FoodExtras,
       FoodIngredients
     });

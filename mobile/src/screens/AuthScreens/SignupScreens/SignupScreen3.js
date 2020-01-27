@@ -26,7 +26,7 @@ const SignupScreen3 = props => {
 
       let user = Object.assign({}, props.getUser, { phone })
       user.deviceID = "STATIC DEVICEID"
-      let res = Http.postWithoutToken('signup', user)
+      let res = Http.postWithoutToken('auth/signup', user)
       if (res.err) throw new Error()
       else {
         await storeUserStorage(res.user.username)

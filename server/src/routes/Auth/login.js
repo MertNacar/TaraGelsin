@@ -45,7 +45,7 @@ router.post("/immediately", async (req, res) => {
 });
 
 //login validate with form
-router.post("/", async (req, res) => {
+router.post("", async (req, res) => {
   try {
     let { username, password } = req.body.data;
     let data = await models.Users.findOne({
@@ -64,18 +64,15 @@ router.post("/", async (req, res) => {
         username
       }
     });
-    console.log(data)
     if (data === null) throw new Error();
     else {
       let confirm = await verifyPassword(password, data.password);
       if (confirm) {
         let token = jwt.createToken(data.username);
         let user = data.dataValues;
-        //user.city = data.tblCities ? data.tblCities.city : "";
         user.token = token;
         user.loginDate = Date(Date.now()).toString();
         delete user.password;
-        delete user.tblCity;
         res.json({ err: false, user });
       } else throw new Error();
     }

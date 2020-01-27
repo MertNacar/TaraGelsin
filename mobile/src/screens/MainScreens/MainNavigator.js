@@ -1,12 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import ProfileStack from './ProfileScreens/ProfileStack'
-import QrScreen from './QrScreens/QrScreen'
+import QrStack from './QrScreens/QrStack'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 export default createBottomTabNavigator({
   Qr: {
-    screen: QrScreen,
+    screen: QrStack,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
         <Icon name='md-qr-scanner' color={tintColor} size={24} />

@@ -5,15 +5,13 @@ import OrderDetails from './OrderDetails'
 
 const OrderDetailExtras = db.define(
   "tblOrderDetailExtras",
-  {
-
-  },
+  {},
   {
     timestamps: false
   }
 );
 
-Extras.belongsToMany(OrderDetails, { through: "tblOrderDetailExtras", foreignKey: 'extraID', otherKey: 'orderDetailID' });
-OrderDetails.belongsToMany(Extras, { through: "tblOrderDetailExtras", foreignKey: 'orderDetailID', otherKey: 'extraID' });
+Extras.belongsToMany(OrderDetails, { through: OrderDetailExtras, foreignKey: 'extraID', otherKey: 'orderDetailID' });
+OrderDetails.belongsToMany(Extras, { through: OrderDetailExtras, foreignKey: 'orderDetailID', otherKey: 'extraID' });
 
 export default OrderDetailExtras
