@@ -17,12 +17,12 @@ const ScanScreen = props => {
         props.updateCafe(res.cafe)
         props.navigation.navigate("Shop")
       } else throw new Error()
-    } catch{
+    } catch {
       // Kullanıcıya Hata Göster
       props.navigation.goBack()
     }
   }
-  
+
   return (
     <QRCodeScanner
       onRead={onSuccess}

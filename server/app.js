@@ -7,6 +7,7 @@ import models from "./src/database/models/index";
 import morgan from "morgan";
 import auth from "./src/routes/Auth/index"
 import main from "./src/routes/Main/index";
+import shop from "./src/routes/Shop/index";
 
 const app = express();
 
@@ -22,6 +23,10 @@ app.use(`/${process.env.API}/auth/signup`, auth.signup)
 app.use(`/${process.env.API}/auth/forget`, auth.forget)
 app.use(`/${process.env.API}/main/profile`, main.profile)
 app.use(`/${process.env.API}/main/qrCode`, main.qrCode)
+app.use(`/${process.env.API}/shop/menu`, shop.menu)
+app.use(`/${process.env.API}/shop/cafe`, shop.cafe)
+app.use(`/${process.env.API}/shop/waiter`, shop.waiter)
+app.use(`/${process.env.API}/shop/cart`, shop.cart)
 
 app.get("/test", async (req, res) => {
   try {
