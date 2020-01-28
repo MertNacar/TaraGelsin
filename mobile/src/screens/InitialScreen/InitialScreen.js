@@ -4,7 +4,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 import styles from './style'
-import { COLOR_PRIMARY } from '../../constStyle/constStyle'
+import { COLOR_PRIMARY } from '../../constStyle/colors'
 import { getTokenStorage, getUserStorage } from "../../AsyncStorage/index";
 import * as Http from '../../utils/httpHelper'
 import { updateUser } from '../../store/user/actionCreator'
