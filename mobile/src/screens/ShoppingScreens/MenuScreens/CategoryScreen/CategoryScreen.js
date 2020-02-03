@@ -30,9 +30,13 @@ const CategoryScreen = props => {
   }
 
   onRefresh = () => {
-    setLoading(true)
     props.removeCategories()
+    setLoading(true)
   };
+
+  goFood = (categoryID) => {
+    props.navigation.navigate("Foods", { categoryID })
+  }
 
   if (loading) {
     return (
@@ -51,7 +55,8 @@ const CategoryScreen = props => {
               categoryLink={item.categoryImagePath}
               categoryName={item.categoryName}
               categoryID={item.categoryID}
-              {...props} />
+              goFood={() => goFood(item.categoryID)}
+            />
           }
 
           keyExtractor={item => item.categoryID}

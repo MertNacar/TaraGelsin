@@ -4,21 +4,16 @@ import { Tile } from 'react-native-elements'
 import { PREFIX_IMAGEURL } from "react-native-dotenv";
 
 
-const CategoryCard = props => {
-
-  goFoods = () => {
-    console.log('props.categoryID', props.categoryID)
-    props.navigation.navigate("Foods", { categoryID: props.categoryID })
-  }
-
+const CategoryCard = (props) => {
   return (
     <View style={styles.cardContainer}>
       <Tile
+
         containerStyle={styles.tileContainer}
         imageSrc={{ uri: PREFIX_IMAGEURL + props.categoryLink }}
         featured
         title={props.categoryName}
-        onPress={() => goFoods()}
+        onPress={props.goFood}
       />
     </View>
   )

@@ -12,19 +12,15 @@ const FoodScreen = props => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    console.log('getParam', props.navigation.getParam("categoryID"))
-    console.log('props.getFoods', props.getFoods)
-    if (loading) {
+    if (loading && props.getFoods.length === 0) {
       getFoods()
-    }
-    return () => {
-      props.removeFoods()
     }
   }, [loading])
 
   getFoods = async () => {
     try {
-      categoryID = props.navigation.getParam("categoryID")
+
+      let categoryID = props.navigation.state.params.categoryID
       let res = await Http.get(`shop/menu/categories/foods?categoryID=${categoryID}`, props.getUser.token)
       if (!res.err) {
         props.updateFoods(res.foods)
@@ -36,9 +32,13 @@ const FoodScreen = props => {
   }
 
   onRefresh = () => {
-    setLoading(true)
     props.removeFoods()
+    setLoading(true)
   };
+
+  goFoodDetail = (foodID) => {
+    props.navigation.navigate("Foods", { foodID })
+  }
 
   if (loading) {
     return (
@@ -57,7 +57,8 @@ const FoodScreen = props => {
               foodLink={item.foodImagePath}
               foodName={item.foodName}
               foodID={item.foodID}
-              {...props} />
+              goFoodDetail={() => goFoodDetail(item.foodID)}
+            />
           }
           numColumns={2}
           keyExtractor={item => item.foodID}
