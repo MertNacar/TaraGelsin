@@ -1,0 +1,55 @@
+{
+  "Auth": {
+    "Login": {
+      "ErrorRegex": "Girdiğiniz bilgiler uygun değildir.",
+      "ErrorWrong": "Yanlış kullanıcı adı veya şifre girdiniz.",
+      "Username": "Kullanıcı Adı",
+      "Password": "Şifre",
+      "Title": "Giriş Yap",
+      "ForgetButton": "Şifremi unuttum ?",
+      "SignupButton": "Kayıt Ol"
+    },
+    "Signup": {
+      "ErrorRegex": "Girdiğiniz bilgiler uygun değildir.",
+      "ErrorUsername": "Girdiğiniz kullanıcı adı kullanılmaktadır.",
+      "Username": "Kullanıcı Adı",
+      "Firstname": "İsim",
+      "Surname": "Soyisim",
+      "TermCondition": "Kullanım Koşulları ve Şartlarını Okudum",
+      "DataCondition": "KVKK Verilerimin işlenmesini onaylıyorum.",
+      "ContinueButton": "Devam et",
+      "StillMember": "Zaten üye misin ?",
+      "ErrorPasswordMatch": "Girdiğiniz şifreler uyuşmamaktadır.",
+      "ErrorPasswordRegex": "Girdiğiniz şifre uygun değildir, lütfen başka bir şifre deneyiniz",
+      "Password": "Şifre",
+      "PasswordAgain": "Şifre Tekrar",
+      "SignupButton": "Kayıt Ol"
+    },
+    "Forget": {
+      "ErrorRegex": "Girdiğiniz bilgiler uygun değildir.",
+      "ErrorUsernameValidate": "Böyle bir kullanıcı adı kullanılmamaktadır.",
+      "Username": "Kullanıcı Adı",
+      "TelephoneNumber": "+90 452 080 51 51",
+      "TakePassword": "Şifreni Al",
+      "RememberPassword": "Şifren aklına mı geldi ?",
+      "ErrorPasswordMatch": "Girdiğiniz şifreler uyuşmamaktadır.",
+      "ErrorPasswordRegex": "Girdiğiniz şifre uygun değildir, lütfen başka bir şifre deneyiniz",
+      "ErrorPasswordFetch": "Şifreyi değiştirirken bir hatayla karşılaştık tekrar deneyiniz.",
+      "Password": "Şifre",
+      "PasswordAgain": "Şifre Tekrar"
+    }
+  },
+  "Main": {
+    "Qr": {
+      "QrButton": "Tara Gelsin",
+      "QrCodeText": "Lütfen, masanıza ait qr kodu tarayınız."
+    },
+    "Profile": {}
+  },
+  "Shopping": {
+    "Menu": {},
+    "Restaurant": {},
+    "Waiter": {},
+    "Cart": {}
+  }
+}

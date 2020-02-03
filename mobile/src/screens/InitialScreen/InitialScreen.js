@@ -19,7 +19,7 @@ const InitialScreen = props => {
       if (token.err) throw new Error()
       else {
         let username = await getUserStorage()
-        let result = await Http.post("auth/login/immediately", username.value, token.value)
+        let result = await Http.get(`auth/login/immediately?username=${username.value}`, token.value)
 
         if (result.err) throw new Error()
         else {
@@ -27,7 +27,7 @@ const InitialScreen = props => {
           props.navigation.navigate("Main")
         }
       }
-    } catch{
+    } catch (err) {
       props.navigation.navigate("Auth")
     }
   }

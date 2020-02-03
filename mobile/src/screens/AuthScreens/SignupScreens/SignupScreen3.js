@@ -4,7 +4,7 @@ import { Input, Text, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { validateRegex, phoneRegex } from '../../../regex/regex'
 import styles from './style3'
-import { updateUser } from '../../../store/user/actionCreator'
+import { removeUser } from '../../../store/user/actionCreator'
 import * as Http from '../../../utils/httpHelper'
 import { connect } from 'react-redux'
 import { storeUserStorage, storeTokenStorage } from '../../../AsyncStorage/index'
@@ -26,17 +26,16 @@ const SignupScreen3 = props => {
 
       let user = Object.assign({}, props.getUser, { phone })
       user.deviceID = "STATIC DEVICEID"
-      let res = Http.postWithoutToken('auth/signup', user)
+      let res = await Http.postWithoutToken('auth/signup/', user)
+
       if (res.err) throw new Error()
       else {
-        await storeUserStorage(res.user.username)
-        await storeTokenStorage(res.user.token)
-        Object.assign(user, res.user)
-        props.updateUser(user)
-        props.navigation.navigate("Main")
-      }
-    } catch {
+        props.removeUser(user)
+        props.navigation.navigate("Login")
 
+      }
+    } catch (err) {
+      console.warn(err.message)
     }
   }
 
@@ -72,7 +71,7 @@ mapStateToProps = state => {
 
 mapDispatchToProps = dispatch => {
   return {
-    updateUser: user => dispatch(updateUser(user))
+    removeUser: () => dispatch(removeUser())
   };
 };
 

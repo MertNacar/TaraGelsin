@@ -1,24 +1,30 @@
 import actions from "./action";
 
-const getFood = user => {
+const updateFoods = food => {
   return {
-    type: actions.GET_FOOD,
-    payload: user
+    type: actions.UPDATE_FOOD,
+    payload: food
   };
 };
 
-const successFood = data => {
+const removeFoods = () => {
+  return {
+    type: actions.REMOVE_FOOD,
+  };
+};
+
+const successFoods = data => {
   return {
     type: actions.FOOD_SUCCEEDED,
     data
   };
 };
 
-const failFood = error => {
+const failFoods = error => {
   return {
     type: actions.FOOD_FAILED,
     error
   };
 };
 
-export { getFood, successFood, failFood };
+export { updateFoods, removeFoods, successFoods, failFoods };

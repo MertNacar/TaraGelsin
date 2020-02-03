@@ -1,24 +1,29 @@
 import actions from "./action";
 
-const getCategory = user => {
+const updateCategories = category => {
   return {
-    type: actions.GET_CATEGORY,
-    payload: user
+    type: actions.UPDATE_CATEGORY,
+    payload: category
+  };
+};
+const removeCategories = () => {
+  return {
+    type: actions.REMOVE_CATEGORY,
   };
 };
 
-const successCategory = data => {
+const successCategories = data => {
   return {
     type: actions.CATEGORY_SUCCEEDED,
     data
   };
 };
 
-const failCategory = error => {
+const failCategories = error => {
   return {
     type: actions.CATEGORY_FAILED,
     error
   };
 };
 
-export { getCategory, successCategory, failCategory };
+export { updateCategories, removeCategories, successCategories, failCategories };

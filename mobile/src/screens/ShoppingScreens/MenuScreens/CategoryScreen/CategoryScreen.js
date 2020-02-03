@@ -4,14 +4,15 @@ import * as Http from '../../../../utils/httpHelper'
 import { connect } from 'react-redux'
 import styles from './style'
 import { COLOR_PRIMARY } from '../../../../constStyle/colors'
+import CategoryCard from '../../../../components/Category/CategoryCard'
+import { updateCategories, removeCategories } from '../../../../store/category/actionCreator'
 
 const CategoryScreen = props => {
 
-  const [categories, setCategories] = useState("")
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (loading) {
+    if (loading && props.getCategories.length === 0) {
       getCategories()
     }
   }, [loading])
@@ -20,7 +21,7 @@ const CategoryScreen = props => {
     try {
       let res = await Http.get(`shop/menu/categories?cafeID=${props.getCafe.cafeID}`, props.getUser.token)
       if (!res.err) {
-        setCategories(res.categories)
+        props.updateCategories(res.categories)
         setLoading(false)
       } else throw new Error("Beklenmedik bir hatayla karşılaştık.")
     } catch {
@@ -28,13 +29,9 @@ const CategoryScreen = props => {
     }
   }
 
-  //adding to ıcon
-  goTopList = () => {
-    listRef.scrollToOffset({ x: 0, y: 0 })
-  }
-
   onRefresh = () => {
     setLoading(true)
+    props.removeCategories()
   };
 
   if (loading) {
@@ -45,21 +42,25 @@ const CategoryScreen = props => {
     )
   } else {
     return (
-      <View>
-        <Text>CategoryScreen</Text>
-        <View>
-          <FlatList
-            data={categories}
-            ref={(ref) => { listRef = ref }}
-            renderItem={({ item }) => <Text>{item.categoryName}</Text>}
-            keyExtractor={item => item.categoryID}
-            refreshControl={
-              <RefreshControl
-                refreshing={loading}
-                onRefresh={onRefresh}
-              />}
-          />
-        </View>
+      <View style={styles.container}>
+        <FlatList
+          data={props.getCategories}
+          style={styles.categoryList}
+          renderItem={({ item }) =>
+            <CategoryCard
+              categoryLink={item.categoryImagePath}
+              categoryName={item.categoryName}
+              categoryID={item.categoryID}
+              {...props} />
+          }
+
+          keyExtractor={item => item.categoryID}
+          refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={onRefresh}
+            />}
+        />
       </View>
     )
   }
@@ -68,13 +69,15 @@ const CategoryScreen = props => {
 mapStateToProps = state => {
   return {
     getUser: state.user,
-    getCafe: state.cafe
+    getCafe: state.cafe,
+    getCategories: state.categories
   };
 };
 
 mapDispatchToProps = dispatch => {
   return {
-    updateCategory: category => dispatch(updateCategory(category))
+    updateCategories: category => dispatch(updateCategories(category)),
+    removeCategories: () => dispatch(removeCategories())
   };
 };
 

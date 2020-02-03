@@ -10,9 +10,9 @@ var express = require("express");
 var router = express.Router();
 
 //Get ınformation from user
-router.post("/immediately", async (req, res) => {
+router.get("/immediately", async (req, res) => {
   try {
-    let username = req.body.data;
+    let username = req.query.username;
     let token = req.headers.authorization.split(" ")[1];
     let validate = jwt.validateToken(token);
     if (validate) {
@@ -76,8 +76,8 @@ router.post("", async (req, res) => {
         res.json({ err: false, user });
       } else throw new Error();
     }
-  } catch (err) {
-    res.json({ err: true, mess:err.message });
+  } catch {
+    res.json({ err: true });
   }
 });
 

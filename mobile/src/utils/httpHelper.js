@@ -12,9 +12,8 @@ const get = async (endpoint, token) => {
         Accept: "application/json"
       }
     });
-    if (res.status !== 200) throw new Error()
-    else return await res.json();
-
+    if (res.status === 200) return await res.json();
+    else throw new Error()
   } catch {
     return { err: true };
   }
@@ -23,8 +22,8 @@ const get = async (endpoint, token) => {
 const getWithoutToken = async (endpoint) => {
   try {
     let res = await fetch(url(endpoint))
-    if (res.status !== 200) throw new Error()
-    else return await res.json();
+    if (res.status === 200) return await res.json();
+    else throw new Error()
   } catch {
     return { err: true };
   }
@@ -42,8 +41,8 @@ const post = async (endpoint, body = {}, token) => {
         data: body
       })
     });
-    if (res.status !== 200) throw new Error()
-    else return await res.json();
+    if (res.status === 200) return await res.json();
+    else throw new Error()
   } catch {
     return { err: true };
   }
@@ -60,8 +59,8 @@ const postWithoutToken = async (endpoint, body = {}) => {
         data: body
       })
     });
-    if (res.status !== 200) throw new Error()
-    else return await res.json();
+    if (res.status === 200) return await res.json();
+    else throw new Error()
   } catch {
     return { err: true };
   }
@@ -79,8 +78,8 @@ const put = async (endpoint, body = {}, token) => {
         data: body
       })
     });
-    if (res.status !== 200) throw new Error()
-    else return await res.json();
+    if (res.status === 200) return await res.json();
+    else throw new Error()
   } catch {
     return { err: true };
   }

@@ -34,7 +34,7 @@ const ForgetPasswordScreen = props => {
       phoneValidation = validateRegex(usernameRegex, user.phone)
 
       if (userValidation && phoneValidation) {
-        let checkUser = await Http.postWithoutToken("auth/forget/password", user)
+        let checkUser = await Http.postWithoutToken("auth/forget/password/", user)
 
         if (checkUser.err) throw new Error("Böyle bir kullanıcı adı kullanılmamaktadır.")
         else {
@@ -81,7 +81,7 @@ const ForgetPasswordScreen = props => {
 
         <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} containerStyle={styles.button} title="Şifreni Al" onPress={() => goForgetScreen2()} />
 
-        <Button disabled={disable} disabledTitleStyle={{ opacity: 0.8 }} type="clear" containerStyle={styles.buttonClear} title="Şifren aklınamı geldi ?" onPress={() => goLoginScreen()} />
+        <Button disabled={disable} disabledTitleStyle={{ opacity: 0.8 }} type="clear" containerStyle={styles.buttonClear} title="Şifren aklına mı geldi ?" onPress={() => goLoginScreen()} />
 
       </View>
 

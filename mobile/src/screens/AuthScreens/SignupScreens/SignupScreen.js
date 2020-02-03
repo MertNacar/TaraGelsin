@@ -40,7 +40,7 @@ const SignupScreen = props => {
       surValidation = validateRegex(nameRegex, user.surname)
 
       if (userValidation && firstValidation && surValidation && conditions && informations) {
-        let checkUsername = await Http.postWithoutToken("auth/signup/validateUsername", user.username)
+        let checkUsername = await Http.getWithoutToken(`auth/signup/validateUsername?username=${user.username}`)
 
         if (checkUsername.err) throw new Error("Girdiğiniz kullanıcı adı kullanılmaktadır.")
         else {

@@ -6,7 +6,7 @@ import { validateRegex, usernameRegex, passwordRegex } from '../../../regex/rege
 import { storeTokenStorage, storeUserStorage } from '../../../AsyncStorage'
 import * as Http from '../../../utils/httpHelper'
 import { updateUser } from '../../../store/user/actionCreator'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import styles from './style'
 
 const LoginScreen = props => {
@@ -38,7 +38,8 @@ const LoginScreen = props => {
 
       validateUsername = validateRegex(usernameRegex, username)
       validatePassword = validateRegex(passwordRegex, password)
-
+      console.log('validateUsername', validateUsername)
+      console.log('validatePassword', validatePassword)
       if (validateUsername && validatePassword) {
         let result = await Http.postWithoutToken('auth/login', { username, password })
 
@@ -89,7 +90,7 @@ const LoginScreen = props => {
           />
         </View>
 
-        <Button containerStyle={styles.link} title="Giriş Yap" onPress={() => login()} />
+        <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} containerStyle={styles.link} title="Giriş Yap" onPress={() => login()} />
 
       </View>
       <View style={styles.link}>
