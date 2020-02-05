@@ -6,10 +6,13 @@ import styles from './style'
 import { COLOR_PRIMARY } from '../../../../constStyle/colors'
 import CategoryCard from '../../../../components/Category/CategoryCard'
 import { updateCategories, removeCategories } from '../../../../store/category/actionCreator'
+import { removeFoods } from '../../../../store/food/actionCreator'
 
 const CategoryScreen = props => {
 
   const [loading, setLoading] = useState(true)
+  const [page, setPage] = useState(0)
+  const [threshold, setThreshold] = useState(0.25)
 
   useEffect(() => {
     if (loading && props.getCategories.length === 0) {
@@ -17,9 +20,10 @@ const CategoryScreen = props => {
     }
   }, [loading])
 
+  handleLoadMore = () => { }
   getCategories = async () => {
     try {
-      let res = await Http.get(`shop/menu/categories?cafeID=${props.getCafe.cafeID}`, props.getUser.token)
+      let res = await Http.get(`shop/menu/categories?cafeID=${props.getCafe.cafeID}&page=${page}`, props.getUser.token)
       if (!res.err) {
         props.updateCategories(res.categories)
         setLoading(false)
@@ -35,6 +39,7 @@ const CategoryScreen = props => {
   };
 
   goFood = (categoryID) => {
+    props.removeFoods()
     props.navigation.navigate("Foods", { categoryID })
   }
 
@@ -49,16 +54,16 @@ const CategoryScreen = props => {
       <View style={styles.container}>
         <FlatList
           data={props.getCategories}
+          showsVerticalScrollIndicator={false}
           style={styles.categoryList}
           renderItem={({ item }) =>
             <CategoryCard
-              categoryLink={item.categoryImagePath}
-              categoryName={item.categoryName}
-              categoryID={item.categoryID}
+              item={item}
               goFood={() => goFood(item.categoryID)}
             />
           }
-
+          onEndReached={handleLoadMore}
+          onEndReachedThreshold={threshold}
           keyExtractor={item => item.categoryID}
           refreshControl={
             <RefreshControl
@@ -82,7 +87,8 @@ mapStateToProps = state => {
 mapDispatchToProps = dispatch => {
   return {
     updateCategories: category => dispatch(updateCategories(category)),
-    removeCategories: () => dispatch(removeCategories())
+    removeCategories: () => dispatch(removeCategories()),
+    removeFoods: () => dispatch(removeFoods())
   };
 };
 

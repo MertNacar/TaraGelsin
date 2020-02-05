@@ -13,7 +13,7 @@ var router = express.Router();
 
 router.get("/categories", async (req, res) => {
   try {
-    let cafeID = req.query.cafeID;
+    let { cafeID, page } = req.query;
     let token = req.headers.authorization.split(" ")[1];
     let validate = jwt.validateToken(token);
 
@@ -21,6 +21,8 @@ router.get("/categories", async (req, res) => {
       let data = await models.Categories.findAll({
         attributes: ["categoryID", "categoryName", "categoryImagePath"],
         includeIgnoreAttributes: false,
+        limit: 3,
+        offset: page * 3,
         include: [{
           required: true,
           model: models.Cafes,
@@ -41,14 +43,19 @@ router.get("/categories", async (req, res) => {
 
 router.get("/categories/foods", async (req, res) => {
   try {
-    let categoryID = req.query.categoryID;
+    let { categoryID, page } = req.query;
     let token = req.headers.authorization.split(" ")[1];
     let validate = jwt.validateToken(token);
 
     if (validate) {
       let data = await models.Foods.findAll({
-        attributes: ["foodID", "foodName", "foodCost", "foodCost", "foodDescription", "isNewFood", "foodPreperationTime", "foodImagePath", "foodCal", "foodOnSale"],
+        attributes: ["foodID", "foodName", "foodCost", "foodDescription", "isNewFood", "foodPreperationTime", "foodImagePath", "foodCal"],
         includeIgnoreAttributes: false,
+        limit: 3,
+        offset: page * 3,
+        where: {
+          foodOnSale: true
+        },
         include: [{
           required: true,
           model: models.Categories,
@@ -64,6 +71,42 @@ router.get("/categories/foods", async (req, res) => {
     } else throw new Error()
   } catch {
     res.json({ err: true });
+  }
+});
+
+router.get("/categories/foods/foodDetails", async (req, res) => {
+  try {
+    let foodID = req.query.foodID;
+    let token = req.headers.authorization.split(" ")[1];
+    let validate = jwt.validateToken(token);
+
+    if (validate) {
+      let data = await models.Foods.findOne({
+        attributes: ["foodID"],
+        where: {
+          foodID
+        },
+        include: [{
+          required: true,
+          model: models.Ingredients,
+          through: { attributes: [] },
+        },
+        {
+          through: { attributes: [] },
+          model: models.Extras,
+        }]
+      });
+      if (data !== null) {
+        data.dataValues.ingredients = [...data.tblIngredients]
+        data.dataValues.extras = [...data.tblExtras]
+        delete data.dataValues.tblIngredients
+        delete data.dataValues.tblExtras
+        res.json({ err: false, food: data });
+
+      } else throw new Error()
+    } else throw new Error()
+  } catch (err) {
+    res.json({ err: true, errm: err.message });
   }
 });
 

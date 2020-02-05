@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, FlatList, RefreshControl, ActivityIndicator } from 'react-native'
+import { View, Text, FlatList, RefreshControl, ActivityIndicator, SafeAreaView } from 'react-native'
 import * as Http from '../../../../utils/httpHelper'
 import { connect } from 'react-redux'
 import styles from './style'
@@ -10,18 +10,18 @@ import { updateFoods, removeFoods } from '../../../../store/food/actionCreator'
 const FoodScreen = props => {
 
   const [loading, setLoading] = useState(true)
+  const [page, setPage] = useState(0)
 
   useEffect(() => {
-    if (loading && props.getFoods.length === 0) {
+    if (loading) {
       getFoods()
     }
   }, [loading])
 
   getFoods = async () => {
     try {
-
       let categoryID = props.navigation.state.params.categoryID
-      let res = await Http.get(`shop/menu/categories/foods?categoryID=${categoryID}`, props.getUser.token)
+      let res = await Http.get(`shop/menu/categories/foods?categoryID=${categoryID}&page=${page}`, props.getUser.token)
       if (!res.err) {
         props.updateFoods(res.foods)
         setLoading(false)
@@ -36,8 +36,8 @@ const FoodScreen = props => {
     setLoading(true)
   };
 
-  goFoodDetail = (foodID) => {
-    props.navigation.navigate("Foods", { foodID })
+  goFoodDetails = (foodID) => {
+    props.navigation.navigate("FoodDetails", { foodID })
   }
 
   if (loading) {
@@ -48,19 +48,17 @@ const FoodScreen = props => {
     )
   } else {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <FlatList
           data={props.getFoods}
           style={styles.foodList}
+          showsVerticalScrollIndicator={false}
           renderItem={({ item }) =>
             <FoodCard
-              foodLink={item.foodImagePath}
-              foodName={item.foodName}
-              foodID={item.foodID}
-              goFoodDetail={() => goFoodDetail(item.foodID)}
+              food={item}
+              goFoodDetails={() => goFoodDetails(item.foodID)}
             />
           }
-          numColumns={2}
           keyExtractor={item => item.foodID}
           refreshControl={
             <RefreshControl
@@ -68,7 +66,7 @@ const FoodScreen = props => {
               onRefresh={onRefresh}
             />}
         />
-      </View>
+      </SafeAreaView>
     )
   }
 }

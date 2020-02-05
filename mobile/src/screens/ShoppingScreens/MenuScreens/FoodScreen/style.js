@@ -9,8 +9,7 @@ export default StyleSheet.create({
   },
   foodList: {
     flex: 1,
-    width: screenWidth,
-    paddingHorizontal: 7
+    padding: 5
   },
   loading: {
     flex: 1,
