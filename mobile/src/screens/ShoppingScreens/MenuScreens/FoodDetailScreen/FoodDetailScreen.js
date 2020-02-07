@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, SectionList, Image, ActivityIndicator, SafeAreaView } from 'react-native'
+import { View, ScrollView, Image, ActivityIndicator, SafeAreaView } from 'react-native'
 import { PREFIX_IMAGEURL } from "react-native-dotenv";
 import * as Http from '../../../../utils/httpHelper'
 import { COLOR_PRIMARY } from '../../../../constStyle/colors'
@@ -10,11 +10,13 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import IconAwe from 'react-native-vector-icons/FontAwesome5'
 import IngredientCard from '../../../../components/FoodDetail/IngredientCard';
 import ExtraCard from '../../../../components/FoodDetail/ExtraCard';
+import { updateCart } from '../../../../store/cart/actionCreator';
 const FoodDetailScreen = props => {
   const [loading, setLoading] = useState(true)
   const [food, setFood] = useState({})
   const [extras, setExtras] = useState([])
   const [ingredients, setIngredients] = useState([])
+  const [disable, setDisable] = useState(false)
 
   useEffect(() => {
     if (loading) {
@@ -45,9 +47,18 @@ const FoodDetailScreen = props => {
   }
 
   addExtra = (id, disable) => {
-    console.log(extras)
     extras.find(item => item.extraID === id).disable = !disable
     setExtras(extras)
+  }
+
+  addCart = () => {
+    setDisable(true)
+    let selectedExtras = extras.filter(item => {
+      return item.disable == true
+    })
+    let newFood = Object.assign({}, food, { extras: selectedExtras })
+    props.updateCart([newFood])
+    props.navigation.goBack()
   }
 
   if (loading) {
@@ -57,7 +68,6 @@ const FoodDetailScreen = props => {
       </SafeAreaView>
     )
   } else {
-    console.log("hey")
     let ingredientList = ingredients.map(item => {
       return <IngredientCard item={item} />
     })
@@ -65,10 +75,10 @@ const FoodDetailScreen = props => {
     let extraList = extras.map(item => {
       return <ExtraCard extras={extras} item={item} addExtra={() => addExtra(item.extraID, item.disable)} />
     })
-
+    console.log("hey")
     return (
       <SafeAreaView style={styles.container}>
-        <SectionList showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollView}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollView}>
 
           <View style={styles.card}>
             <Image style={styles.images} source={{ uri: PREFIX_IMAGEURL + food.foodImagePath }} />
@@ -108,10 +118,10 @@ const FoodDetailScreen = props => {
             <View style={styles.list}>
               {extraList}
             </View>
-            <Button /*disabled={disable} disabledStyle={{ opacity: 0.8 }}*/ containerStyle={styles.button} title="Sepete Ekle" onPress={() => addCart()} />
+            <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} containerStyle={styles.button} title="Sepete Ekle" onPress={() => addCart()} />
           </View>
 
-        </SectionList >
+        </ScrollView >
       </SafeAreaView>
     )
   }
@@ -125,4 +135,10 @@ mapStateToProps = state => {
 };
 
 
-export default connect(mapStateToProps)(FoodDetailScreen);
+mapDispatchToProps = dispatch => {
+  return {
+    updateCart: food => dispatch(updateCart(food)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FoodDetailScreen);
