@@ -1,15 +1,16 @@
 import React from 'react'
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
+import { View, StyleSheet, Dimensions } from 'react-native'
+import { Text } from 'react-native-elements'
 import { Tile } from 'react-native-elements'
 import { PREFIX_IMAGEURL } from "react-native-dotenv";
 import Icon from 'react-native-vector-icons/Ionicons'
 import IconAwe from 'react-native-vector-icons/FontAwesome5'
+import { COLOR_PRIMARY, COLOR_SECONDARY, COLOR_TERTIARY, COLOR_BACKGROUND } from '../../constStyle/colors';
 const FoodCard = props => {
 
   return (
     <View style={styles.cardContainer}>
       <Tile
-        containerStyle={styles.tileContainer}
         imageSrc={{ uri: PREFIX_IMAGEURL + props.food.foodImagePath }}
         title={props.food.foodName}
         onPress={props.goFoodDetails}
@@ -18,17 +19,19 @@ const FoodCard = props => {
         <View style={styles.row}>
           <View style={styles.rowCost}>
 
-            <Text>
+            <Text h4>
               {props.food.foodCost}
             </Text>
-            <IconAwe name="lira-sign" size={16} />
+            <Text> </Text>
+            <IconAwe name="lira-sign" size={20} />
           </View>
 
           <View style={styles.rowTime}>
-            <Text>
-              {props.food.foodPreperationTime}
+            <Text h4>
+              {props.food.foodPreperationTime} min
             </Text>
-            <Icon name="md-time" size={18} />
+            <Text> </Text>
+            <Icon name="md-time" size={26} />
           </View>
         </View>
       </Tile>
@@ -38,12 +41,13 @@ const FoodCard = props => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    padding: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 2,
     marginBottom: 30
   },
-  tileContainer: {
-  },
   titleStyle: {
+    color: COLOR_PRIMARY,
     textAlign: "center"
   },
   row: {

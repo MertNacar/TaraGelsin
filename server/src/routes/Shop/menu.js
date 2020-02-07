@@ -87,7 +87,6 @@ router.get("/categories/foods/foodDetails", async (req, res) => {
           foodID
         },
         include: [{
-          required: true,
           model: models.Ingredients,
           through: { attributes: [] },
         },

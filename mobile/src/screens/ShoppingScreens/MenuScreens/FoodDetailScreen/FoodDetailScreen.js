@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, FlatList, Image, ActivityIndicator } from 'react-native'
+import { View, SectionList, Image, ActivityIndicator, SafeAreaView } from 'react-native'
 import { PREFIX_IMAGEURL } from "react-native-dotenv";
 import * as Http from '../../../../utils/httpHelper'
 import { COLOR_PRIMARY } from '../../../../constStyle/colors'
 import { connect } from 'react-redux'
+import { Button, Text } from 'react-native-elements'
+import styles from './style'
+import Icon from 'react-native-vector-icons/Ionicons'
+import IconAwe from 'react-native-vector-icons/FontAwesome5'
+import IngredientCard from '../../../../components/FoodDetail/IngredientCard';
+import ExtraCard from '../../../../components/FoodDetail/ExtraCard';
 const FoodDetailScreen = props => {
   const [loading, setLoading] = useState(true)
   const [food, setFood] = useState({})
+  const [extras, setExtras] = useState([])
+  const [ingredients, setIngredients] = useState([])
 
   useEffect(() => {
-    getFoodDetails()
+    if (loading) {
+      getFoodDetails()
+    }
   }, [])
 
   getFoodDetails = async () => {
@@ -20,7 +30,12 @@ const FoodDetailScreen = props => {
 
       if (!res.err) {
         let selectedFood = props.getFoods.filter(item => item.foodID === foodID)
-        setFood({ ...selectedFood[0], extras: res.food.extras, ingredients: res.food.ingredients })
+        let extras = res.food.extras.map(item => {
+          return { ...item, disable: false }
+        })
+        setExtras(extras)
+        setIngredients(res.food.ingredients)
+        setFood(selectedFood[0])
         setLoading(false)
 
       } else throw new Error()
@@ -29,64 +44,75 @@ const FoodDetailScreen = props => {
     }
   }
 
+  addExtra = (id, disable) => {
+    console.log(extras)
+    extras.find(item => item.extraID === id).disable = !disable
+    setExtras(extras)
+  }
+
   if (loading) {
     return (
-      <View style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
-      }}>
+      <SafeAreaView style={styles.loading}>
         <ActivityIndicator size="large" color={COLOR_PRIMARY} />
-      </View>
+      </SafeAreaView>
     )
   } else {
-    console.log("food", food)
+    console.log("hey")
+    let ingredientList = ingredients.map(item => {
+      return <IngredientCard item={item} />
+    })
+
+    let extraList = extras.map(item => {
+      return <ExtraCard extras={extras} item={item} addExtra={() => addExtra(item.extraID, item.disable)} />
+    })
+
     return (
-      <View>
-        <View style={{ flex: 1 }}>
+      <SafeAreaView style={styles.container}>
+        <SectionList showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollView}>
 
-        </View>
-        <Image style={{ width: 300, height: 250 }} source={{ uri: PREFIX_IMAGEURL + food.foodImagePath }} />
-        <Text>foodName : {food.foodName}</Text>
-        <Text>foodCost : {food.foodCost}</Text>
-        <Text>foodDescription : {food.foodDescription}</Text>
-        <Text>food is new :{food.isNewFood}</Text>
-        <Text>food preparation time : {food.foodPreperationTime}</Text>
-        <Text>food calori : {food.foodCal}</Text>
-        <FlatList
-          data={food.ingredients}
-          style={{ flex: 1 }}
-          renderItem={({ item }) =>
-            <View style={{ flex: 1 }}>
-              <Text>{item.ingredientName}</Text>
+          <View style={styles.card}>
+            <Image style={styles.images} source={{ uri: PREFIX_IMAGEURL + food.foodImagePath }} />
+
+            <View style={styles.rowMain}>
+
+              <Text h4>{food.foodName}</Text>
+              <View style={styles.rowSecond}>
+                <Text h4>{food.foodCost} </Text>
+                <IconAwe name="lira-sign" size={22} />
+              </View>
+
             </View>
-          }
-          keyExtractor={item => item.ingredientID}
-        /*refreshControl={
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={onRefresh}
-          />}*/
-        />
 
-        <FlatList
-          data={food.extras}
-          style={{ flex: 1 }}
-          renderItem={({ item }) =>
-            <View style={{ flex: 1 }}>
-              <Text>{item.extraName}</Text>
-              <Text>{item.extraCost}</Text>
+            <View style={styles.rowMain}>
+              <Text style={{ fontWeight: "bold" }}>{food.foodDescription}}</Text>
             </View>
-          }
-          keyExtractor={item => item.extraID}
-        /*refreshControl={
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={onRefresh}
-          />}*/
-        />
 
-      </View >
+            <View style={styles.rowMain}>
+
+              <Text h4>{food.foodCal} calorie</Text>
+              <View style={styles.rowSecond}>
+                <Text h4>{food.foodPreperationTime} min </Text>
+                <Icon name="md-time" size={26}></Icon>
+              </View>
+
+            </View>
+
+          </View>
+
+          <View style={{ flex: 1 }}>
+
+            <View style={styles.list}>
+              {ingredientList}
+            </View>
+
+            <View style={styles.list}>
+              {extraList}
+            </View>
+            <Button /*disabled={disable} disabledStyle={{ opacity: 0.8 }}*/ containerStyle={styles.button} title="Sepete Ekle" onPress={() => addCart()} />
+          </View>
+
+        </SectionList >
+      </SafeAreaView>
     )
   }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, FlatList, RefreshControl, ActivityIndicator, SafeAreaView } from 'react-native'
+import { View, FlatList, RefreshControl, ActivityIndicator, SafeAreaView } from 'react-native'
 import * as Http from '../../../../utils/httpHelper'
 import { connect } from 'react-redux'
 import styles from './style'

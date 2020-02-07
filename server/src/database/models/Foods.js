@@ -19,7 +19,7 @@ const Foods = db.define(
     },
 
     foodCost: {
-      type: Sequelize.DECIMAL(10, 4),
+      type: Sequelize.DECIMAL(8, 2),
       allowNull: false
     },
 
