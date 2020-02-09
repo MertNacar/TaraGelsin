@@ -29,6 +29,11 @@ const CredCards = db.define(
       type: Sequelize.CHAR(4),
       allowNull: false
     },
+
+    cardPinNumber: {
+      type: Sequelize.CHAR(4),
+      allowNull: false
+    },
   }
 );
 

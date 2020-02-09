@@ -31,7 +31,7 @@ export default createStackNavigator({
         flex: 1,
         color: Colors.COLOR_SECONDARY,
         textAlign: "center",
-        marginLeft: 16
+        marginLeft: 16 //right 56 sol ok
       },
       headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
       headerStyle: {

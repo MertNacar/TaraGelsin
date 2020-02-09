@@ -18,7 +18,8 @@ export default StyleSheet.create({
     flex: 1,
     width: screenWidth,
     height: 250,
-    borderWidth: 3,
+    resizeMode: "contain",
+    borderWidth: 2,
     borderColor: COLOR_BACKGROUND
   },
   rowMain: {

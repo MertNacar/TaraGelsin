@@ -75,7 +75,6 @@ const FoodDetailScreen = props => {
     let extraList = extras.map(item => {
       return <ExtraCard extras={extras} item={item} addExtra={() => addExtra(item.extraID, item.disable)} />
     })
-    console.log("hey")
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollView}>

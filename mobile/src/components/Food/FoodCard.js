@@ -5,13 +5,15 @@ import { Tile } from 'react-native-elements'
 import { PREFIX_IMAGEURL } from "react-native-dotenv";
 import Icon from 'react-native-vector-icons/Ionicons'
 import IconAwe from 'react-native-vector-icons/FontAwesome5'
-import { COLOR_PRIMARY, COLOR_SECONDARY, COLOR_TERTIARY, COLOR_BACKGROUND } from '../../constStyle/colors';
+import * as Colors from '../../constStyle/colors';
+
 const FoodCard = props => {
 
   return (
     <View style={styles.cardContainer}>
       <Tile
         imageSrc={{ uri: PREFIX_IMAGEURL + props.food.foodImagePath }}
+        imageContainerStyle={{ marginHorizontal: 7 }}
         title={props.food.foodName}
         onPress={props.goFoodDetails}
         titleStyle={styles.titleStyle}
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
     marginBottom: 30
   },
   titleStyle: {
-    color: COLOR_PRIMARY,
+    color: Colors.COLOR_BACKGROUND,
     textAlign: "center"
   },
   row: {

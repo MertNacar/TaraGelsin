@@ -16,10 +16,10 @@ router.get("/scan", async (req, res) => {
     let qrCode = req.query.qrCode.split("/");
     let token = req.headers.authorization.split(" ")[1];
     let validate = jwt.validateToken(token);
-    if(validate){
+    if (validate) {
 
       let data = await models.Cafes.findOne({
-        attributes: ["cafeID", "cafeName", "cafePoint", "cafeDescription", "cafeImagePath"],
+        attributes: ["cafeID", "cafeName", "cafePoint", "cafeDescription", "cafeImagePath", "cafeAddress"],
         where: {
           cafeID: qrCode[0]
         },
@@ -36,7 +36,7 @@ router.get("/scan", async (req, res) => {
         delete data.dataValues.tblTables
         let cafe = { ...data.dataValues, tableName: data.tblTables[0].tableName }
         res.json({ err: false, cafe });
-        
+
       } else throw new Error()
     } else throw new Error()
   } catch {

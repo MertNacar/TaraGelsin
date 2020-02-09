@@ -6,8 +6,6 @@ const screenHeight = Math.round(Dimensions.get('window').height);
 export default StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
   },
   image: {
     flex: 2,
@@ -16,13 +14,13 @@ export default StyleSheet.create({
   },
   row: {
     flex: 1,
-    paddingHorizontal: 5,
+    padding: 5,
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center"
   },
   button: {
     flex: 1,
-    paddingHorizontal: 5,
   },
 
 })
