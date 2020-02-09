@@ -14,9 +14,10 @@ export default createStackNavigator({
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,
-        textAlign: "center"
+        textAlign: "center",
+        marginLeft: 72
       },
-      headerRight: (<Icon name="md-power" size={26} color={Colors.COLOR_PRIMARY} />),
+      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
@@ -30,8 +31,9 @@ export default createStackNavigator({
         flex: 1,
         color: Colors.COLOR_SECONDARY,
         textAlign: "center",
-        marginRight: 56
+        marginLeft: 16
       },
+      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
@@ -45,8 +47,9 @@ export default createStackNavigator({
         flex: 1,
         color: Colors.COLOR_SECONDARY,
         textAlign: "center",
-        marginRight: 56
+        marginLeft: 16
       },
+      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },

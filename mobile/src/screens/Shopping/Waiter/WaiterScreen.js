@@ -4,6 +4,7 @@ import * as Colors from '../../../constStyle/colors'
 import { View, Image } from 'react-native'
 import { Button, Text } from 'react-native-elements'
 import WaiterImage from '../../../assets/images/Waiter.png'
+import Icon from 'react-native-vector-icons/Ionicons'
 import styles from './style'
 
 const WaiterScreen = () => {
@@ -44,8 +45,10 @@ export default createStackNavigator({
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,
-        textAlign: "center"
+        textAlign: "center",
+        marginLeft: 72
       },
+      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },

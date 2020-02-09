@@ -1,8 +1,10 @@
+import React from 'react'
 import { createStackNavigator } from 'react-navigation-stack'
 import CartScreen from './CartScreen/CartScreen'
 import PaymentScreen from './PaymentScreens/PaymentScreen'
 import ChoosePaymentScreen from './ChoosePaymentScreen/ChoosePaymentScreen'
 import * as Colors from '../../../constStyle/colors'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 export default createStackNavigator({
   Cart: {
@@ -12,8 +14,10 @@ export default createStackNavigator({
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,
-        textAlign: "center"
+        textAlign: "center",
+        marginLeft: 72
       },
+      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
@@ -27,8 +31,9 @@ export default createStackNavigator({
         flex: 1,
         color: Colors.COLOR_SECONDARY,
         textAlign: "center",
-        marginRight: 56
+        marginLeft: 16
       },
+      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
@@ -42,8 +47,9 @@ export default createStackNavigator({
         flex: 1,
         color: Colors.COLOR_SECONDARY,
         textAlign: "center",
-        marginRight: 56
+        marginLeft: 16
       },
+      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
