@@ -66,6 +66,7 @@ router.post("", async (req, res) => {
     });
     if (data === null) throw new Error();
     else {
+      console.log(data.password)
       let confirm = await verifyPassword(password, data.password);
       if (confirm) {
         let token = jwt.createToken(data.username);

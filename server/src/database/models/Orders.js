@@ -14,7 +14,7 @@ const Orders = db.define(
     },
 
     orderStatus: {
-      type: Sequelize.ENUM('0', '1', '2'),
+      type: Sequelize.ENUM('-1', '0', '1', '2'),
       defaultValue: '0'
     },
 
@@ -30,7 +30,9 @@ const Orders = db.define(
 
     orderPoint: Sequelize.DECIMAL(2, 1),
 
-    orderNote: Sequelize.STRING,
+    orderNote: Sequelize.STRING(120),
+
+    orderComment: Sequelize.STRING(120),
 
     orderCalorie: {
       type: Sequelize.SMALLINT,
