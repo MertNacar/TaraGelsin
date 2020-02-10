@@ -15,7 +15,7 @@ router.post("/password", async (req, res) => {
   try {
     let user = req.body.data;
     let data = await models.Users.findOne({
-      attributes: ["userID", "gender", "taraPoint", "username", "fullname", "phone", "deviceID", "email", "birthday"],
+      attributes: ["userID", "taraPoint", "username", "fullname", "phone", "deviceID", "email"],
       where: {
         username: user.username,
         phone: user.phone

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
 import { Button } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/Ionicons'
 import { removeTokenStorage, removeUserStorage } from '../../../../AsyncStorage/index'
 import { removeUser } from '../../../../store/user/actionCreator'
 import { connect } from 'react-redux'
 const ProfileScreen = props => {
 
-  const [user, setUser] = useState({ username: "", fullname: "", email: "", phone: "", gender: "", loginDate: "" })
+  const [user, setUser] = useState({ username: "", fullname: "", email: "", phone: "", loginDate: "" })
 
   logOut = async () => {
     await removeUserStorage()
@@ -20,14 +21,31 @@ const ProfileScreen = props => {
   }, [])
 
   return (
-    <View>
-      <View><Text>username : {user.username}</Text></View>
-      <View><Text>fullname : {user.fullname}</Text></View>
-      <View><Text>email : {user.email}</Text></View>
-      <View><Text>gender : {user.gender}</Text></View>
-      <View><Text>loginDate : {user.loginDate}</Text></View>
-      <Button title="Çıkış Yap" type="clear" titleStyle={{ color: "red" }} onPress={() => logOut()} />
-    </View>
+    <SafeAreaView>
+
+      <ScrollView>
+        <View>
+          <Image />
+          <Text>username : {user.username}</Text>
+        </View>
+
+
+        <View>
+          <Icon />
+          <Text>fullname : {user.fullname}</Text>
+        </View>
+        <View>
+          <Icon />
+          <Text>fullname : {user.email}</Text>
+        </View>
+        <View>
+          <Icon />
+          <Text>fullname : {user.phone}</Text>
+        </View>
+        <View><Text>loginDate : {user.loginDate}</Text></View>
+        <Button title="Çıkış Yap" type="clear" titleStyle={{ color: "red" }} onPress={() => logOut()} />
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 

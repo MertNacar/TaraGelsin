@@ -23,8 +23,6 @@ router.get("/immediately", async (req, res) => {
           "username",
           "email",
           "phone",
-          "gender",
-          "birthday",
           "deviceID"
         ],
         where: {
@@ -56,8 +54,6 @@ router.post("", async (req, res) => {
         "password",
         "email",
         "phone",
-        "gender",
-        "birthday",
         "deviceID"
       ],
       where: {

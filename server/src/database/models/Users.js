@@ -32,14 +32,7 @@ const Users = db.define(
       allowNull: false
     },
 
-    birthday: Sequelize.DATEONLY,
-
     deviceID: Sequelize.STRING,
-
-    gender: {
-      type: Sequelize.CHAR(1),
-      defaultValue: "u"
-    },
 
     taraPoint: {
       type: Sequelize.SMALLINT,
