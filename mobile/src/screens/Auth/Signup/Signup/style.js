@@ -4,42 +4,65 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: "5%",
-    justifyContent: "center",
     alignItems: "center"
   },
 
   form: {
     flex: 1,
     paddingTop: "5%",
-    width: "80%",
-    justifyContent: "flex-start",
-    alignItems: "center"
+    width: "90%",
+    //justifyContent: "flex-start",
   },
 
   row: {
     flex: 1,
+    marginTop: 5,
     flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
 
-  username: {
+  name: {
+    width: "48%",
+    marginBottom: 5,
+    borderWidth: 1,
+    borderRadius: 10
+  },
+
+  phone: {
+    height: "100%",
+    width: "66%",
+    marginTop: 10,
+    borderWidth: 1,
+    borderRadius: 10
+  },
+
+  password: {
     flex: 1,
-    width: "100%"
+    width: "100%",
+    marginTop: 15,
+    borderWidth: 1,
+    borderRadius: 10
+  },
+
+  inputCountry: {
+    height: "100%",
+    width: "30%",
+    marginTop: 10,
+    borderWidth: 1,
+    borderRadius: 10
   },
 
   checks: {
-    flex: 2,
+    flex: 9,
+    marginTop: "3%",
     justifyContent: "flex-start",
-    alignItems: "center"
-  },
-  buttons: {
-    flex: 2,
-    justifyContent: "flex-start",
-    alignItems: "center"
+
   },
   button: {
-    marginTop: "10%",
+    marginTop: "3%",
     alignSelf: "center",
-    width: "50%"
+    width: "100%"
   }
 })
 export default styles 

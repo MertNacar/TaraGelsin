@@ -1,9 +1,10 @@
 import { createStackNavigator } from 'react-navigation-stack'
 import ProfileScreen from './Profile/ProfileScreen'
 import ProfileUpdateScreen from './ProfileUpdate/ProfileUpdateScreen'
-import CredCardScreen from './CredCard/CredCard/CredCardScreen'
-import AddCredCardScreen from './CredCard/AddCredCard/AddCredCardScreen'
+import CredCardScreen from './CredCard/CredCardScreen'
+import AddCredCardScreen from './AddCredCard/AddCredCardScreen'
 import * as Colors from '../../../constStyle/colors'
+
 export default createStackNavigator({
   Profile: {
     screen: ProfileScreen,

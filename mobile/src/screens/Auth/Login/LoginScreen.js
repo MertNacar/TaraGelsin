@@ -2,25 +2,36 @@ import React, { useState } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { Button, Text, Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons'
-import { validateRegex, usernameRegex, passwordRegex } from '../../../regex/regex'
-import { storeTokenStorage, storeUserStorage } from '../../../AsyncStorage'
+import { validateRegex, phoneRegex, passwordRegex } from '../../../regex/regex'
+import { storeTokenStorage, storePhoneStorage } from '../../../AsyncStorage'
 import * as Http from '../../../utils/httpHelper'
 import { updateUser } from '../../../store/user/actionCreator'
 import { connect } from 'react-redux'
 import styles from './style'
+import * as Colors from '../../../constStyle/colors'
+import CountryPicker from 'react-native-country-picker-modal'
 
 const LoginScreen = props => {
 
-  const [username, setUsername] = useState('');
+  const [countryCode, setCountryCode] = useState('TR')
+  const [country, setCountry] = useState(null)
+  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [err, setErr] = useState(false);
   const [errMessage, setErrMessage] = useState("")
   const [disable, setDisable] = useState(false)
 
   changeText = (value, type) => {
-    if (type === 'username') setUsername(value)
+    if (type === 'phone') {
+      setPhone("+" + country.callingCode + value)
+    }
     else setPassword(value);
   };
+
+  const onSelectCountry = (country) => {
+    setCountryCode(country.cca2)
+    setCountry(country)
+  }
 
   goSignupScreen = () => {
     props.navigation.navigate("Signup")
@@ -35,15 +46,14 @@ const LoginScreen = props => {
       setDisable(true)
       setErrMessage("")
       setErr(false)
+      let validatePhone = validateRegex(phoneRegex, phone)
+      let validatePassword = validateRegex(passwordRegex, password)
 
-      validateUsername = validateRegex(usernameRegex, username)
-      validatePassword = validateRegex(passwordRegex, password)
-
-      if (validateUsername && validatePassword) {
-        let result = await Http.postWithoutToken('auth/login', { username, password })
+      if (validatePhone && validatePassword) {
+        let result = await Http.postWithoutToken('auth/login', { phone, password })
 
         if (!result.err) {
-          await storeUserStorage(username)
+          await storePhoneStorage(phone)
           await storeTokenStorage(result.user.token)
           props.updateUser(result.user)
           setDisable(false)
@@ -51,7 +61,7 @@ const LoginScreen = props => {
 
         } else throw new Error("Yanlış kullanıcı adı veya şifre girdiniz.")
       } else throw new Error("Girdiğiniz bilgiler uygun değildir.")
-    } catch (err) {
+    } catch {
       setDisable(false)
       setErrMessage(err.message)
       setErr(true)
@@ -70,32 +80,55 @@ const LoginScreen = props => {
       <View style={styles.form}>
 
         <View style={styles.inputs}>
-          <Input
-            placeholder="Kullanıcı Adı"
-            textContentType="username"
-            inputStyle={{ marginLeft: 5 }}
-            leftIcon={<Icon name="md-person" size={24} color="black" />}
-            onChangeText={value => changeText(value, 'username')}
-          />
+          <View style={styles.row}>
+            <View style={styles.inputCountry}>
+              <CountryPicker
+                containerButtonStyle={{ alignItems: "center", paddingTop: 10 }}
+                countryCode={countryCode}
+                withCallingCodeButton={true}
+                withCallingCode={true}
+                withAlphaFilter={true}
+                withFilter={true}
+                onSelect={value => onSelectCountry(value)}
+                visible
+              />
 
+            </View>
+            <Input
+              placeholder="Phone"
+              textContentType="telephoneNumber"
+              underlineColorAndroid="transparent"
+              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputStyle={{ marginLeft: 5 }}
+              maxLength={10}
+              containerStyle={styles.inputPhone}
+              leftIcon={<Icon name="md-call" size={24} color={Colors.COLOR_BACKGROUND} />}
+              onChangeText={value => changeText(value, 'phone')}
+            />
+
+          </View>
           <Input
             placeholder="Şifre"
             secureTextEntry={true}
+            underlineColorAndroid="transparent"
+            inputContainerStyle={{ borderBottomWidth: 0 }}
             textContentType="password"
+            maxLength={24}
             inputStyle={{ marginLeft: 5 }}
-            leftIcon={<Icon name="md-lock" size={24} color="black" />}
+            containerStyle={styles.inputPassword}
+            leftIcon={<Icon name="md-lock" size={24} color={Colors.COLOR_BACKGROUND} />}
             onChangeText={value => changeText(value, 'password')}
           />
         </View>
 
-        <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} containerStyle={styles.link} title="Giriş Yap" onPress={() => login()} />
+        <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} containerStyle={styles.link} buttonStyle={styles.loginButton} title="Giriş Yap" onPress={() => login()} />
 
       </View>
       <View style={styles.link}>
 
-        <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} title="Şifremi unuttum ?" type="clear" onPress={() => goForgetScreen()} />
+        <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} titleStyle={{ color: Colors.COLOR_BACKGROUND }} title="Şifremi unuttum ?" type="clear" onPress={() => goForgetScreen()} />
 
-        <Button disabled={disable} disabledTitleStyle={{ opacity: 0.8 }} title="Kayıt Ol" type="clear" onPress={() => goSignupScreen()} />
+        <Button disabled={disable} disabledTitleStyle={{ opacity: 0.8 }} titleStyle={{ color: Colors.COLOR_BACKGROUND }} title="Kayıt Ol" type="clear" onPress={() => goSignupScreen()} />
 
       </View>
 

@@ -3,7 +3,7 @@
     "Login": {
       "ErrorRegex": "Girdiğiniz bilgiler uygun değildir.",
       "ErrorWrong": "Yanlış kullanıcı adı veya şifre girdiniz.",
-      "Username": "Kullanıcı Adı",
+      "Phone": "Kullanıcı Adı",
       "Password": "Şifre",
       "Title": "Giriş Yap",
       "ForgetButton": "Şifremi unuttum ?",
@@ -11,8 +11,8 @@
     },
     "Signup": {
       "ErrorRegex": "Girdiğiniz bilgiler uygun değildir.",
-      "ErrorUsername": "Girdiğiniz kullanıcı adı kullanılmaktadır.",
-      "Username": "Kullanıcı Adı",
+      "ErrorPhone": "Girdiğiniz kullanıcı adı kullanılmaktadır.",
+      "Phone": "Kullanıcı Adı",
       "Firstname": "İsim",
       "Surname": "Soyisim",
       "TermCondition": "Kullanım Koşulları ve Şartlarını Okudum",
@@ -27,8 +27,8 @@
     },
     "Forget": {
       "ErrorRegex": "Girdiğiniz bilgiler uygun değildir.",
-      "ErrorUsernameValidate": "Böyle bir kullanıcı adı kullanılmamaktadır.",
-      "Username": "Kullanıcı Adı",
+      "ErrorPhoneValidate": "Böyle bir kullanıcı adı kullanılmamaktadır.",
+      "Phone": "Kullanıcı Adı",
       "TelephoneNumber": "+90 452 080 51 51",
       "TakePassword": "Şifreni Al",
       "RememberPassword": "Şifren aklına mı geldi ?",

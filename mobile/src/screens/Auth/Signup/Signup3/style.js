@@ -1,27 +1,32 @@
 import { StyleSheet } from 'react-native'
+import { COLOR_BACKGROUND } from '../../../../constStyle/colors'
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: "10%",
-    justifyContent: "center",
-    alignItems: "center"
+    padding: 10,
+    alignItems: "center",
+    justifyContent: "center"
   },
-  form: {
-    flex: 2,
-    width: "70%",
-    justifyContent: "flex-start",
-    alignItems: "center"
-  },
-
-  link: {
+  image: {
     flex: 3,
-    justifyContent: "flex-start"
+    width: "70%",
+    height: "80%",
+    resizeMode: "contain"
   },
-  button: {
-    marginTop: "10%",
-    alignSelf: "center",
-    width: "50%"
+  row: {
+    flex: 1.5,
+    justifyContent: "center"
+  },
+  text: {
+    textAlign: "center",
+  },
+  buttonContainer: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  buttonStyle: {
+    paddingHorizontal: 5,
+    backgroundColor: COLOR_BACKGROUND
   }
 })
-export default styles 

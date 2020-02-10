@@ -1,40 +1,51 @@
 import React, { useState, useEffect } from 'react'
 import { View, SafeAreaView } from 'react-native'
-import { CheckBox, Input, Text, Button } from 'react-native-elements'
+import { Input, Text, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { validateRegex, phoneRegex, usernameRegex } from '../../../../regex/regex'
+import { validateRegex, phoneRegex, emailRegex } from '../../../../regex/regex'
 import styles from './style'
 import { updateUser } from '../../../../store/user/actionCreator'
 import { connect } from 'react-redux'
 import * as Http from '../../../../utils/httpHelper'
+import CountryPicker from 'react-native-country-picker-modal'
 
 const ForgetPasswordScreen = props => {
 
-  const [user, setUser] = useState({ username: "", phone: "" })
+  const [countryCode, setCountryCode] = useState('TR')
+  const [country, setCountry] = useState(null)
+  const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
   const [err, setErr] = useState(false)
   const [errMessage, setErrMessage] = useState("")
   const [disable, setDisable] = useState(false)
 
   changeText = (value, type) => {
-    let newUser = Object.assign({}, user, { [type]: value })
-    setUser(newUser)
+    if (type === 'phone') {
+      setPhone("+" + country.callingCode + value)
+    }
+    else setEmail(value);
   };
 
   goLoginScreen = () => {
     props.navigation.navigate("Login")
   };
 
+  const onSelectCountry = (country) => {
+    setCountryCode(country.cca2)
+    setCountry(country)
+  }
+
   goForgetScreen2 = async () => {
     try {
       setDisable(true)
       setErrMessage("")
       setErr(false)
-      // phone validate düzenlenecek
-      userValidation = validateRegex(usernameRegex, user.username)
-      phoneValidation = validateRegex(usernameRegex, user.phone)
 
-      if (userValidation && phoneValidation) {
-        let checkUser = await Http.postWithoutToken("auth/forget/password/", user)
+      let emailValidation = validateRegex(emailRegex, email)
+      let phoneValidation = validateRegex(phoneRegex, phone)
+
+      if (emailValidation && phoneValidation) {
+        let checkUser = await Http.postWithoutToken("auth/forget/password", { email, phone })
 
         if (checkUser.err) throw new Error("Böyle bir kullanıcı adı kullanılmamaktadır.")
         else {
@@ -62,22 +73,44 @@ const ForgetPasswordScreen = props => {
 
       <View style={styles.form}>
         <Input
-          placeholder="Kullanıcı Adı"
-          textContentType="username"
-          containerStyle={{ paddingBottom: 15 }}
+          placeholder="Email"
+          textContentType="emailAddress"
+          underlineColorAndroid="transparent"
+          maxLength={40}
+          containerStyle={{ borderWidth: 1, borderRadius: 10 }}
           inputStyle={{ marginLeft: 5 }}
-          leftIcon={<Icon name="md-person" size={24} color="black" />}
-          onChangeText={value => changeText(value, 'username')}
+          leftIcon={<Icon name="md-mail" size={24} color="black" />}
+          onChangeText={value => changeText(value, 'email')}
         />
 
-        <Input
-          placeholder="+90 452 080 51 51"
-          textContentType="telephoneNumber"
-          containerStyle={{ paddingBottom: 15 }}
-          inputStyle={{ marginLeft: 5 }}
-          leftIcon={<Icon name="md-call" size={24} color="black" />}
-          onChangeText={value => changeText(value, 'phone')}
-        />
+        <View style={styles.row}>
+          <View style={styles.inputCountry}>
+            <CountryPicker
+              containerButtonStyle={{ alignItems: "center", paddingTop: 10 }}
+              countryCode={countryCode}
+              withCallingCodeButton={true}
+              withCallingCode={true}
+              withAlphaFilter={true}
+              withFilter={true}
+              onSelect={value => onSelectCountry(value)}
+              visible
+            />
+
+          </View>
+          <Input
+            placeholder="452 080 51 51"
+            textContentType="telephoneNumber"
+            underlineColorAndroid="transparent"
+            maxLength={10}
+            containerStyle={{ borderWidth: 1, borderRadius: 10 }}
+            inputStyle={{ paddingLeft: 5 }}
+            leftIcon={<Icon name="md-call" size={24} color="black" />}
+            onChangeText={value => changeText(value, 'phone')}
+          />
+
+        </View>
+
+
 
         <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} containerStyle={styles.button} title="Şifreni Al" onPress={() => goForgetScreen2()} />
 

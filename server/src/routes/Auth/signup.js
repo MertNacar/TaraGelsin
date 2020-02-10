@@ -28,22 +28,6 @@ router.post("", async (req, res) => {
   }
 });
 
-//validate for inputs
-router.get("/validateUsername", async (req, res) => {
-  try {
-    let username = req.query.username;
-    let data = await models.Users.findOne({
-      attributes: ["username"],
-      where: {
-        username
-      }
-    });
-    if (data === null) res.json({ err: false });
-    else throw new Error()
-  } catch (err) {
-    res.json({ err: true });
-  }
-});
 
 router.post("/validatePhone", async (req, res) => {
   try {
@@ -52,6 +36,30 @@ router.post("/validatePhone", async (req, res) => {
       attributes: ["phone"],
       where: {
         phone
+      }
+    });
+
+    if (data === null) res.json({ err: false });
+    else throw new Error()
+  } catch {
+    res.json({ err: true });
+  }
+});
+
+router.post("/validatePhoneEmail", async (req, res) => {
+  try {
+    let { phone, email } = req.query;
+    let data = await models.Users.findOne({
+      attributes: ["phone"],
+      where: {
+        [Op.or]: [
+          {
+            email
+          },
+          {
+            phone
+          }
+        ]
       }
     });
 

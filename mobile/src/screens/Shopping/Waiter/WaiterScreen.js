@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { createStackNavigator } from 'react-navigation-stack'
 import * as Colors from '../../../constStyle/colors'
-import { View, Image } from 'react-native'
+import { View, Image, SafeAreaView } from 'react-native'
 import { Button, Text } from 'react-native-elements'
 import WaiterImage from '../../../assets/images/Waiter.png'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -24,7 +24,7 @@ const WaiterScreen = () => {
     };
   }, [])
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Image source={WaiterImage} style={styles.image} />
       <View style={styles.row}>
         <Text h4 h4Style={styles.text}>Anında garsonu masanıza çağırın</Text>
@@ -33,7 +33,7 @@ const WaiterScreen = () => {
         <Text style={styles.text}>El kol sallayıp farklı şekillere girmenize gerek yok !</Text>
       </View>
       <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} buttonStyle={styles.buttonStyle} containerStyle={styles.buttonContainer} title="Garson Çağır" onPress={() => callWaiter()} />
-    </View>
+    </SafeAreaView>
   )
 }
 

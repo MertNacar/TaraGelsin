@@ -11,35 +11,31 @@ const styles = StyleSheet.create({
   form: {
     flex: 1,
     paddingTop: "5%",
-    width: "80%",
+    width: "90%",
     justifyContent: "flex-start",
     alignItems: "center"
   },
-
+  inputCountry: {
+    width: "28%",
+    height: "100%",
+    borderWidth: 1,
+    borderRadius: 10
+  },
+  inputPhone: {
+    width: "68%",
+    paddingLeft: 5,
+    borderWidth: 1,
+    borderRadius: 10
+  },
   row: {
-    flex: 1,
     flexDirection: "row",
   },
 
-  username: {
-    flex: 1,
-    width: "100%"
-  },
-
-  checks: {
-    flex: 4,
-    justifyContent: "flex-start"
-  },
   button: {
     marginTop: "10%",
     alignSelf: "center",
     width: "50%"
   },
-  buttonClear: {
-    marginTop: "10%",
-    alignSelf: "center",
-    width: "100%"
-  }
 
 })
 export default styles 

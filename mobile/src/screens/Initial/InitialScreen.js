@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import styles from './style'
 import { COLOR_PRIMARY } from '../../constStyle/colors'
-import { getTokenStorage, getUserStorage } from "../../AsyncStorage/index";
+import { getTokenStorage, getPhoneStorage } from "../../AsyncStorage/index";
 import * as Http from '../../utils/httpHelper'
 import { updateUser } from '../../store/user/actionCreator'
 import { connect } from 'react-redux'
@@ -15,19 +15,20 @@ const InitialScreen = props => {
   init = async () => {
     try {
       const token = await getTokenStorage();
-
+      console.log(token)
       if (token.err) throw new Error()
       else {
-        let username = await getUserStorage()
-        let result = await Http.get(`auth/login/immediately?username=${username.value}`, token.value)
-
+        let phone = await getPhoneStorage()
+        console.log(phone)
+        let result = await Http.get(`auth/login/immediately?phone=${phone.value}`, token.value)
+        console.log(result)
         if (result.err) throw new Error()
         else {
           props.updateUser(result.user)
           props.navigation.navigate("Main")
         }
       }
-    } catch (err) {
+    } catch {
       props.navigation.navigate("Auth")
     }
   }

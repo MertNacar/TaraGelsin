@@ -31,14 +31,14 @@ const ForgetPasswordScreen2 = props => {
       setDisable(true)
       setErrMessage("")
       setErr(false)
-      validate = validatePassword()
+      let validate = validatePassword()
 
       if (validate) {
         passValidation = validateRegex(passwordRegex, passwords.password)
 
         if (passValidation) {
-          let user = { username: props.getUser.username, password: passwords.password }
-          let changingPassword = await Http.postWithoutToken("auth/forget/changePassword/", user)
+          let user = { email: props.getUser.email, password: passwords.password }
+          let changingPassword = await Http.postWithoutToken("auth/forget/changePassword", user)
 
           if (!changingPassword.err) {
             setDisable(false)
@@ -72,6 +72,7 @@ const ForgetPasswordScreen2 = props => {
           secureTextEntry={true}
           textContentType="newPassword"
           inputStyle={{ marginLeft: 5 }}
+          maxLength={24}
           containerStyle={{ paddingBottom: 15 }}
           leftIcon={<Icon name="md-lock" size={24} color="black" />}
           onChangeText={value => changeText(value, 'password')}
@@ -81,6 +82,7 @@ const ForgetPasswordScreen2 = props => {
           placeholder="Şifre Tekrar"
           secureTextEntry={true}
           inputStyle={{ marginLeft: 5 }}
+          maxLength={24}
           containerStyle={{ paddingBottom: 15 }}
           leftIcon={<Icon name="md-lock" size={24} color="black" />}
           onChangeText={value => changeText(value, 'rePassword')}

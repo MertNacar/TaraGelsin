@@ -32,10 +32,10 @@ export const removeTokenStorage = async () => {
   }
 };
 
-export const getUserStorage = async () => {
+export const getPhoneStorage = async () => {
   try {
     let value;
-    value = await AsyncStorage.getItem("username");
+    value = await AsyncStorage.getItem("phone");
     if (value !== null) return { value, err: false }
     else throw new Error()
   } catch {
@@ -44,20 +44,20 @@ export const getUserStorage = async () => {
 };
 
 /**
- * @param {string} username - UserToken
+ * @param {string} phone - UserToken
  */
-export const storeUserStorage = async username => {
+export const storePhoneStorage = async phone => {
   try {
-    await AsyncStorage.setItem("username", username);
+    await AsyncStorage.setItem("phone", phone);
     return { err: false };
   } catch {
     return { err: true };
   }
 };
 
-export const removeUserStorage = async () => {
+export const removePhoneStorage = async () => {
   try {
-    await AsyncStorage.removeItem("username");
+    await AsyncStorage.removeItem("phone");
     return { err: false };
   } catch {
     return { err: true };

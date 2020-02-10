@@ -2,81 +2,63 @@ import React, { useState } from 'react'
 import { View, SafeAreaView } from 'react-native'
 import { Input, Text, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { validateRegex, passwordRegex } from '../../../../regex/regex'
+import { validateRegex, phoneRegex } from '../../../../regex/regex'
 import styles from './style'
-import { updateUser } from '../../../../store/user/actionCreator'
+import { removeUser } from '../../../../store/user/actionCreator'
+import * as Http from '../../../../utils/httpHelper'
 import { connect } from 'react-redux'
+import { storeUserStorage, storeTokenStorage } from '../../../../AsyncStorage/index'
 
 const SignupScreen2 = props => {
-  const [passwords, setPasswords] = useState({ password: "", rePassword: "" })
-  const [err, setErr] = useState(false)
-  const [errMessage, setErrMessage] = useState("")
+  const [phone, setPhone] = useState("")
+  const [err, setErr] = useState("")
 
-  changeText = (value, type) => {
-    let newPassword = Object.assign({}, passwords, { [type]: value })
-    setPasswords(newPassword)
-  };
-
-  validatePassword = () => {
-    if (passwords.password === passwords.rePassword) {
-      return true
-    } else return false
+  changeNumber = (value) => {
+    setPhone(value)
   }
 
-  continueSign2 = async () => {
-    setErrMessage("")
-    setErr(false)
-    validate = validatePassword()
+  sendSms = () => {
 
-    if (validate) {
-      passValidation = validateRegex(passwordRegex, passwords.password)
+  }
 
-      if (passValidation) {
-        let user = Object.assign({}, props.getUser, { password: passwords.password })
-        props.updateUser(user)
-        props.navigation.navigate("Signup3")
+  signUp = async () => {
+    try {
 
-      } else {
-        setErr(true)
-        setErrMessage("Girdiğiniz şifre uygun değildir, lütfen başka bir şifre deneyiniz")
+      let user = Object.assign({}, props.getUser, { phone })
+      user.deviceID = "STATIC DEVICEID"
+      let res = await Http.postWithoutToken('auth/signup/', user)
+
+      if (res.err) throw new Error()
+      else {
+        props.removeUser(user)
+        props.navigation.navigate("Login")
+
       }
-    } else {
-      setErr(true)
-      setErrMessage("Girdiğiniz şifreler uyuşmamaktadır.")
+    } catch (err) {
+      console.warn(err.message)
     }
-  };
+  }
 
   return (
     <SafeAreaView style={styles.container}>
+      <Text>Signup2</Text>
+
       <View style={{ display: err ? "flex" : "none" }}>
         <Text style={{ color: "red" }}>
-          {errMessage}
+          Hatalı Telefon Numarası Girdiniz.
         </Text>
       </View>
 
-      <View style={styles.form}>
+      <Input
+        placeholder="+90 452 080 51 51"
+        textContentType="telephoneNumber"
+        inputStyle={{ marginLeft: 5 }}
+        inputContainerStyle={{ borderBottomWidth: 0 }}
+        leftIcon={<Icon name="md-call" size={24} color="black" />}
+        onChangeText={value => changeNumber(value)}
+      />
 
-        <Input
-          placeholder="Şifre"
-          secureTextEntry={true}
-          textContentType="password"
-          inputStyle={{ marginLeft: 5 }}
-          containerStyle={{ paddingBottom: 15 }}
-          leftIcon={<Icon name="md-lock" size={24} color="black" />}
-          onChangeText={value => changeText(value, 'password')}
-        />
-
-        <Input
-          placeholder="Şifre Tekrar"
-          secureTextEntry={true}
-          inputStyle={{ marginLeft: 5 }}
-          containerStyle={{ paddingBottom: 15 }}
-          leftIcon={<Icon name="md-lock" size={24} color="black" />}
-          onChangeText={value => changeText(value, 'rePassword')}
-        />
-
-        <Button containerStyle={styles.button} title="Devam et" onPress={() => continueSign2()} />
-      </View>
+      <Button containerStyle={styles.button} title="Kayıt Ol" onPress={() => signUp()} />
 
     </SafeAreaView>
   )
@@ -90,7 +72,7 @@ mapStateToProps = state => {
 
 mapDispatchToProps = dispatch => {
   return {
-    updateUser: user => dispatch(updateUser(user))
+    removeUser: () => dispatch(removeUser())
   };
 };
 

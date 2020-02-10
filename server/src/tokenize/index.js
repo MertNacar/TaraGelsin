@@ -8,8 +8,8 @@ const validateToken = token => {
   return jwt.verify(token, PUBLIC_KEY, options.verifyOptions());
 };
 
-const createToken = username => {
-  return jwt.sign({ username }, PRIVATE_KEY, options.signOptions());
+const createToken = phone => {
+  return jwt.sign({ phone }, PRIVATE_KEY, options.signOptions());
 };
 
 export default { validateToken, createToken }

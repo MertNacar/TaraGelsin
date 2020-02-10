@@ -1,6 +1,7 @@
 import db from "../connection"
 import Sequelize from "sequelize"
-
+import Countries from './Countries'
+import Cities from './Cities'
 const Users = db.define(
   "tblUsers",
   {
@@ -8,11 +9,6 @@ const Users = db.define(
       primaryKey: true,
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4
-    },
-
-    username: {
-      type: Sequelize.STRING,
-      allowNull: false
     },
 
     fullname: {
@@ -28,11 +24,15 @@ const Users = db.define(
     email: Sequelize.STRING,
 
     phone: {
+      type: Sequelize.STRING(15),
+      allowNull: false,
+      unique: true
+    },
+
+    deviceID: {
       type: Sequelize.STRING,
       allowNull: false
     },
-
-    deviceID: Sequelize.STRING,
 
     taraPoint: {
       type: Sequelize.SMALLINT,
@@ -40,5 +40,11 @@ const Users = db.define(
     },
   }
 );
+
+Countries.hasMany(Users, { foreignKey: 'countryID', allowNull: false });
+Users.belongsTo(Countries, { foreignKey: 'countryID', allowNull: false });
+
+Cities.hasMany(Users, { foreignKey: 'cityID' });
+Users.belongsTo(Cities, { foreignKey: 'cityID' });
 
 export default Users

@@ -12,7 +12,7 @@ var router = express.Router();
 //Get ınformation from user
 router.get("/immediately", async (req, res) => {
   try {
-    let username = req.query.username;
+    let phone = req.query.phone;
     let token = req.headers.authorization.split(" ")[1];
     let validate = jwt.validateToken(token);
     if (validate) {
@@ -20,13 +20,12 @@ router.get("/immediately", async (req, res) => {
         attributes: [
           "userID",
           "fullname",
-          "username",
           "email",
           "phone",
           "deviceID"
         ],
         where: {
-          username
+          phone
         },
       });
       if (data === null) throw new Error();
@@ -45,27 +44,25 @@ router.get("/immediately", async (req, res) => {
 //login validate with form
 router.post("", async (req, res) => {
   try {
-    let { username, password } = req.body.data;
+    let { phone, password } = req.body.data;
     let data = await models.Users.findOne({
       attributes: [
         "userID",
         "fullname",
-        "username",
         "password",
         "email",
         "phone",
         "deviceID"
       ],
       where: {
-        username
+        phone
       }
     });
     if (data === null) throw new Error();
     else {
-      console.log(data.password)
       let confirm = await verifyPassword(password, data.password);
       if (confirm) {
-        let token = jwt.createToken(data.username);
+        let token = jwt.createToken(data.phone);
         let user = data.dataValues;
         user.token = token;
         user.loginDate = Date(Date.now()).toString();

@@ -7,7 +7,7 @@ import { removeUser } from '../../../../store/user/actionCreator'
 import { connect } from 'react-redux'
 const ProfileScreen = props => {
 
-  const [user, setUser] = useState({ username: "", fullname: "", email: "", phone: "", loginDate: "" })
+  const [user, setUser] = useState({ phone: "", fullname: "", email: "", loginDate: "" })
 
   logOut = async () => {
     await removeUserStorage()
@@ -26,14 +26,10 @@ const ProfileScreen = props => {
       <ScrollView>
         <View>
           <Image />
-          <Text>username : {user.username}</Text>
-        </View>
-
-
-        <View>
-          <Icon />
           <Text>fullname : {user.fullname}</Text>
         </View>
+
+
         <View>
           <Icon />
           <Text>fullname : {user.email}</Text>
