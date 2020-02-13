@@ -4,7 +4,8 @@ import {
   jwt,
   verifyPassword,
   hashPassword,
-  models
+  models,
+  regex
 } from "../imports"
 
 var express = require("express");

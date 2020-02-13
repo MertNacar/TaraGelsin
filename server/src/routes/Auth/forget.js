@@ -36,7 +36,7 @@ router.post("/password", async (req, res) => {
   }
 });
 
-router.post("/changePassword", async (req, res) => {
+router.post("/change-password", async (req, res) => {
   try {
     let { phone, password } = req.body.data;
     let phoneValid = regex.validateRegex(regex.phoneRegex, phone)

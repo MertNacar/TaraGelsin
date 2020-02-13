@@ -4,7 +4,8 @@ import {
   jwt,
   verifyPassword,
   hashPassword,
-  models
+  models,
+  regex
 } from "../imports"
 
 var express = require("express");
@@ -14,10 +15,12 @@ var router = express.Router();
 router.get("/scan", async (req, res) => {
   try {
     let qrCode = req.query.qrCode.split("/");
+    let uuidCafeValid = regex.validateRegex(regex.uuidRegex, qrCode[0])
+    let uuidTableValid = regex.validateRegex(regex.uuidRegex, qrCode[1])
     let token = req.headers.authorization.split(" ")[1];
     let validate = jwt.validateToken(token);
-    if (validate) {
 
+    if (validate && uuidCafeValid && uuidTableValid) {
       let data = await models.Cafes.findOne({
         attributes: ["cafeID", "cafeName", "cafePoint", "cafeDescription", "cafeImagePath", "cafeAddress"],
         where: {
