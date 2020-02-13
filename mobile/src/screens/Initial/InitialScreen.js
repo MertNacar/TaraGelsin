@@ -15,18 +15,18 @@ const InitialScreen = props => {
   init = async () => {
     try {
       const token = await getTokenStorage();
-      console.log(token)
+
       if (token.err) throw new Error()
       else {
         let phone = await getPhoneStorage()
-        console.log(phone)
-        let result = await Http.get(`auth/login/immediately?phone=${phone.value}`, token.value)
-        console.log(result)
+        let result = await Http.post(`auth/login/immediately`, { phone: phone.value }, token.value)
+
         if (result.err) throw new Error()
         else {
           props.updateUser(result.user)
           props.navigation.navigate("Main")
         }
+
       }
     } catch {
       props.navigation.navigate("Auth")

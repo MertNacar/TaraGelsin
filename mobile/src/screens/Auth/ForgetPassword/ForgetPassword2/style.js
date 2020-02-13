@@ -1,35 +1,41 @@
 import { StyleSheet } from 'react-native'
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop:"10%",
-    justifyContent:"center",
-    alignItems:"center"
+    paddingTop: "10%",
+    justifyContent: "flex-start",
+    alignItems: "center"
   },
-  form: {
-    flex:2,
-    width: "70%",
-    justifyContent:"flex-start",
-    alignItems:"center"
+  errText: {
+    color: "red",
+    textAlign: "center"
   },
-
-  inputs:{
-    flex:6,
-    width:"100%",
-    justifyContent:"space-evenly",
-    alignItems:"center"
+  textContainer: {
+    width: "90%",
+    alignItems: "center"
   },
-
-  switch:{
-    flex:3,
-    flexDirection:"row",
-    justifyContent:"space-evenly",
-    alignItems:"center"
+  text: {
+    textAlign: "center",
+    fontWeight: "600",
+    fontSize: 16
   },
-  link: {
-    flex: 3,
-    justifyContent:"flex-start"
+  input: {
+    width: "90%",
+    alignSelf: "center",
+    marginTop: "10%",
+    marginBottom: 5,
+    borderWidth: 1,
+    borderRadius: 10
+  },
+  inputText: {
+    marginTop: 10,
+    alignItems: "center",
+    textAlign: "center"
+  },
+  button: {
+    marginTop: "10%",
+    alignSelf: "center",
+    width: "50%",
   }
 })
-export default styles 

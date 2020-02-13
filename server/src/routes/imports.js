@@ -5,7 +5,7 @@ import models from "../database/models/index"
 import { hashPassword, verifyPassword } from "../database/hashing/index"
 import jwt from "../tokenize/index"
 import cloudinary from "cloudinary"
-
+import * as regex from '../regex/regex'
 const Op = Sequelize.Op
 
 cloudinary.v2.config({
@@ -22,6 +22,7 @@ export {
   models,
   hashPassword,
   verifyPassword,
-  cloudinary
+  cloudinary,
+  regex
 }
 

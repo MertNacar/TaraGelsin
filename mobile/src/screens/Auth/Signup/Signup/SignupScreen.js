@@ -12,16 +12,26 @@ import * as Colors from '../../../../constStyle/colors'
 const SignupScreen = props => {
 
   const [countryCode, setCountryCode] = useState('TR')
-  const [country, setCountry] = useState(null)
+  const [country, setCountry] = useState({ callingCode: '90' })
   const [informations, setInformations] = useState(false);
   const [conditions, setConditions] = useState(false);
   const [user, setUser] = useState({ phone: "", email: "", firstname: "", surname: "", password: "" });
   const [err, setErr] = useState(false)
   const [errMessage, setErrMessage] = useState("")
   const [disable, setDisable] = useState(false)
+  const [borderColors, setBorderColors] = useState(
+    {
+      firstBorder: Colors.COLOR_BACKGROUND,
+      surBorder: Colors.COLOR_BACKGROUND,
+      phoneBorder: Colors.COLOR_BACKGROUND,
+      passBorder: Colors.COLOR_BACKGROUND,
+      mailBorder: Colors.COLOR_BACKGROUND,
+      condBorder: Colors.COLOR_BACKGROUND,
+      infoBorder: Colors.COLOR_BACKGROUND
+    })
 
   changeText = (value, type) => {
-    if (type === 'phone') value = "+" + country.callingCode + value
+    if (type === 'phone') value = country.callingCode + value
     let newUser = Object.assign({}, user, { [type]: value })
     setUser(newUser)
   };
@@ -39,27 +49,41 @@ const SignupScreen = props => {
     setConditions(!conditions)
   };
 
+  setBorders = (verifyFirst, verifySur, verifyPhone, verifyPass, verifyMail, verifyCond, verifyInfo) => {
+    let firstBorder = verifyFirst ? Colors.COLOR_BACKGROUND : "red"
+    let surBorder = verifySur ? Colors.COLOR_BACKGROUND : "red"
+    let phoneBorder = verifyPhone ? Colors.COLOR_BACKGROUND : "red"
+    let passBorder = verifyPass ? Colors.COLOR_BACKGROUND : "red"
+    let mailBorder = verifyMail ? Colors.COLOR_BACKGROUND : "red"
+    let condBorder = verifyCond ? Colors.COLOR_BACKGROUND : "red"
+    let infoBorder = verifyInfo ? Colors.COLOR_BACKGROUND : "red"
+    setBorderColors({ firstBorder, surBorder, phoneBorder, passBorder, mailBorder, condBorder, infoBorder })
+  }
+
   continueSign = async () => {
     try {
+      setBorders(true, true, true, true, true, true, true)
       setDisable(true)
       setErrMessage("")
       setErr(false)
 
-      let phoneValidation = validateRegex(phoneRegex, user.phone)
       let firstValidation = validateRegex(nameRegex, user.firstname)
       let surValidation = validateRegex(nameRegex, user.surname)
+      let phoneValidation = validateRegex(phoneRegex, user.phone)
       let passValidation = validateRegex(passwordRegex, user.password)
       let emailValidation = validateRegex(emailRegex, user.email)
+      setBorders(firstValidation, surValidation, phoneValidation, passValidation,
+        emailValidation, conditions, informations)
 
       let validation = phoneValidation && firstValidation && surValidation
         && passValidation && emailValidation && conditions && informations
 
       if (validation) {
-        let checking = await Http.getWithoutToken(`auth/signup/validatePhoneEmail?phone=${user.phone}&email=${user.email}`)
+        let checking = await Http.postWithoutToken(`auth/signup/validate-phone-email`, { phone: user.phone, email: user.email })
 
         if (checking.err) throw new Error("Girdiğiniz bilgiler kullanılmaktadır.")
         else {
-          props.updateUser(user)
+          props.updateUser({ ...user, countryName: countryCode })
           setDisable(false)
           props.navigation.navigate("Signup2")
         }
@@ -91,7 +115,7 @@ const SignupScreen = props => {
           <Input
             placeholder="İsim"
             textContentType="name"
-            containerStyle={styles.name}
+            containerStyle={[styles.name, { borderColor: borderColors.firstBorder }]}
             inputStyle={{ marginLeft: 5 }}
             inputContainerStyle={{ borderBottomWidth: 0 }}
             underlineColorAndroid="transparent"
@@ -102,7 +126,7 @@ const SignupScreen = props => {
           <Input
             placeholder="Soyisim"
             textContentType="familyName"
-            containerStyle={styles.name}
+            containerStyle={[styles.name, { borderColor: borderColors.surBorder }]}
             inputStyle={{ marginLeft: 5 }}
             inputContainerStyle={{ borderBottomWidth: 0 }}
             underlineColorAndroid="transparent"
@@ -130,7 +154,7 @@ const SignupScreen = props => {
             placeholder="Phone"
             textContentType="telephoneNumber"
             inputContainerStyle={{ borderBottomWidth: 0 }}
-            containerStyle={styles.phone}
+            containerStyle={[styles.phone, { borderColor: borderColors.phoneBorder }]}
             maxLength={10}
             underlineColorAndroid="transparent"
             leftIcon={<Icon name="md-call" size={24} color={Colors.COLOR_BACKGROUND} />}
@@ -143,7 +167,7 @@ const SignupScreen = props => {
           placeholder="Şifre"
           secureTextEntry={true}
           textContentType="password"
-          containerStyle={styles.password}
+          containerStyle={[styles.password, { borderColor: borderColors.passBorder }]}
           maxLength={24}
           inputContainerStyle={{ borderBottomWidth: 0 }}
           inputStyle={{ marginLeft: 5 }}
@@ -154,7 +178,7 @@ const SignupScreen = props => {
         <Input
           placeholder="Email"
           textContentType="emailAddress"
-          containerStyle={styles.password}
+          containerStyle={[styles.password, { borderColor: borderColors.mailBorder }]}
           maxLength={40}
           inputContainerStyle={{ borderBottomWidth: 0 }}
           inputStyle={{ marginLeft: 5 }}
@@ -165,6 +189,8 @@ const SignupScreen = props => {
         <View style={styles.checks}>
           <CheckBox
             center
+            textStyle={{ color: borderColors.condBorder }}
+            wrapperStyle={{ marginLeft: 10 }}
             title="Kullanım Koşulları ve Şartlarını okudum ve onaylıyorum."
             checkedIcon={<Icon name="md-checkbox" size={24} color={Colors.COLOR_BACKGROUND} />}
             uncheckedIcon={<Icon name="md-checkbox-outline" size={24} color={Colors.COLOR_BACKGROUND} />}
@@ -173,6 +199,8 @@ const SignupScreen = props => {
           />
           <CheckBox
             center
+            textStyle={{ color: borderColors.infoBorder }}
+            wrapperStyle={{ marginLeft: 10 }}
             title="KVKK Verilerin işlenmesini okudum ve onaylıyorum."
             checkedIcon={<Icon name="md-checkbox" size={24} color={Colors.COLOR_BACKGROUND} />}
             uncheckedIcon={<Icon name="md-checkbox-outline" size={24} color={Colors.COLOR_BACKGROUND} />}

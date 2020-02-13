@@ -23,6 +23,7 @@ export default StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
+    width: "100%",
     justifyContent: "center"
   },
   buttonStyle: {

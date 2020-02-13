@@ -11,6 +11,9 @@ export const nameRegex = new RegExp("^[A-Za-zöçşığü]{3,20}$");
 export const phoneRegex = new RegExp(
   "^[0-9]{7,14}$"
 );
+export const countryRegex = new RegExp(
+  "^[A-Z]{2}$"
+);
 export const validateRegex = (typeRegex, input) => {
   return typeRegex.test(input);
 };

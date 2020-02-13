@@ -14,16 +14,17 @@ import CountryPicker from 'react-native-country-picker-modal'
 const LoginScreen = props => {
 
   const [countryCode, setCountryCode] = useState('TR')
-  const [country, setCountry] = useState(null)
+  const [country, setCountry] = useState({ callingCode: '90' })
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [err, setErr] = useState(false);
   const [errMessage, setErrMessage] = useState("")
   const [disable, setDisable] = useState(false)
+  const [borderColors, setBorderColors] = useState({ phoneBorder: Colors.COLOR_BACKGROUND, passBorder: Colors.COLOR_BACKGROUND })
 
   changeText = (value, type) => {
     if (type === 'phone') {
-      setPhone("+" + country.callingCode + value)
+      setPhone(country.callingCode + value)
     }
     else setPassword(value);
   };
@@ -41,13 +42,21 @@ const LoginScreen = props => {
     props.navigation.navigate("Forget")
   };
 
+  setBorders = (verifyPhone, verifyPass) => {
+    let phoneBorder = verifyPhone ? Colors.COLOR_BACKGROUND : "red"
+    let passBorder = verifyPass ? Colors.COLOR_BACKGROUND : "red"
+    setBorderColors({ phoneBorder, passBorder })
+  }
+
   login = async () => {
     try {
+      setBorders(true, true)
       setDisable(true)
       setErrMessage("")
       setErr(false)
       let validatePhone = validateRegex(phoneRegex, phone)
       let validatePassword = validateRegex(passwordRegex, password)
+      setBorders(validatePhone, validatePassword)
 
       if (validatePhone && validatePassword) {
         let result = await Http.postWithoutToken('auth/login', { phone, password })
@@ -59,9 +68,9 @@ const LoginScreen = props => {
           setDisable(false)
           props.navigation.navigate("Main")
 
-        } else throw new Error("Yanlış kullanıcı adı veya şifre girdiniz.")
+        } else throw new Error("Bu numara veya şifre ile kayıtlı kullanıcı bulunamamıştır.")
       } else throw new Error("Girdiğiniz bilgiler uygun değildir.")
-    } catch {
+    } catch (err) {
       setDisable(false)
       setErrMessage(err.message)
       setErr(true)
@@ -101,7 +110,7 @@ const LoginScreen = props => {
               inputContainerStyle={{ borderBottomWidth: 0 }}
               inputStyle={{ marginLeft: 5 }}
               maxLength={10}
-              containerStyle={styles.inputPhone}
+              containerStyle={[styles.inputPhone, { borderColor: borderColors.phoneBorder }]}
               leftIcon={<Icon name="md-call" size={24} color={Colors.COLOR_BACKGROUND} />}
               onChangeText={value => changeText(value, 'phone')}
             />
@@ -115,7 +124,7 @@ const LoginScreen = props => {
             textContentType="password"
             maxLength={24}
             inputStyle={{ marginLeft: 5 }}
-            containerStyle={styles.inputPassword}
+            containerStyle={[styles.inputPassword, { borderColor: borderColors.passBorder }]}
             leftIcon={<Icon name="md-lock" size={24} color={Colors.COLOR_BACKGROUND} />}
             onChangeText={value => changeText(value, 'password')}
           />

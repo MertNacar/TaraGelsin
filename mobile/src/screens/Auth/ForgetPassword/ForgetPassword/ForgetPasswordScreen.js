@@ -8,20 +8,21 @@ import { updateUser } from '../../../../store/user/actionCreator'
 import { connect } from 'react-redux'
 import * as Http from '../../../../utils/httpHelper'
 import CountryPicker from 'react-native-country-picker-modal'
-
+import * as Colors from '../../../../constStyle/colors'
 const ForgetPasswordScreen = props => {
 
   const [countryCode, setCountryCode] = useState('TR')
-  const [country, setCountry] = useState(null)
+  const [country, setCountry] = useState({ callingCode: "90" })
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
   const [err, setErr] = useState(false)
   const [errMessage, setErrMessage] = useState("")
   const [disable, setDisable] = useState(false)
+  const [borderColors, setBorderColors] = useState({ phoneBorder: Colors.COLOR_BACKGROUND, mailBorder: Colors.COLOR_BACKGROUND })
 
   changeText = (value, type) => {
     if (type === 'phone') {
-      setPhone("+" + country.callingCode + value)
+      setPhone(country.callingCode + value)
     }
     else setEmail(value);
   };
@@ -35,19 +36,27 @@ const ForgetPasswordScreen = props => {
     setCountry(country)
   }
 
+  setBorders = (verifyPhone, verifyMail) => {
+    let phoneBorder = verifyPhone ? Colors.COLOR_BACKGROUND : "red"
+    let mailBorder = verifyMail ? Colors.COLOR_BACKGROUND : "red"
+    setBorderColors({ phoneBorder, mailBorder })
+  }
+
   goForgetScreen2 = async () => {
     try {
+      setBorders(true, true)
       setDisable(true)
       setErrMessage("")
       setErr(false)
 
       let emailValidation = validateRegex(emailRegex, email)
       let phoneValidation = validateRegex(phoneRegex, phone)
+      setBorders(phoneValidation, emailValidation)
 
       if (emailValidation && phoneValidation) {
         let checkUser = await Http.postWithoutToken("auth/forget/password", { email, phone })
 
-        if (checkUser.err) throw new Error("Böyle bir kullanıcı adı kullanılmamaktadır.")
+        if (checkUser.err) throw new Error("Böyle bir telefon kullanılmamaktadır.")
         else {
           props.updateUser(checkUser.user)
           setDisable(false)
@@ -77,7 +86,8 @@ const ForgetPasswordScreen = props => {
           textContentType="emailAddress"
           underlineColorAndroid="transparent"
           maxLength={40}
-          containerStyle={{ borderWidth: 1, borderRadius: 10 }}
+          inputContainerStyle={{ borderBottomWidth: 0 }}
+          containerStyle={[styles.inputEmail, { borderColor: borderColors.mailBorder }]}
           inputStyle={{ marginLeft: 5 }}
           leftIcon={<Icon name="md-mail" size={24} color="black" />}
           onChangeText={value => changeText(value, 'email')}
@@ -102,8 +112,9 @@ const ForgetPasswordScreen = props => {
             textContentType="telephoneNumber"
             underlineColorAndroid="transparent"
             maxLength={10}
-            containerStyle={{ borderWidth: 1, borderRadius: 10 }}
-            inputStyle={{ paddingLeft: 5 }}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+            containerStyle={[styles.inputPhone, { borderColor: borderColors.phoneBorder }]}
+            inputStyle={{ paddingLeft: 7 }}
             leftIcon={<Icon name="md-call" size={24} color="black" />}
             onChangeText={value => changeText(value, 'phone')}
           />
@@ -112,9 +123,9 @@ const ForgetPasswordScreen = props => {
 
 
 
-        <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} containerStyle={styles.button} title="Şifreni Al" onPress={() => goForgetScreen2()} />
+        <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} buttonStyle={styles.button} containerStyle={styles.buttonContainer} title="Devam Et" onPress={() => goForgetScreen2()} />
 
-        <Button disabled={disable} disabledTitleStyle={{ opacity: 0.8 }} type="clear" title="Şifren aklına mı geldi ?" onPress={() => goLoginScreen()} />
+        <Button disabled={disable} disabledTitleStyle={{ opacity: 0.8 }} titleStyle={styles.textButtonInput} containerStyle={styles.textButtonContainer} type="clear" title="Şifren aklına mı geldi ?" onPress={() => goLoginScreen()} />
 
       </View>
 

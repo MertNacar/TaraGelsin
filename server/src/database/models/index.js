@@ -17,6 +17,7 @@ import OrderDetailExtras from './OrderDetailExtras'
 import CafeTables from './CafeTables'
 import FoodExtras from './FoodExtras'
 import FoodIngredients from './FoodIngredients'
+import Devices from './Devices'
 
 const models = {
   Users,
@@ -37,7 +38,8 @@ const models = {
   OrderDetailExtras,
   CafeTables,
   FoodExtras,
-  FoodIngredients
+  FoodIngredients,
+  Devices
 }
 
 export default models

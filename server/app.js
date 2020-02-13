@@ -49,6 +49,7 @@ app.get("/test", async (req, res) => {
     let CafeTables = await models.CafeTables.findAll();
     let FoodExtras = await models.FoodExtras.findAll();
     let FoodIngredients = await models.FoodIngredients.findAll();
+    let Devices = await models.Devices.findAll();
 
     res.send({
       err: false,
@@ -70,7 +71,8 @@ app.get("/test", async (req, res) => {
       OrderDetailExtras,
       CafeTables,
       FoodExtras,
-      FoodIngredients
+      FoodIngredients,
+      Devices
     });
   } catch (err) {
     res.send({ err: true, err: err.message });

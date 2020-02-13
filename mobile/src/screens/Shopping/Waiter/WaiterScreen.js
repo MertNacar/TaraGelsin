@@ -11,16 +11,15 @@ const WaiterScreen = () => {
   const [disable, setDisable] = useState(false)
 
   callWaiter = () => {
-    let timeout = setTimeout(() => {
-      setDisable(false)
+    setDisable(false)
+    setTimeout(() => {
+      setDisable(true)
     }, 1000 * 60 * 5);
-    setDisable(true)
-    timeout();
   }
 
   useEffect(() => {
     return () => {
-      clearTimeout("timeout")
+      clearTimeout()
     };
   }, [])
   return (

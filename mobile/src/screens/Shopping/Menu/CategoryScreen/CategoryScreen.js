@@ -23,7 +23,7 @@ const CategoryScreen = props => {
   handleLoadMore = () => { }
   getCategories = async () => {
     try {
-      let res = await Http.get(`shop/menu/categories?cafeID=${props.getCafe.cafeID}&page=${page}`, props.getUser.token)
+      let res = await Http.get(`shop/menu/categories?cafeID=${props.getCafe.cafeID}&page=${page}#`, props.getUser.token)
       if (!res.err) {
         props.updateCategories(res.categories)
         setLoading(false)

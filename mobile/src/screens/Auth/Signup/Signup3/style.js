@@ -10,8 +10,8 @@ export default StyleSheet.create({
   },
   image: {
     flex: 3,
-    width: "70%",
-    height: "80%",
+    width: "100%",
+    height: "100%",
     resizeMode: "contain"
   },
   row: {
@@ -19,11 +19,14 @@ export default StyleSheet.create({
     justifyContent: "center"
   },
   text: {
+    fontWeight: "700",
+    fontSize: 18,
     textAlign: "center",
   },
   buttonContainer: {
-    flex: 1,
-    justifyContent: "center"
+    width: "100%",
+    justifyContent: "center",
+    flex: 1.5
   },
   buttonStyle: {
     paddingHorizontal: 5,

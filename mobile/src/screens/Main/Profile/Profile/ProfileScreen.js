@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
 import { Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
-import { removeTokenStorage, removeUserStorage } from '../../../../AsyncStorage/index'
+import { removeTokenStorage, removePhoneStorage } from '../../../../AsyncStorage/index'
 import { removeUser } from '../../../../store/user/actionCreator'
 import { connect } from 'react-redux'
 const ProfileScreen = props => {
@@ -10,7 +10,7 @@ const ProfileScreen = props => {
   const [user, setUser] = useState({ phone: "", fullname: "", email: "", loginDate: "" })
 
   logOut = async () => {
-    await removeUserStorage()
+    await removePhoneStorage()
     await removeTokenStorage()
     props.removeUser()
     props.navigation.navigate("Auth")

@@ -1,105 +1,86 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { View, SafeAreaView } from 'react-native'
-import { CheckBox, Input, Text, Button } from 'react-native-elements'
-import Icon from 'react-native-vector-icons/Ionicons'
-import { validateRegex, passwordRegex } from '../../../../regex/regex'
+import { Input, Text, Button } from 'react-native-elements'
 import styles from './style'
-import { updateUser } from '../../../../store/user/actionCreator'
-import { connect } from 'react-redux'
-import * as Http from '../../../../utils/httpHelper'
+import * as Colors from '../../../../constStyle/colors'
 
-const ForgetPasswordScreen2 = props => {
-
-  const [passwords, setPasswords] = useState({ password: "", rePassword: "" })
-  const [err, setErr] = useState(false)
+export default ForgetPasswordScreen2 = props => {
+  const [err, setErr] = useState("")
+  const [sentCode, setSentCode] = useState(null)
+  const [count, setCount] = useState(0)
   const [errMessage, setErrMessage] = useState("")
+  const [showSendButton, setShowSendButton] = useState(true)
+  const [showVerifyButton, setShowVerifyButton] = useState(false)
   const [disable, setDisable] = useState(false)
 
-  changeText = (value, type) => {
-    let newPassword = Object.assign({}, passwords, { [type]: value })
-    setPasswords(newPassword)
-  };
-
-  validatePassword = () => {
-    if (passwords.password === passwords.rePassword) {
-      return true
-    } else return false
+  sendSms = () => {
+    setCount(0)
+    setShowSendButton(false)
+    setShowVerifyButton(true)
+    setErr(false)
+    setErrMessage("")
   }
 
-  getNewPassword = async () => {
+  changeNumber = (value) => {
+    setSentCode(value)
+  }
+
+  signUp = async () => {
     try {
-      setDisable(true)
-      setErrMessage("")
       setErr(false)
-      let validate = validatePassword()
+      setErrMessage("")
+      setDisable(true)
+      setCount(count + 1)
+      let validate = (sentCode == 120120)
 
-      if (validate) {
-        passValidation = validateRegex(passwordRegex, passwords.password)
+      if (count <= 3) {
 
-        if (passValidation) {
-          let user = { email: props.getUser.email, password: passwords.password }
-          let changingPassword = await Http.postWithoutToken("auth/forget/changePassword", user)
+        if (validate) {
+          props.navigation.navigate("Forget3")
 
-          if (!changingPassword.err) {
-            setDisable(false)
-            props.navigation.navigate("Login")
+        } else throw new Error("Tek seferlik kod yanlış girildi")
 
-          } else throw new Error("Şifreyi değiştirirken bir hatayla karşılaştık tekrar deneyiniz.")
-
-        } else throw new Error("Girdiğiniz şifre uygun değildir, lütfen başka bir şifre deneyiniz")
-
-      } else throw new Error("Girdiğiniz şifreler uyuşmamaktadır.")
-
+      } else {
+        setShowSendButton(true)
+        setShowVerifyButton(false)
+        throw new Error("Tek seferlik kod hakkınız bitmiştir. Lütfen tekrar kod yolla butonuna tıklayınız.")
+      }
     } catch (err) {
       setDisable(false)
       setErrMessage(err.message)
       setErr(true)
     }
-  };
+  }
 
   return (
     <SafeAreaView style={styles.container}>
 
-      <View style={{ display: err ? "flex" : "none" }}>
-        <Text style={{ color: "red" }}>
+      <View style={{ display: err ? "flex" : "none", width: "90%", marginBottom: 10 }}>
+        <Text style={styles.errText}>
           {errMessage}
         </Text>
       </View>
-
-      <View style={styles.form}>
-        <Input
-          placeholder="Şifre"
-          secureTextEntry={true}
-          textContentType="newPassword"
-          inputStyle={{ marginLeft: 5 }}
-          maxLength={24}
-          containerStyle={{ paddingBottom: 15 }}
-          leftIcon={<Icon name="md-lock" size={24} color="black" />}
-          onChangeText={value => changeText(value, 'password')}
-        />
-
-        <Input
-          placeholder="Şifre Tekrar"
-          secureTextEntry={true}
-          inputStyle={{ marginLeft: 5 }}
-          maxLength={24}
-          containerStyle={{ paddingBottom: 15 }}
-          leftIcon={<Icon name="md-lock" size={24} color="black" />}
-          onChangeText={value => changeText(value, 'rePassword')}
-        />
-
-        <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} containerStyle={styles.button} title="Şifreni Al" onPress={() => getNewPassword()} />
-
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>Telefonunuza kod gönderildi</Text>
+        <Text style={styles.text}>Birkaç kez yanlış girmeniz durumunda</Text>
+        <Text style={styles.text}>yeniden kod isteminiz gerekmektedir.</Text>
       </View>
+      <Input
+        disabled={showSendButton}
+        placeholder="Tek seferlik kodunuzu giriniz."
+        textContentType="oneTimeCode"
+        keyboardType="numeric"
+        containerStyle={styles.input}
+        inputStyle={styles.inputText}
+        maxLength={6}
+        inputContainerStyle={{ borderBottomWidth: 0 }}
+        onChangeText={value => changeNumber(value)}
+      />
+
+      <Button title="Kod Yolla" containerStyle={[{ display: showSendButton ? "flex" : "none" }, styles.button]} buttonStyle={{ backgroundColor: Colors.COLOR_BACKGROUND }} onPress={() => sendSms()} />
+
+      <Button title="Onayla" disabled={disable} disabledTitleStyle={{ opacity: 0.8 }} containerStyle={[{ display: showVerifyButton ? "flex" : "none" }, styles.button]} buttonStyle={{ backgroundColor: Colors.COLOR_BACKGROUND }} onPress={() => signUp()} />
 
     </SafeAreaView>
   )
 }
-
-mapStateToProps = state => {
-  return {
-    getUser: state.user
-  };
-};
-
-export default connect(mapStateToProps)(ForgetPasswordScreen2);

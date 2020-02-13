@@ -2,6 +2,8 @@ import db from "../connection"
 import Sequelize from "sequelize"
 import Countries from './Countries'
 import Cities from './Cities'
+import Devices from './Devices'
+
 const Users = db.define(
   "tblUsers",
   {
@@ -29,11 +31,6 @@ const Users = db.define(
       unique: true
     },
 
-    deviceID: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-
     taraPoint: {
       type: Sequelize.SMALLINT,
       defaultValue: 0
@@ -46,5 +43,8 @@ Users.belongsTo(Countries, { foreignKey: 'countryID', allowNull: false });
 
 Cities.hasMany(Users, { foreignKey: 'cityID' });
 Users.belongsTo(Cities, { foreignKey: 'cityID' });
+
+Devices.hasMany(Users, { foreignKey: 'deviceID' });
+Users.belongsTo(Devices, { foreignKey: 'deviceID' });
 
 export default Users
