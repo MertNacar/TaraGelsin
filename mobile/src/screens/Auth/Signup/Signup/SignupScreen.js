@@ -156,6 +156,7 @@ const SignupScreen = props => {
             inputContainerStyle={{ borderBottomWidth: 0 }}
             containerStyle={[styles.phone, { borderColor: borderColors.phoneBorder }]}
             maxLength={10}
+            keyboardType="numeric"
             underlineColorAndroid="transparent"
             leftIcon={<Icon name="md-call" size={24} color={Colors.COLOR_BACKGROUND} />}
             inputStyle={{ marginLeft: 5 }}

@@ -1,8 +1,12 @@
 import { createStackNavigator } from 'react-navigation-stack'
 import ProfileScreen from './Profile/ProfileScreen'
 import ProfileUpdateScreen from './ProfileUpdate/ProfileUpdateScreen'
-import CredCardScreen from './CredCard/CredCardScreen'
-import AddCredCardScreen from './AddCredCard/AddCredCardScreen'
+import PaymentStack from './PaymentMethod/PaymentStack'
+import ChangePassStack from './ChangePass/ChangePassStack'
+import InformationScreen from './Informations/InformationScreen'
+import LanguageScreen from './Languages/LanguageScreen'
+import NotificationScreen from './Notifications/NotificationScreen'
+import OrderHistoryScreen from './OrderHistory/OrderHistoryScreen'
 import * as Colors from '../../../constStyle/colors'
 
 export default createStackNavigator({
@@ -38,10 +42,22 @@ export default createStackNavigator({
       },
     }
   },
-  CredCard: {
-    screen: CredCardScreen,
+  Payment: {
+    screen: PaymentStack,
     navigationOptions: {
-      headerTitle: "Kredi Kartlarım",
+      header: null
+    }
+  },
+  ChangePass: {
+    screen: ChangePassStack,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Informations: {
+    screen: InformationScreen,
+    navigationOptions: {
+      headerTitle: "Informations",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
@@ -56,10 +72,10 @@ export default createStackNavigator({
       },
     }
   },
-  AddCredCard: {
-    screen: AddCredCardScreen,
+  Languages: {
+    screen: LanguageScreen,
     navigationOptions: {
-      headerTitle: "Kredi Kartı Ekle",
+      headerTitle: "Choose Language",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
@@ -73,7 +89,43 @@ export default createStackNavigator({
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
     }
-  }
+  },
+  Notifications: {
+    screen: NotificationScreen,
+    navigationOptions: {
+      headerTitle: "Notifications",
+      headerLeftContainerStyle: {
+        backgroundColor: Colors.COLOR_SECONDARY
+      },
+      headerTitleStyle: {
+        flex: 1,
+        color: Colors.COLOR_SECONDARY,
+        textAlign: "center",
+        marginRight: 56
+      },
+      headerStyle: {
+        backgroundColor: Colors.COLOR_BACKGROUND,
+      },
+    }
+  },
+  OrderHistory: {
+    screen: OrderHistoryScreen,
+    navigationOptions: {
+      headerTitle: "Order History",
+      headerLeftContainerStyle: {
+        backgroundColor: Colors.COLOR_SECONDARY
+      },
+      headerTitleStyle: {
+        flex: 1,
+        color: Colors.COLOR_SECONDARY,
+        textAlign: "center",
+        marginRight: 56
+      },
+      headerStyle: {
+        backgroundColor: Colors.COLOR_BACKGROUND,
+      },
+    }
+  },
 },
   {
     initialRouteName: "Profile"

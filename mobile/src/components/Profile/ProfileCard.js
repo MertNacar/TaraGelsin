@@ -1,17 +1,17 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { ListItem } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
-const ProfileCard = () => {
+import { COLOR_BACKGROUND } from '../../constStyle/colors'
+const ProfileCard = props => {
   return (
     <View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={props.clickItem}>
         <ListItem
-          key={props.id}
-          leftIcon={<Icon name={props.LeftIconName} size={22} />}
-          rightIcon={<Icon name="md-arrow-forward" size={20} />}
+          containerStyle={styles.itemContainer}
+          leftIcon={<Icon name={props.LeftIconName} size={22} color={COLOR_BACKGROUND} />}
+          rightIcon={<Icon name="md-arrow-forward" size={20} color={COLOR_BACKGROUND} />}
           title={props.titleText}
-          bottomDivider
         />
       </TouchableOpacity>
     </View>
@@ -19,7 +19,10 @@ const ProfileCard = () => {
 }
 
 const styles = StyleSheet.create({
-
+  itemContainer: {
+    width: "100%",
+    borderBottomWidth: 1,
+  }
 })
 
 

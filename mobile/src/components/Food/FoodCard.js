@@ -14,6 +14,7 @@ const FoodCard = props => {
       <Tile
         imageSrc={{ uri: PREFIX_IMAGEURL + props.food.foodImagePath }}
         imageContainerStyle={{ marginHorizontal: 7 }}
+        imageProps={{ resizeMode: "cover" }}
         title={props.food.foodName}
         onPress={props.goFoodDetails}
         titleStyle={styles.titleStyle}

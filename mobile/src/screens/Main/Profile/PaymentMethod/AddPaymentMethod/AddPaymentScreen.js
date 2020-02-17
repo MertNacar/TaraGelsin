@@ -1,12 +1,12 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-const CredCardScreen = () => {
+const AddPaymentScreen = () => {
   return (
     <View>
-      <Text>CredCardScreen</Text>
+      <Text>AddPaymentScreen</Text>
     </View>
   )
 }
 
-export default CredCardScreen
+export default AddPaymentScreen

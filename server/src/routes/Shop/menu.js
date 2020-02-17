@@ -24,8 +24,8 @@ router.get("/categories", async (req, res) => {
       let data = await models.Categories.findAll({
         attributes: ["categoryID", "categoryName", "categoryImagePath"],
         includeIgnoreAttributes: false,
-        limit: 3,
-        offset: page * 3,
+        /*limit: 3,
+        offset: page * 3,*/
         include: [{
           required: true,
           model: models.Cafes,
@@ -56,8 +56,8 @@ router.get("/categories/foods", async (req, res) => {
       let data = await models.Foods.findAll({
         attributes: ["foodID", "foodName", "foodCost", "foodDescription", "isNewFood", "foodPreperationTime", "foodImagePath", "foodCal"],
         includeIgnoreAttributes: false,
-        limit: 3,
-        offset: page * 3,
+        /*limit: 3,
+        offset: page * 3,*/
         where: {
           foodOnSale: true
         },

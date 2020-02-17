@@ -41,7 +41,9 @@ router.post("/change-password", async (req, res) => {
     let { phone, password } = req.body.data;
     let phoneValid = regex.validateRegex(regex.phoneRegex, phone)
     let passValid = regex.validateRegex(regex.passwordRegex, password)
-
+    console.log('phoneValid', phoneValid)
+    console.log('passValid', passValid)
+    //console.log('phoneValid', phoneValid)
     if (phoneValid && passValid) {
       let data = await models.Users.findOne({
         attributes: ["userID"],
@@ -49,9 +51,9 @@ router.post("/change-password", async (req, res) => {
           phone
         }
       });
-
+      console.log('data', data)
       if (data !== null) {
-        let hash = await hashPassword(user.password)
+        let hash = await hashPassword(password)
         await data.update({ password: hash }, { where: { userID: data.userID } });
         res.json({ err: false });
       } else throw new Error()

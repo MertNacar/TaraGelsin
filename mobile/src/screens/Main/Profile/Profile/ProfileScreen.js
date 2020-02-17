@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView } from 'react-native'
 import { Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { removeTokenStorage, removePhoneStorage } from '../../../../AsyncStorage/index'
 import { removeUser } from '../../../../store/user/actionCreator'
 import { connect } from 'react-redux'
+import * as Colors from '../../../../constStyle/colors'
+import profileInfos from './data'
+import ProfileCard from '../../../../components/Profile/ProfileCard'
+import styles from './style'
+import moment from 'moment'
 const ProfileScreen = props => {
 
-  const [user, setUser] = useState({ phone: "", fullname: "", email: "", loginDate: "" })
+  const [user, setUser] = useState({ phone: "", fullname: "", email: "" })
 
   logOut = async () => {
     await removePhoneStorage()
@@ -20,26 +25,31 @@ const ProfileScreen = props => {
     setUser(props.getUser)
   }, [])
 
+  goSubPage = (id) => {
+    props.navigation.navigate(id)
+  }
+
+  let profileList = profileInfos.map((item, i) => {
+    return (
+      <ProfileCard
+        key={i}
+        LeftIconName={item.iconName}
+        titleText={item.text}
+        clickItem={() => goSubPage(item.onPress)}
+      />
+    )
+  })
+
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
 
-      <ScrollView>
-        <View>
-          <Image />
-          <Text>fullname : {user.fullname}</Text>
+        <View style={styles.list}>
+          {profileList}
         </View>
 
-
-        <View>
-          <Icon />
-          <Text>fullname : {user.email}</Text>
-        </View>
-        <View>
-          <Icon />
-          <Text>fullname : {user.phone}</Text>
-        </View>
-        <View><Text>loginDate : {user.loginDate}</Text></View>
-        <Button title="Çıkış Yap" type="clear" titleStyle={{ color: "red" }} onPress={() => logOut()} />
+        <Button iconRight={true} icon={<Icon name="md-log-out" color="red" size={22} />}
+          type="clear" title="Çıkış Yap" containerStyle={styles.buttonContainer} buttonStyle={styles.button} titleStyle={styles.buttonText} onPress={() => logOut()} />
       </ScrollView>
     </SafeAreaView>
   )

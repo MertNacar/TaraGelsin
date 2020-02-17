@@ -1,0 +1,37 @@
+[
+  {
+    "text": "Kişisel Bilgilerim",
+    "iconName": "md-person",
+    "onPress": "UpdateProfile"
+  },
+  {
+    "text": "Ödeme Yöntemlerim",
+    "iconName": "md-card",
+    "onPress": "PaymentMethod"
+  },
+  {
+    "text": "Geçmiş Siparişlerim",
+    "iconName": "md-cart",
+    "onPress": "OrderHistory"
+  },
+  {
+    "text": "Şifre Değiştir",
+    "iconName": "md-lock",
+    "onPress": "ChangePass"
+  },
+  {
+    "text": "İletişim Tercihleri",
+    "iconName": "md-notifications",
+    "onPress": "Notifications"
+  },
+  {
+    "text": "Bilgilendirmeler",
+    "iconName": "md-paper",
+    "onPress": "Informations"
+  },
+  {
+    "text": "Dil - Language",
+    "iconName": "md-globe",
+    "onPress": "Languages"
+  }
+]

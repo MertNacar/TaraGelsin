@@ -10,7 +10,7 @@ import { updateFoods, removeFoods } from '../../../../store/food/actionCreator'
 const FoodScreen = props => {
 
   const [loading, setLoading] = useState(true)
-  const [page, setPage] = useState(0)
+  //const [page, setPage] = useState(0)
 
   useEffect(() => {
     if (loading) {
@@ -21,7 +21,7 @@ const FoodScreen = props => {
   getFoods = async () => {
     try {
       let categoryID = props.navigation.state.params.categoryID
-      let res = await Http.get(`shop/menu/categories/foods?categoryID=${categoryID}&page=${page}`, props.getUser.token)
+      let res = await Http.get(`shop/menu/categories/foods?categoryID=${categoryID}&page=${0}`, props.getUser.token)
       if (!res.err) {
         props.updateFoods(res.foods)
         setLoading(false)
@@ -30,6 +30,10 @@ const FoodScreen = props => {
       //Pop up olabilir
     }
   }
+
+  /*renderFooter = () => {
+    return (<ActivityIndicator size="small" />)
+  }*/
 
   onRefresh = () => {
     props.removeFoods()
@@ -53,6 +57,7 @@ const FoodScreen = props => {
           data={props.getFoods}
           style={styles.foodList}
           showsVerticalScrollIndicator={false}
+          //ListFooterComponent={renderFooter}
           renderItem={({ item }) =>
             <FoodCard
               food={item}

@@ -15,12 +15,12 @@ var router = express.Router();
 router.get("/scan", async (req, res) => {
   try {
     let qrCode = req.query.qrCode.split("/");
-    let uuidCafeValid = regex.validateRegex(regex.uuidRegex, qrCode[0])
-    let uuidTableValid = regex.validateRegex(regex.uuidRegex, qrCode[1])
+    let cafeValid = regex.validateRegex(regex.uuidRegex, qrCode[0])
+    let tableValid = regex.validateRegex(regex.uuidRegex, qrCode[1])
     let token = req.headers.authorization.split(" ")[1];
     let validate = jwt.validateToken(token);
 
-    if (validate && uuidCafeValid && uuidTableValid) {
+    if (validate && cafeValid && tableValid) {
       let data = await models.Cafes.findOne({
         attributes: ["cafeID", "cafeName", "cafePoint", "cafeDescription", "cafeImagePath", "cafeAddress"],
         where: {
@@ -35,6 +35,7 @@ router.get("/scan", async (req, res) => {
           },
         }]
       });
+
       if (data !== null) {
         delete data.dataValues.tblTables
         let cafe = { ...data.dataValues, tableName: data.tblTables[0].tableName }

@@ -112,6 +112,7 @@ const ForgetPasswordScreen = props => {
             textContentType="telephoneNumber"
             underlineColorAndroid="transparent"
             maxLength={10}
+            keyboardType="numeric"
             inputContainerStyle={{ borderBottomWidth: 0 }}
             containerStyle={[styles.inputPhone, { borderColor: borderColors.phoneBorder }]}
             inputStyle={{ paddingLeft: 7 }}

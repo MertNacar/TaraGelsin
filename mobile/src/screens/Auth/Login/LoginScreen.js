@@ -110,6 +110,7 @@ const LoginScreen = props => {
               inputContainerStyle={{ borderBottomWidth: 0 }}
               inputStyle={{ marginLeft: 5 }}
               maxLength={10}
+              keyboardType="numeric"
               containerStyle={[styles.inputPhone, { borderColor: borderColors.phoneBorder }]}
               leftIcon={<Icon name="md-call" size={24} color={Colors.COLOR_BACKGROUND} />}
               onChangeText={value => changeText(value, 'phone')}

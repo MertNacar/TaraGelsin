@@ -13,7 +13,7 @@ var router = express.Router();
 //Get ınformation from user
 router.post("/immediately", async (req, res) => {
   try {
-    let { phone } = req.query.data;
+    let { phone } = req.body.data;
     let phoneValid = regex.validateRegex(regex.phoneRegex, phone)
     let token = req.headers.authorization.split(" ")[1];
     let validate = jwt.validateToken(token);
@@ -29,9 +29,6 @@ router.post("/immediately", async (req, res) => {
         where: {
           phone
         },
-        include: [
-          deviceID
-        ]
       });
 
       if (data !== null) {
