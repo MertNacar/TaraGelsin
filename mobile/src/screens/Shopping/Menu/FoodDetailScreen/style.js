@@ -27,7 +27,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingTop: 10,
+    paddingTop: 15,
     paddingHorizontal: 10
   },
   rowSecond: {
@@ -41,11 +41,25 @@ export default StyleSheet.create({
     width: screenWidth,
     padding: 5
   },
+  ingredientCard: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
   button: {
     flex: 1,
     width: screenWidth,
-    paddingHorizontal: 4
+    paddingHorizontal: 4,
+    paddingTop: 15
+  },
+  buttonSmallContainer: {
+    flex: 1,
+    alignSelf: "center"
+  },
+  buttonSmall: {
+    width: 50,
   },
   loading: {
     flex: 1,

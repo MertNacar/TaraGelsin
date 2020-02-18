@@ -1,10 +1,10 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { View, Text, StyleSheet, Dimensions } from 'react-native'
 import { Tile } from 'react-native-elements'
 import { PREFIX_IMAGEURL } from "react-native-dotenv";
 const screenWidth = Math.round(Dimensions.get('window').width);
 
-const CategoryCard = memo((props) => {
+const CategoryCard = (props) => {
   return (
     <View style={styles.cardContainer}>
       <Tile
@@ -18,7 +18,7 @@ const CategoryCard = memo((props) => {
       />
     </View>
   )
-})
+}
 
 const styles = StyleSheet.create({
   cardContainer: {

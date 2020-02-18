@@ -4,12 +4,8 @@ import { Button } from 'react-native-elements'
 import * as Colors from '../../constStyle/colors'
 
 const IngredientCard = props => {
-  console.log(props.item.ingredientID)
   return (
-    <View key={props.item.ingredientID}
-      style={[styles.ingredientCard, props.addStyle]}>
-      <Text style={styles.ingredientTextColor}>{props.item.ingredientName}</Text>
-    </View>
+    <Text style={styles.ingredientTextColor}>{props.item.ingredientName}</Text>
   )
 }
 
@@ -19,15 +15,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 10,
-    borderWidth: 3,
+    borderWidth: 1,
     marginBottom: 6,
-    borderColor: Colors.COLOR_BACKGROUND,
-    backgroundColor: Colors.COLOR_PRIMARY,
+    width: "45%"
   },
   ingredientTextColor: {
     fontSize: 18,
-    color: "white"
   }
 })
 

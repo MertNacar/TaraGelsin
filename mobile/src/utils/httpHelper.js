@@ -1,8 +1,7 @@
 import { URL, API } from "react-native-dotenv";
 
 const url = endpoint => {
-  let fullUrl = URL + "/" + API + "/" + endpoint
-  return fullUrl;
+  return URL + "/" + API + "/" + endpoint + ""
 };
 
 const get = async (endpoint, token) => {

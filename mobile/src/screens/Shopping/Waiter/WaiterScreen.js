@@ -14,7 +14,7 @@ const WaiterScreen = () => {
     setDisable(false)
     setTimeout(() => {
       setDisable(true)
-    }, 1000 * 60 * 5);
+    }, 1000 * 60 * 2);
   }
 
   useEffect(() => {

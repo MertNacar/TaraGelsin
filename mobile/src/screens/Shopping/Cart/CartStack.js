@@ -2,7 +2,6 @@ import React from 'react'
 import { createStackNavigator } from 'react-navigation-stack'
 import CartScreen from './CartScreen/CartScreen'
 import PaymentScreen from './PaymentScreens/PaymentScreen'
-import ChoosePaymentScreen from './ChoosePaymentScreen/ChoosePaymentScreen'
 import * as Colors from '../../../constStyle/colors'
 import Icon from 'react-native-vector-icons/Ionicons'
 
@@ -16,22 +15,6 @@ export default createStackNavigator({
         color: Colors.COLOR_SECONDARY,
         textAlign: "center",
         marginLeft: 72
-      },
-      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
-      headerStyle: {
-        backgroundColor: Colors.COLOR_BACKGROUND,
-      },
-    }
-  },
-  ChoosePayment: {
-    screen: ChoosePaymentScreen,
-    navigationOptions: {
-      headerTitle: "Ödeme Yöntemi Seç",
-      headerTitleStyle: {
-        flex: 1,
-        color: Colors.COLOR_SECONDARY,
-        textAlign: "center",
-        marginLeft: 16
       },
       headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
       headerStyle: {

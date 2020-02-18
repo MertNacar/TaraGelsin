@@ -17,6 +17,7 @@ const FoodDetailScreen = props => {
   const [extras, setExtras] = useState([])
   const [ingredients, setIngredients] = useState([])
   const [disable, setDisable] = useState(false)
+  const [foodQuantity, setFoodQuantity] = useState(1)
 
   useEffect(() => {
     if (loading) {
@@ -35,6 +36,7 @@ const FoodDetailScreen = props => {
         let extras = res.food.extras.map(item => {
           return { ...item, disable: false }
         })
+        console.log('extras', extras)
         setExtras(extras)
         setIngredients(res.food.ingredients)
         setFood(selectedFood[0])
@@ -47,6 +49,7 @@ const FoodDetailScreen = props => {
   }
 
   addExtra = (id, disable) => {
+    console.log('extra before', extras)
     extras.find(item => item.extraID === id).disable = !disable
     setExtras(extras)
   }
@@ -56,9 +59,16 @@ const FoodDetailScreen = props => {
     let selectedExtras = extras.filter(item => {
       return item.disable === true
     })
-    let newFood = Object.assign({}, food, { extras: selectedExtras })
+    let newFood = Object.assign({}, food, { extras: selectedExtras }, { foodQuantity })
     props.updateCart([newFood])
     props.navigation.goBack()
+  }
+
+  changeQuantity = (type) => {
+    if (type === "decrement") {
+      if (foodQuantity > 1) setFoodQuantity(foodQuantity - 1)
+    }
+    else setFoodQuantity(foodQuantity + 1)
   }
 
   if (loading) {
@@ -68,13 +78,21 @@ const FoodDetailScreen = props => {
       </SafeAreaView>
     )
   } else {
+
     let ingredientList = ingredients.map(item => {
-      return <IngredientCard item={item} />
+      return (
+        <View key={item.ingredientID}>
+          <IngredientCard item={item} />
+        </View>)
     })
 
     let extraList = extras.map(item => {
-      return <ExtraCard extras={extras} item={item} addExtra={() => addExtra(item.extraID, item.disable)} />
+      return (
+        <View key={item.extraID}>
+          <ExtraCard item={item} disable={item.disable} addExtra={() => addExtra(item.extraID, item.disable)} />
+        </View>)
     })
+    console.log('render after', extras)
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollView}>
@@ -117,8 +135,26 @@ const FoodDetailScreen = props => {
             <View style={styles.list}>
               {extraList}
             </View>
-            <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} containerStyle={styles.button} title="Sepete Ekle" onPress={() => addCart()} />
           </View>
+
+          <View style={styles.rowMain}>
+
+            <View style={{ flex: 1 }}>
+
+              <Button buttonStyle={styles.buttonSmall} containerStyle={styles.buttonSmallContainer} title="-" onPress={() => changeQuantity("decrement")} />
+            </View>
+
+            <View style={{ flex: 1 }}>
+              <Text h4 h4Style={{ textAlign: "center" }}>{foodQuantity} Adet</Text>
+            </View>
+
+
+            <View style={{ flex: 1 }}>
+              <Button buttonStyle={styles.buttonSmall} containerStyle={styles.buttonSmallContainer} title="+" onPress={() => changeQuantity("increment")} />
+            </View>
+          </View>
+
+          <Button disabled={disable} disabledStyle={[styles.button, { opacity: 0.8 }]} containerStyle={styles.button} title="Sepete Ekle" onPress={() => addCart()} />
 
         </ScrollView >
       </SafeAreaView>
