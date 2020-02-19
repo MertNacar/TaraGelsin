@@ -12,14 +12,23 @@ import styles from './style'
 const CartScreen = props => {
 
   const [isEmpty, setIsEmpty] = useState(true)
+  const [totalCost, setTotalCost] = useState(0)
+  const [update, setUpdate] = useState("")
 
   useEffect(() => {
-    if (props.getCart.length === 0) setIsEmpty(true)
-    else setIsEmpty(false)
-  }, [props.getCart.length])
+    if (props.getCart.length === 0) {
+      setIsEmpty(true)
+      setTotalCost(0)
+    }
+    else {
+      setIsEmpty(false)
+      changeTotalCost()
+    }
+  }, [props.getCart.length, update])
 
   incrementQuantity = (id, quantity) => {
     props.getCart.find(item => item.foodID === id).foodQuantity = quantity + 1
+    setUpdate("increment")
   }
 
   decrementQuantity = (id, quantity) => {
@@ -30,19 +39,24 @@ const CartScreen = props => {
     } else {
       props.getCart.find(item => item.foodID === id).foodQuantity = quantity - 1
     }
+    setUpdate("decrement")
   }
 
   goPayment = () => {
     props.navigation.navigate("Payment")
   }
 
-  getTotalCost = () => {
-    let cart = props.getCart
-    if (cart.length > 1) {
-      return a.reduce((acc, current) => {
+  changeTotalCost = () => {
+    let total
+    if (props.getCart.length > 1) {
+      total = props.getCart.reduce((acc, current) => {
         (acc.foodCost * acc.foodQuantity) + (current.foodCost * current.foodQuantity)
+        setTotalCost(total)
       })
-    } else return cart[0].foodCost * cart[0].foodQuantity
+    } else {
+      total = props.getCart[0].foodCost * props.getCart[0].foodQuantity
+      setTotalCost(total)
+    }
   }
 
   if (isEmpty) {
@@ -74,7 +88,7 @@ const CartScreen = props => {
             <View style={styles.footerContainer}>
               <View>
                 <Icon name="md-cart" size={16} />
-                <Text>{getTotalCost()}</Text>
+                <Text>{totalCost}</Text>
               </View>
               <Button
                 /*buttonStyle={styles.buttonStyle} 
