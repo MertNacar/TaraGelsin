@@ -5,11 +5,12 @@ import FoodScreen from './FoodScreen/FoodScreen'
 import FoodDetailScreen from './FoodDetailScreen/FoodDetailScreen'
 import * as Colors from '../../../constStyle/colors'
 import Icon from 'react-native-vector-icons/Ionicons'
+import TabBarLogout from '../../../components/TabBarLogout'
 
 export default createStackNavigator({
   Categories: {
     screen: CategoryScreen,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       headerTitle: "Categories",
       headerTitleStyle: {
         flex: 1,
@@ -17,15 +18,17 @@ export default createStackNavigator({
         textAlign: "center",
         marginLeft: 72
       },
-      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
+      headerRight: (
+        <TabBarLogout {...navigation} />
+      ),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
-    }
+    })
   },
   Foods: {
     screen: FoodScreen,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       headerTitle: "Foods",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
@@ -36,15 +39,17 @@ export default createStackNavigator({
         textAlign: "center",
         marginLeft: 16
       },
-      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
+      headerRight: (
+        <TabBarLogout {...navigation} />
+      ),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
-    }
+    })
   },
   FoodDetails: {
     screen: FoodDetailScreen,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       headerTitle: "Food Details",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
@@ -55,11 +60,13 @@ export default createStackNavigator({
         textAlign: "center",
         marginLeft: 16
       },
-      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
+      headerRight: (
+        <TabBarLogout {...navigation} />
+      ),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
-    }
+    })
   },
 },
   {

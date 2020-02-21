@@ -12,7 +12,7 @@ const OrderCardButton = props => {
       </View>
 
       <View style={{ flex: 1 }}>
-        <Text style={{ textAlign: "center" }}>{props.foodQuantity}</Text>
+        <Text style={styles.quantityText}>{props.foodQuantity}</Text>
       </View>
 
       <View style={{ flex: 1 }}>
@@ -30,9 +30,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center"
   },
+  quantityText: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "700"
+  },
   buttonSmallContainer: {
     flex: 1,
-    alignSelf: "center"
+    justifyContent: "center",
+    alignItems: "center"
   },
   buttonSmall: {
     width: 25,

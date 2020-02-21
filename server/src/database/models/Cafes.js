@@ -50,6 +50,11 @@ const Cafes = db.define(
       allowNull: false
     },
 
+    cafeDiscount: {
+      type: Sequelize.SMALLINT,
+      defaultValue: 0
+    },
+
     isSubscriber: {
       type: Sequelize.BOOLEAN,
       allowNull: false

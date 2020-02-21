@@ -18,11 +18,11 @@ const OrderCard = props => {
         }
 
         title={props.item.foodName}
-
+        titleStyle={styles.titleText}
         subtitle={
           <View style={styles.cost}>
-            <Text>{props.item.foodCost}</Text>
-            <Icon name="lira-sign" size={12} />
+            <Text style={styles.costText}>{props.item.foodCost}</Text>
+            <Icon name="lira-sign" size={14} />
           </View>
         }
 
@@ -42,7 +42,11 @@ const OrderCard = props => {
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
-    borderBottomWidth: 1
+    borderBottomWidth: 1.5
+  },
+  titleText: {
+    fontSize: 16,
+    fontWeight: "700",
   },
   image: {
     height: 75,
@@ -50,10 +54,15 @@ const styles = StyleSheet.create({
     resizeMode: "cover"
   },
   cost: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  }
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start"
+  },
+  costText: {
+    fontSize: 16,
+    fontWeight: "700",
+    marginRight: 3
+  },
 })
 
 

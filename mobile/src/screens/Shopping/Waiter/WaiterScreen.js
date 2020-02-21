@@ -5,6 +5,7 @@ import { View, Image, SafeAreaView } from 'react-native'
 import { Button, Text } from 'react-native-elements'
 import WaiterImage from '../../../assets/images/Waiter.png'
 import Icon from 'react-native-vector-icons/Ionicons'
+import TabBarLogout from '../../../components/TabBarLogout'
 import styles from './style'
 
 const WaiterScreen = () => {
@@ -14,7 +15,7 @@ const WaiterScreen = () => {
     setDisable(false)
     setTimeout(() => {
       setDisable(true)
-    }, 1000 * 60 * 2);
+    }, 10000);
   }
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const WaiterScreen = () => {
 export default createStackNavigator({
   Waiter: {
     screen: WaiterScreen,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       headerTitle: "Waiter",
       headerTitleStyle: {
         flex: 1,
@@ -47,11 +48,13 @@ export default createStackNavigator({
         textAlign: "center",
         marginLeft: 72
       },
-      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
+      headerRight: (
+        <TabBarLogout {...navigation} />
+      ),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
-    }
+    })
   }
 },
   {

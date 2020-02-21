@@ -4,11 +4,12 @@ import CartScreen from './CartScreen/CartScreen'
 import PaymentScreen from './PaymentScreens/PaymentScreen'
 import * as Colors from '../../../constStyle/colors'
 import Icon from 'react-native-vector-icons/Ionicons'
+import TabBarLogout from '../../../components/TabBarLogout'
 
 export default createStackNavigator({
   Cart: {
     screen: CartScreen,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       headerTitle: "Sepetim",
       headerTitleStyle: {
         flex: 1,
@@ -16,27 +17,34 @@ export default createStackNavigator({
         textAlign: "center",
         marginLeft: 72
       },
-      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
+      headerRight: (
+        <TabBarLogout {...navigation} />
+      ),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
-    }
+    })
   },
   Payment: {
     screen: PaymentScreen,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       headerTitle: "Ödeme",
+      headerLeftContainerStyle: {
+        backgroundColor: Colors.COLOR_SECONDARY
+      },
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,
         textAlign: "center",
         marginLeft: 16
       },
-      headerRight: (<Icon name="md-settings" size={26} color={Colors.COLOR_PRIMARY} style={{ paddingHorizontal: 15 }} />),
+      headerRight: (
+        <TabBarLogout {...navigation} />
+      ),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
-    }
+    })
   },
 },
   {

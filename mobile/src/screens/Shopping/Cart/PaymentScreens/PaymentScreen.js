@@ -1,52 +1,152 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, ScrollView, TextInput } from 'react-native'
-import { Text, Button } from 'react-native-elements'
+import { Text, Button, ListItem, Overlay, Divider } from 'react-native-elements'
 import { connect } from 'react-redux'
+import styles from './style'
+import CreditCard from '../../../../components/Payment/CreditCard'
+import { CheckBox } from 'react-native-elements'
+import * as Http from '../../../../utils/httpHelper'
+import { validateRegex, commentRegex } from '../../../../regex/regex'
+import Icon from 'react-native-vector-icons/Ionicons'
+import * as Colors from '../../../../constStyle/colors'
 
-const PaymentScreen = () => {
+const PaymentScreen = props => {
+  const [totalCost, setTotalCost] = useState(null)
+  const [orderNote, setOrderNote] = useState(null)
+  const [cards, setCards] = useState([])
+  const [isVisible, setIsVisible] = useState(false)
+  const [condition, setCondition] = useState(false)
+  const [borderColors, setBorderColors] = useState(
+    {
+      noteBorder: Colors.COLOR_BACKGROUND,
+      condBorder: Colors.COLOR_BACKGROUND,
+    })
+
+  useEffect(() => {
+    setTotalCost(props.navigation.state.params.totalCost)
+    fetchCreditCards()
+  }, [])
+
+  fetchCreditCards = async () => {
+    try {
+      let res = await Http.get("shop/cart/credit-card", props.getUser.token)
+      if (!res.err) setCards(res.cards)
+      else throw new Error()
+    } catch {
+      //bir hatayla karşılaştık
+    }
+  }
+
+  changeCondition = () => {
+    setCondition(!condition)
+  };
 
   onChangeText = (text) => {
+    setOrderNote(text)
+  }
+
+  setBorders = (verifyNote, verifyCond) => {
+    let noteBorder = verifyNote ? Colors.COLOR_BACKGROUND : "red"
+    let condBorder = verifyCond ? Colors.COLOR_BACKGROUND : "red"
+    setBorderColors({ noteBorder, condBorder })
+  }
+
+
+  giveOrder = () => {
 
   }
 
-  return (
-    <View>
-      <ScrollView>
+  addCredCard = () => {
 
-        <View>
+  }
+
+  let cardList = cards.map(item => {
+    return (
+      <View style={styles.creditCard}>
+        <CreditCard name={item.cardName} />
+        <Divider style={styles.divider} />
+      </View>
+    )
+  })
+
+  let discountAmount = props.getCafe.cafeDiscount * totalCost
+  let netSum = totalCost - (props.getCafe.cafeDiscount * totalCost)
+
+  return (
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+
+        <View style={styles.orderNote}>
+
+          <Text style={styles.orderTitle}>Not Ekle</Text>
+
           <TextInput
-            style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+            style={{ height: 80, borderColor: borderColors.noteBorder, borderWidth: 1 }}
             maxLength={120}
+            placeholder="Sipariş notunu hemen ekle (en fazla 120 karakter / !?., geçerlidir)"
             onChangeText={text => onChangeText(text)}
-            multiline="true"
+            multiline={true}
             textAlignVertical="top"
           />
         </View>
 
-        <View>
-          <Text h4>Ödeme yöntemi seçiniz</Text>
+        <View style={styles.orderNote}>
 
-          <View>
-            kartlarım
-            Ödeme yöntemi ekle
+          <Text style={styles.orderTitle}>Ödeme yöntemi seçiniz</Text>
+
+          <View style={styles.cardList}>
+            {cardList}
+            <View>
+              <ListItem
+                leftIcon={<Icon name="md-add" size={26} color={Colors.COLOR_BACKGROUND} />}
+                title="Kredi kartı eklemek için tıklayınız."
+                onPress={() => addCredCard()}
+              />
+            </View>
           </View>
+
+
+
+          <Overlay
+            isVisible={isVisible}
+            windowBackgroundColor="rgba(255, 255, 255, .5)"
+            overlayBackgroundColor="red"
+            width="auto"
+            height="auto"
+          >
+            <Text>Hello from Overlay!</Text>
+          </Overlay>
+
         </View>
 
+        <View style={styles.orderSummary}>
 
-        <View>
-          <Text h4>Toplam kalori Kalori </Text>
+          <Text style={styles.summaryText}>Sepette indirim yüzdesi {props.getCafe.cafeDiscount}</Text>
+
+          <Divider style={styles.divider} />
+
+          <Text style={styles.summaryText}>İndirim miktarı {discountAmount}</Text>
+
+          <Divider style={styles.divider} />
+
+          <Text style={styles.summaryText}>Ödenecek net tutar {netSum} </Text>
+
+          <Divider style={styles.divider} />
+
+          <CheckBox
+            containerStyle={{ width: "100%", alignSelf: "center" }}
+            textStyle={{ color: borderColors.condBorder }}
+            title="Satış sözlemesini okudum ve onaylıyorum."
+            checkedIcon={<Icon name="md-checkbox" size={24} color={Colors.COLOR_BACKGROUND} />}
+            uncheckedIcon={<Icon name="md-checkbox-outline" size={24} color={Colors.COLOR_BACKGROUND} />}
+            checked={condition}
+            onPress={() => changeCondition()}
+          />
+
+          <Button containerStyle={{ flex: 1, marginTop: 10 }} buttonStyle={{ width: "100%" }} titleStyle={{ textAlign: "center" }} title="Sipariş Ver" onPress={() => giveOrder()} />
+
         </View>
 
-
-        <View>
-          <Text>Sepet tutarı Discountsuz total</Text>
-          <Text>İndirim yüzdesi - İndirim miktarı</Text>
-          <Text>Ödeneccek Tutar</Text>
-          <Text>Satış sözlemesini okudum.</Text>
-          <Text>email adresine fatura yönlendiricektir.</Text>
-        </View>
-
-        <Button title="Öde" />
       </ScrollView>
     </View>
   )
@@ -56,6 +156,7 @@ const PaymentScreen = () => {
 mapStateToProps = state => {
   return {
     getUser: state.user,
+    getCafe: state.cafe,
     getFoods: state.foods,
     getCart: state.cart
   };

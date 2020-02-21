@@ -4,7 +4,7 @@ import { PREFIX_IMAGEURL } from "react-native-dotenv";
 import * as Http from '../../../../utils/httpHelper'
 import { COLOR_PRIMARY } from '../../../../constStyle/colors'
 import { connect } from 'react-redux'
-import { Button, Text } from 'react-native-elements'
+import { Button, Text, Divider } from 'react-native-elements'
 import styles from './style'
 import Icon from 'react-native-vector-icons/Ionicons'
 import IconAwe from 'react-native-vector-icons/FontAwesome5'
@@ -18,12 +18,13 @@ const FoodDetailScreen = props => {
   const [ingredients, setIngredients] = useState([])
   const [disable, setDisable] = useState(false)
   const [foodQuantity, setFoodQuantity] = useState(1)
+  const [update, setUpdate] = useState(null)
 
   useEffect(() => {
     if (loading) {
       getFoodDetails()
     }
-  }, [])
+  }, [update])
 
   getFoodDetails = async () => {
     try {
@@ -36,7 +37,6 @@ const FoodDetailScreen = props => {
         let extras = res.food.extras.map(item => {
           return { ...item, disable: false }
         })
-        console.log('extras', extras)
         setExtras(extras)
         setIngredients(res.food.ingredients)
         setFood(selectedFood[0])
@@ -49,9 +49,9 @@ const FoodDetailScreen = props => {
   }
 
   addExtra = (id, disable) => {
-    console.log('extra before', extras)
     extras.find(item => item.extraID === id).disable = !disable
     setExtras(extras)
+    setUpdate(Math.random())
   }
 
   addCart = () => {
@@ -92,7 +92,6 @@ const FoodDetailScreen = props => {
           <ExtraCard item={item} disable={item.disable} addExtra={() => addExtra(item.extraID, item.disable)} />
         </View>)
     })
-    console.log('render after', extras)
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollView}>
@@ -127,15 +126,24 @@ const FoodDetailScreen = props => {
           </View>
 
           <View style={{ flex: 1 }}>
+            <Divider style={{ height: 2 }} />
+
+            <Text h4Style={{ marginLeft: 10 }} h4>Ingredients</Text>
 
             <View style={styles.list}>
               {ingredientList}
             </View>
 
+
+            <Text h4Style={{ marginLeft: 10, marginTop: 10 }} h4>Extras</Text>
+
             <View style={styles.list}>
               {extraList}
             </View>
+
+
           </View>
+
 
           <View style={styles.rowMain}>
 

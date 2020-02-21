@@ -18,11 +18,6 @@ const Orders = db.define(
       defaultValue: '0'
     },
 
-    paymentStatus: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false
-    },
-
     orderCost: {
       type: Sequelize.DECIMAL(12, 4),
       allowNull: false
@@ -33,16 +28,6 @@ const Orders = db.define(
     orderNote: Sequelize.STRING(120),
 
     orderComment: Sequelize.STRING(120),
-
-    orderCalorie: {
-      type: Sequelize.SMALLINT,
-      allowNull: false
-    },
-
-    discount: {
-      type: Sequelize.SMALLINT,
-      defaultValue: 0
-    }
   }
 );
 

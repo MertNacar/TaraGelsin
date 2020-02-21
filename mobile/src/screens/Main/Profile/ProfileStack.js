@@ -45,13 +45,37 @@ export default createStackNavigator({
   Payment: {
     screen: PaymentStack,
     navigationOptions: {
-      header: null
+      headerTitle: "Payment Methods",
+      headerLeftContainerStyle: {
+        backgroundColor: Colors.COLOR_SECONDARY
+      },
+      headerTitleStyle: {
+        flex: 1,
+        color: Colors.COLOR_SECONDARY,
+        textAlign: "center",
+        marginRight: 56
+      },
+      headerStyle: {
+        backgroundColor: Colors.COLOR_BACKGROUND,
+      },
     }
   },
   ChangePass: {
     screen: ChangePassStack,
     navigationOptions: {
-      header: null
+      headerTitle: "Change Password",
+      headerLeftContainerStyle: {
+        backgroundColor: Colors.COLOR_SECONDARY
+      },
+      headerTitleStyle: {
+        flex: 1,
+        color: Colors.COLOR_SECONDARY,
+        textAlign: "center",
+        marginRight: 56
+      },
+      headerStyle: {
+        backgroundColor: Colors.COLOR_BACKGROUND,
+      },
     }
   },
   Informations: {

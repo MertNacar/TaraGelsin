@@ -22,7 +22,7 @@ router.get("/scan", async (req, res) => {
 
     if (validate && cafeValid && tableValid) {
       let data = await models.Cafes.findOne({
-        attributes: ["cafeID", "cafeName", "cafePoint", "cafeDescription", "cafeImagePath", "cafeAddress"],
+        attributes: ["cafeID", "cafeName", "cafePoint", "cafeDescription", "cafeImagePath", "cafeDiscount", "cafeAddress"],
         where: {
           cafeID: qrCode[0]
         },

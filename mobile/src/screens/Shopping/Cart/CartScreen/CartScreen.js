@@ -6,8 +6,9 @@ import { connect } from 'react-redux'
 import { updateCart, removeCart } from '../../../../store/cart/actionCreator'
 import { COLOR_PRIMARY } from '../../../../constStyle/colors'
 import cartImage from '../../../../assets/images/cartImage.png'
-import Icon from 'react-native-vector-icons/Ionicons'
+
 import styles from './style'
+import PaymentFooter from '../../../../components/Cart/PaymentFooter'
 
 const CartScreen = props => {
 
@@ -26,12 +27,12 @@ const CartScreen = props => {
     }
   }, [props.getCart.length, update])
 
-  incrementQuantity = (id, quantity) => {
+  incQuantity = (id, quantity) => {
     props.getCart.find(item => item.foodID === id).foodQuantity = quantity + 1
-    setUpdate("increment")
+    setUpdate(quantity)
   }
 
-  decrementQuantity = (id, quantity) => {
+  decQuantity = (id, quantity) => {
     if (quantity === 1) {
       props.removeCart()
       let newCart = props.getCart.filter(item => item.foodID !== id)
@@ -39,24 +40,19 @@ const CartScreen = props => {
     } else {
       props.getCart.find(item => item.foodID === id).foodQuantity = quantity - 1
     }
-    setUpdate("decrement")
+    setUpdate(quantity)
   }
 
   goPayment = () => {
-    props.navigation.navigate("Payment")
+    props.navigation.navigate("Payment", { totalCost })
   }
 
   changeTotalCost = () => {
-    let total
-    if (props.getCart.length > 1) {
-      total = props.getCart.reduce((acc, current) => {
-        (acc.foodCost * acc.foodQuantity) + (current.foodCost * current.foodQuantity)
-        setTotalCost(total)
-      })
-    } else {
-      total = props.getCart[0].foodCost * props.getCart[0].foodQuantity
-      setTotalCost(total)
-    }
+    let total = 0;
+    props.getCart.map(item => {
+      total += +(item.foodCost) * item.foodQuantity
+    })
+    setTotalCost(total)
   }
 
   if (isEmpty) {
@@ -80,24 +76,12 @@ const CartScreen = props => {
           renderItem={({ item }) =>
             <OrderCard
               item={item}
-              incrementQuantity={() => incrementQuantity(item.foodID, item.foodQuantity)}
-              decrementQuantity={() => decrementQuantity(item.foodID, item.foodQuantity)}
+              incrementQuantity={() => incQuantity(item.foodID, item.foodQuantity)}
+              decrementQuantity={() => decQuantity(item.foodID, item.foodQuantity)}
             />
           }
-          ListFooterComponent={
-            <View style={styles.footerContainer}>
-              <View>
-                <Icon name="md-cart" size={16} />
-                <Text>{totalCost}</Text>
-              </View>
-              <Button
-                /*buttonStyle={styles.buttonStyle} 
-                containerStyle={styles.buttonContainer} */
-                title="Ödemeye geç"
-                onPress={() => goPayment()} />
-            </View>
-          }
         />
+        <PaymentFooter total={totalCost} goPay={() => goPayment()} />
       </SafeAreaView>
     )
   }

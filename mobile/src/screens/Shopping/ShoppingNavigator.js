@@ -20,7 +20,7 @@ export default createBottomTabNavigator({
     screen: CafeScreen,
     navigationOptions: {
       tabBarIcon: ({ tintColor }) => (
-        <Icon name='md-home' color={tintColor} size={30} />
+        <Icon name='md-cafe' color={tintColor} size={30} />
       )
     }
   },

@@ -4,6 +4,10 @@ import { Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { removeTokenStorage, removePhoneStorage } from '../../../../AsyncStorage/index'
 import { removeUser } from '../../../../store/user/actionCreator'
+import { removeCafe } from '../../../../store/cafe/actionCreator'
+import { removeCart } from '../../../../store/cart/actionCreator'
+import { removeCategories } from '../../../../store/category/actionCreator'
+import { removeFoods } from '../../../../store/food/actionCreator'
 import { connect } from 'react-redux'
 import * as Colors from '../../../../constStyle/colors'
 import profileInfos from './data'
@@ -18,7 +22,8 @@ const ProfileScreen = props => {
     await removePhoneStorage()
     await removeTokenStorage()
     props.removeUser()
-    props.navigation.navigate("Auth")
+    props.
+      props.navigation.navigate("Auth")
   }
 
   useEffect(() => {
@@ -63,7 +68,7 @@ mapStateToProps = state => {
 
 mapDispatchToProps = dispatch => {
   return {
-    removeUser: () => dispatch(removeUser())
+    removeUser: () => dispatch(removeUser()),
   };
 };
 

@@ -7,15 +7,7 @@ export default createStackNavigator({
   NewPass: {
     screen: NewPassScreen,
     navigationOptions: {
-      headerTitle: "New Password",
-      headerTitleStyle: {
-        flex: 1,
-        color: Colors.COLOR_SECONDARY,
-        textAlign: "center"
-      },
-      headerStyle: {
-        backgroundColor: Colors.COLOR_BACKGROUND,
-      },
+      header: null
     }
   },
   VerifyPhone: {

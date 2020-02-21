@@ -8,6 +8,7 @@ import InitialScreen from './src/screens/Initial/InitialScreen'
 import { Provider } from 'react-redux'
 import configureStore from './src/store/store'
 import { COLOR_BACKGROUND } from './src/constStyle/colors'
+
 const App = () => {
   let store = configureStore()
   return (

@@ -30,11 +30,6 @@ const Users = db.define(
       allowNull: false,
       unique: true
     },
-
-    taraPoint: {
-      type: Sequelize.SMALLINT,
-      defaultValue: 0
-    },
   }
 );
 

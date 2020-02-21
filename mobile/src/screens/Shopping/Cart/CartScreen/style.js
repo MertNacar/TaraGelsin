@@ -8,7 +8,7 @@ export default StyleSheet.create({
     alignItems: "center"
   },
   orderList: {
-    flex: 1,
+    flex: 8,
     width: screenWidth,
     paddingHorizontal: 7
   },
@@ -24,12 +24,7 @@ export default StyleSheet.create({
   text: {
     textAlign: "center"
   },
-  footerContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
+
   loading: {
     flex: 1,
     justifyContent: "center",

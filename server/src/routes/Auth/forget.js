@@ -20,7 +20,7 @@ router.post("/password", async (req, res) => {
 
     if (phoneValid && emailValid) {
       let data = await models.Users.findOne({
-        attributes: ["userID", "taraPoint", "fullname", "phone", "deviceID", "email"],
+        attributes: ["userID", "fullname", "phone", "deviceID", "email"],
         where: {
           email,
           phone
