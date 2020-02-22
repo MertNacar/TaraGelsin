@@ -29,13 +29,22 @@ router.post("/immediately", async (req, res) => {
         where: {
           phone
         },
+        include: [{
+          required: true,
+          model: models.Countries,
+          attributes: ["countryPhoneCode", "countryName"],
+        }]
       });
 
       if (data !== null) {
         let user = data.dataValues;
+        user.countryName = data.dataValues.tblCountry.countryName
+        user.phoneCode = data.dataValues.tblCountry.countryPhoneCode
         user.token = token;
         user.loginDate = Date(Date.now()).toString();
+        delete data.dataValues.tblCountry
         res.json({ err: false, user });
+
       } else throw new Error();
 
     } else throw new Error();
@@ -63,7 +72,12 @@ router.post("", async (req, res) => {
         ],
         where: {
           phone
-        }
+        },
+        include: [{
+          required: true,
+          model: models.Countries,
+          attributes: ["countryPhoneCode", "countryName"],
+        }]
       });
 
       if (data !== null) {
@@ -72,10 +86,14 @@ router.post("", async (req, res) => {
         if (confirm) {
           let token = jwt.createToken(data.phone);
           let user = data.dataValues;
+          user.countryName = data.dataValues.tblCountry.countryName
+          user.phoneCode = data.dataValues.tblCountry.countryPhoneCode
           user.token = token;
           user.loginDate = Date(Date.now()).toString();
+          delete data.dataValues.tblCountry
           delete user.password;
           res.json({ err: false, user });
+
         } else throw new Error();
 
       } else throw new Error();

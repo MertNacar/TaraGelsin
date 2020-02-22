@@ -28,7 +28,7 @@ export default createStackNavigator({
   },
   Foods: {
     screen: FoodScreen,
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: {
       headerTitle: "Foods",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
@@ -37,19 +37,16 @@ export default createStackNavigator({
         flex: 1,
         color: Colors.COLOR_SECONDARY,
         textAlign: "center",
-        marginLeft: 16
+        marginRight: 56
       },
-      headerRight: (
-        <TabBarLogout {...navigation} />
-      ),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
-    })
+    }
   },
   FoodDetails: {
     screen: FoodDetailScreen,
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: {
       headerTitle: "Food Details",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
@@ -58,15 +55,12 @@ export default createStackNavigator({
         flex: 1,
         color: Colors.COLOR_SECONDARY,
         textAlign: "center",
-        marginLeft: 16
+        marginRight: 56
       },
-      headerRight: (
-        <TabBarLogout {...navigation} />
-      ),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
-    })
+    }
   },
 },
   {

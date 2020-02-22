@@ -46,7 +46,7 @@ const ForgetPasswordScreen2 = props => {
         setBorder(passValidation)
         if (passValidation) {
           let user = { phone: props.getUser.phone, password }
-          let changingPassword = await Http.postWithoutToken("auth/forget/change-password", user)
+          let changingPassword = await Http.putWithoutToken("auth/forget/change-password", user)
 
           if (!changingPassword.err) {
             setDisable(false)

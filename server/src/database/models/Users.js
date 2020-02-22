@@ -23,7 +23,11 @@ const Users = db.define(
       allowNull: false
     },
 
-    email: Sequelize.STRING,
+    email: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true
+    },
 
     phone: {
       type: Sequelize.STRING(15),

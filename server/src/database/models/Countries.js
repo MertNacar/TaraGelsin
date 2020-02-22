@@ -13,6 +13,10 @@ const Countries = db.define(
       type: Sequelize.CHAR(2),
       allowNull: false
     },
+    language: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
     countryPhoneCode: {
       type: Sequelize.STRING(5),
       allowNull: false

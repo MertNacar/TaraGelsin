@@ -29,39 +29,33 @@ export default createStackNavigator({
   },
   AddComment: {
     screen: AddCommentScreen,
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: {
       headerTitle: "Yorumlar",
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,
         textAlign: "center",
-        marginLeft: 16 //right 56 sol ok
+        marginRight: 56
       },
-      headerRight: (
-        <TabBarLogout {...navigation} />
-      ),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
-    })
+    }
   },
   Rating: {
     screen: RatingScreen,
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: {
       headerTitle: "Değerlendirme",
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,
         textAlign: "center",
-        marginLeft: 16
+        marginRight: 56
       },
-      headerRight: (
-        <TabBarLogout {...navigation} />
-      ),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
-    })
+    }
   },
 },
   {

@@ -42,7 +42,7 @@ router.post("", async (req, res) => {
     } else throw new Error();
 
   } catch (err) {
-    res.json({ err: true, mess: err.message });
+    res.json({ err: true });
   }
 });
 

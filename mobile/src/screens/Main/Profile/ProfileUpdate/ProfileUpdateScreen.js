@@ -9,14 +9,15 @@ import { connect } from 'react-redux'
 import * as Http from '../../../../utils/httpHelper'
 import CountryPicker from 'react-native-country-picker-modal'
 import * as Colors from '../../../../constStyle/colors'
-const SignupScreen = props => {
+const ProfileUpdateScreen = props => {
 
-  const [countryCode, setCountryCode] = useState('TR')
-  const [country, setCountry] = useState({ callingCode: '90' })
-  const [user, setUser] = useState({ phone: "", email: "", firstname: "", surname: "" });
+  const [countryName, setCountryName] = useState(props.getUser.countryName)
+  const [country, setCountry] = useState({ callingCode: props.getUser.phoneCode })
+  const [user, setUser] = useState({ phone: "", email: "", firstname: "", surname: "", });
   const [err, setErr] = useState(false)
   const [errMessage, setErrMessage] = useState("")
-  const [disable, setDisable] = useState(false)
+  const [disable, setDisable] = useState(true)
+  const [initial, setInitial] = useState({})
   const [borderColors, setBorderColors] = useState(
     {
       firstBorder: Colors.COLOR_BACKGROUND,
@@ -25,16 +26,30 @@ const SignupScreen = props => {
       mailBorder: Colors.COLOR_BACKGROUND,
     })
 
-  changeText = (value, type) => {
-    if (type === 'phone') value = country.callingCode + value
-    let newUser = Object.assign({}, user, { [type]: value })
+  useEffect(() => {
+    let full = props.getUser.fullname.split(" ")
+    let phone = props.getUser.phone.substr(props.getUser.phoneCode.length)
+    let newUser = {
+      phone: phone, email: props.getUser.email,
+      firstname: full[0], surname: full[1],
+      countryName: props.getUser.countryName, phoneCode: props.getUser.phoneCode
+    }
     setUser(newUser)
-  };
+    setInitial(newUser)
+    return () => {
+      setDisable(false)
+    };
+  }, [])
 
-  const onSelectCountry = (country) => {
-    setCountryCode(country.cca2)
-    setCountry(country)
-  }
+  changeText = (value, type) => {
+    if (type === 'country') {
+      setUser({ ...user, countryName: value.cca2, phoneCode: value.callingCode })
+    } else {
+      let newUser = Object.assign({}, user, { [type]: value })
+      setUser(newUser)
+    }
+    setDisable(false)
+  };
 
   setBorders = (verifyFirst, verifySur, verifyPhone, verifyMail) => {
     let firstBorder = verifyFirst ? Colors.COLOR_BACKGROUND : "red"
@@ -44,8 +59,12 @@ const SignupScreen = props => {
     setBorderColors({ firstBorder, surBorder, phoneBorder, mailBorder })
   }
 
-  continueSign = async () => {
+  updateInfos = async () => {
     try {
+      console.log('user', user)
+      console.log('initialr', initial)
+      let unchanging = Object.values(initial) === Object.values(user)
+      console.log('unchanging', unchanging)
       setBorders(true, true, true, true)
       setDisable(true)
       setErrMessage("")
@@ -53,24 +72,26 @@ const SignupScreen = props => {
 
       let firstValidation = validateRegex(nameRegex, user.firstname)
       let surValidation = validateRegex(nameRegex, user.surname)
-      let phoneValidation = validateRegex(phoneRegex, user.phone)
+      let phoneValidation = validateRegex(phoneRegex, user.phoneCode + user.phone)
       let emailValidation = validateRegex(emailRegex, user.email)
 
       setBorders(firstValidation, surValidation, phoneValidation, emailValidation)
 
       let validation = phoneValidation && firstValidation && surValidation && emailValidation
 
-      if (validation) {
-        let checking = await Http.postWithoutToken(`auth/signup/validate-phone-email`, { phone: user.phone, email: user.email })
+      if (unchanging) props.navigation.goBack()
+      else {
+        if (validation) {
+          let res = await Http.put(`main/profile/update-user`, { user, initial }, props.getUser.token)
 
-        if (checking.err) throw new Error("Girdiğiniz bilgiler kullanılmaktadır.")
-        else {
-          props.updateUser({ ...user, countryName: countryCode })
-          setDisable(false)
-          props.navigation.navigate("Signup2")
-        }
+          if (res.err) throw new Error("Girdiğiniz bilgiler kullanılmaktadır.")
+          else {
+            props.updateUser({ ...res.user, countryName: user.countryName, phoneCode: user.phoneCode })
+            props.navigation.goBack()
+          }
 
-      } else throw new Error("Girdiğiniz bilgiler uygun değildir.")
+        } else throw new Error("Girdiğiniz bilgiler uygun değildir.")
+      }
     } catch (err) {
       setDisable(false)
       setErrMessage(err.message)
@@ -97,6 +118,7 @@ const SignupScreen = props => {
           <Input
             placeholder="İsim"
             textContentType="name"
+            defaultValue={user.firstname}
             containerStyle={[styles.name, { borderColor: borderColors.firstBorder }]}
             inputStyle={{ marginLeft: 5 }}
             inputContainerStyle={{ borderBottomWidth: 0 }}
@@ -108,6 +130,7 @@ const SignupScreen = props => {
           <Input
             placeholder="Soyisim"
             textContentType="familyName"
+            defaultValue={user.surname}
             containerStyle={[styles.name, { borderColor: borderColors.surBorder }]}
             inputStyle={{ marginLeft: 5 }}
             inputContainerStyle={{ borderBottomWidth: 0 }}
@@ -120,21 +143,24 @@ const SignupScreen = props => {
 
 
         <View style={styles.row}>
+
           <View style={styles.inputCountry}>
             <CountryPicker
-              containerButtonStyle={{ alignItems: "center", paddingTop: 5 }}
-              countryCode={countryCode}
+              containerButtonStyle={{ alignItems: "center", paddingTop: "7%" }}
+              countryCode={countryName}
               withCallingCodeButton={true}
               withCallingCode={true}
               withAlphaFilter={true}
               withFilter={true}
-              onSelect={value => onSelectCountry(value)}
+              onSelect={value => changeText(value, 'country')}
               visible
             />
           </View>
+
           <Input
             placeholder="Phone"
             textContentType="telephoneNumber"
+            defaultValue={user.phone}
             inputContainerStyle={{ borderBottomWidth: 0 }}
             containerStyle={[styles.phone, { borderColor: borderColors.phoneBorder }]}
             maxLength={10}
@@ -145,25 +171,36 @@ const SignupScreen = props => {
             onChangeText={value => changeText(value, 'phone')}
           />
         </View>
-        <Input
-          placeholder="Email"
-          textContentType="emailAddress"
-          containerStyle={[styles.password, { borderColor: borderColors.mailBorder }]}
-          maxLength={40}
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-          inputStyle={{ marginLeft: 5 }}
-          leftIcon={<Icon name="md-mail" size={24} color={Colors.COLOR_BACKGROUND} />}
-          onChangeText={value => changeText(value, 'email')}
-        />
 
-        <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} buttonStyle={{ backgroundColor: Colors.COLOR_BACKGROUND }} containerStyle={styles.button} title="Devam et" onPress={() => continueSign()} />
+        <View style={styles.row}>
+          <Input
+            placeholder="Email"
+            textContentType="emailAddress"
+            defaultValue={user.email}
+            containerStyle={[styles.password, { borderColor: borderColors.mailBorder }]}
+            maxLength={40}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
+            inputStyle={{ marginLeft: 5 }}
+            leftIcon={<Icon name="md-mail" size={24} color={Colors.COLOR_BACKGROUND} />}
+            onChangeText={value => changeText(value, 'email')}
+          />
+        </View>
+
+        <Button disabled={disable} disabledStyle={{ opacity: 0.8 }} buttonStyle={{ backgroundColor: Colors.COLOR_BACKGROUND }} containerStyle={styles.button} title="Güncelle" onPress={() => updateInfos()} />
 
       </View>
+
 
     </SafeAreaView>
 
   )
 }
+
+mapStateToProps = state => {
+  return {
+    getUser: state.user
+  };
+};
 
 mapDispatchToProps = dispatch => {
   return {
@@ -171,4 +208,4 @@ mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(SignupScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileUpdateScreen);

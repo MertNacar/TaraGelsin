@@ -22,8 +22,7 @@ const ProfileScreen = props => {
     await removePhoneStorage()
     await removeTokenStorage()
     props.removeUser()
-    props.
-      props.navigation.navigate("Auth")
+    props.navigation.navigate("Auth")
   }
 
   useEffect(() => {

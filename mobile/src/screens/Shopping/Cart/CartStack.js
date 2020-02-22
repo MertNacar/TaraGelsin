@@ -27,7 +27,7 @@ export default createStackNavigator({
   },
   Payment: {
     screen: PaymentScreen,
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: {
       headerTitle: "Ödeme",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
@@ -36,15 +36,12 @@ export default createStackNavigator({
         flex: 1,
         color: Colors.COLOR_SECONDARY,
         textAlign: "center",
-        marginLeft: 16
+        marginRight: 56
       },
-      headerRight: (
-        <TabBarLogout {...navigation} />
-      ),
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
-    })
+    }
   },
 },
   {

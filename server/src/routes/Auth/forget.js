@@ -36,14 +36,12 @@ router.post("/password", async (req, res) => {
   }
 });
 
-router.post("/change-password", async (req, res) => {
+router.put("/change-password", async (req, res) => {
   try {
     let { phone, password } = req.body.data;
     let phoneValid = regex.validateRegex(regex.phoneRegex, phone)
     let passValid = regex.validateRegex(regex.passwordRegex, password)
-    console.log('phoneValid', phoneValid)
-    console.log('passValid', passValid)
-    //console.log('phoneValid', phoneValid)
+
     if (phoneValid && passValid) {
       let data = await models.Users.findOne({
         attributes: ["userID"],
@@ -51,7 +49,7 @@ router.post("/change-password", async (req, res) => {
           phone
         }
       });
-      console.log('data', data)
+
       if (data !== null) {
         let hash = await hashPassword(password)
         await data.update({ password: hash }, { where: { userID: data.userID } });

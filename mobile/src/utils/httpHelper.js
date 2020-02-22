@@ -85,4 +85,23 @@ const put = async (endpoint, body = {}, token) => {
   }
 };
 
-export { get, getWithoutToken, post, postWithoutToken, put };
+const putWithoutToken = async (endpoint, body = {}, token) => {
+  try {
+    let res = await fetch(url(endpoint), {
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        data: body
+      })
+    });
+    if (res.status === 200) return await res.json();
+    else throw new Error()
+  } catch {
+    return { err: true };
+  }
+};
+
+export { get, getWithoutToken, post, postWithoutToken, put, putWithoutToken };
