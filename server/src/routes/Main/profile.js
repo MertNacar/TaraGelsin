@@ -128,6 +128,42 @@ router.post("/add-credit-card", async (req, res) => {
     } else throw new Error();
 
   } catch (err) {
+    res.json({ err: true });
+  }
+});
+
+router.get("/order-history", async (req, res) => {
+  try {
+    let { userID, page } = req.query;
+    let userValid = regex.validateRegex(regex.uuidRegex, userID)
+    let pageValid = regex.validateRegex(regex.pageRegex, page)
+
+    let token = req.headers.authorization.split(" ")[1];
+    let tokenValid = jwt.validateToken(token);
+
+    if (userValid && pageValid && tokenValid) {
+      let orders = await models.Orders.findAll({
+        attributes: ["orderID", "orderCost", "createdAt"],
+        limit: 10,
+        offset: page * 10,
+        order: [['createdAt', 'DESC']],
+        include: [{
+          required: true,
+          model: models.Users,
+          attributes: [],
+          where: {
+            userID
+          }
+        },
+        {
+          required: true,
+          model: models.Cafes,
+          attributes: ["cafeName"]
+        }]
+      })
+      res.json({ err: false, orders });
+    } else throw new Error();
+  } catch (err) {
     console.log('err.message', err.message)
     res.json({ err: true });
   }
