@@ -1,5 +1,6 @@
 import db from "../connection"
 import Sequelize from "sequelize"
+import Users from './Users'
 
 const CredCards = db.define(
   "tblCredCards",
@@ -17,7 +18,8 @@ const CredCards = db.define(
 
     cardNumber: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
 
     cardCvv: {
@@ -30,11 +32,10 @@ const CredCards = db.define(
       allowNull: false
     },
 
-    cardPinNumber: {
-      type: Sequelize.CHAR(4),
-      allowNull: false
-    },
   }
 );
+
+Users.hasMany(CredCards, { foreignKey: 'userID', allowNull: false });
+CredCards.belongsTo(Users, { foreignKey: 'userID', allowNull: false });
 
 export default CredCards

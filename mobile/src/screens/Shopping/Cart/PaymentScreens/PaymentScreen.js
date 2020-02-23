@@ -143,7 +143,9 @@ const PaymentScreen = props => {
             onPress={() => changeCondition()}
           />
 
-          <Button containerStyle={{ flex: 1, marginTop: 10 }} buttonStyle={{ width: "100%" }} titleStyle={{ textAlign: "center" }} title="Sipariş Ver" onPress={() => giveOrder()} />
+          <Button
+            containerStyle={{ flex: 1, marginTop: 10 }} buttonStyle={{ width: "100%", backgroundColor: Colors.COLOR_BACKGROUND }}
+            titleStyle={{ textAlign: "center" }} title="Sipariş Ver" onPress={() => giveOrder()} />
 
         </View>
 

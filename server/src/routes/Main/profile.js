@@ -26,7 +26,10 @@ router.put("/update-user", async (req, res) => {
     let initemailValid = regex.validateRegex(regex.emailRegex, initial.email)
     let initcountryValid = regex.validateRegex(regex.countryRegex, initial.countryName)
 
-    let validate = firstValid && surValid && phoneValid && emailValid && countryValid
+    let token = req.headers.authorization.split(" ")[1];
+    let tokenValid = jwt.validateToken(token);
+
+    let validate = firstValid && surValid && phoneValid && emailValid && countryValid && tokenValid
       && initfirstValid && initsurValid && initphoneValid && initemailValid && initcountryValid
 
     if (validate) {
@@ -60,6 +63,72 @@ router.put("/update-user", async (req, res) => {
     } else throw new Error();
 
   } catch (err) {
+    res.json({ err: true });
+  }
+});
+
+router.get("/credit-cards", async (req, res) => {
+  try {
+    let { userID } = req.query;
+    let firstValid = regex.validateRegex(regex.uuidRegex, userID)
+
+    let token = req.headers.authorization.split(" ")[1];
+    let tokenValid = jwt.validateToken(token);
+
+    if (firstValid && tokenValid) {
+
+      let credCards = await models.CredCards.findAll({
+        attributes: ["cardID", "cardName", "cardNumber"],
+        includeIgnoreAttributes: false,
+        include: [{
+          required: true,
+          model: models.Users,
+          where: {
+            userID
+          },
+        }]
+      })
+
+      res.json({ err: false, credCards });
+    } else throw new Error();
+
+  } catch (err) {
+    res.json({ err: true, mess: err.message });
+  }
+});
+
+router.post("/add-credit-card", async (req, res) => {
+  try {
+    let { cardName, cardNumber, cardCvv, cardDate, userID } = req.body.data;
+    let nameValid = regex.validateRegex(regex.nameRegex, cardName)
+    let numberValid = regex.validateRegex(regex.cardNumberRegex, cardNumber)
+    let dateValid = regex.validateRegex(regex.cardDateRegex, cardDate)
+    let cvvValid = regex.validateRegex(regex.cardCvvRegex, cardCvv)
+
+    let token = req.headers.authorization.split(" ")[1];
+    let tokenValid = jwt.validateToken(token);
+
+    if (nameValid && numberValid && dateValid && cvvValid && tokenValid) {
+
+      let credCard = await models.CredCards.findOne({
+        attributes: ["cardID"],
+        where: {
+          cardNumber
+        }
+      })
+
+      console.log('credCard', credCard)
+      if (credCard == null) {
+        await models.CredCards.create({
+          cardName, cardNumber, cardDate, cardCvv, userID
+        })
+        res.json({ err: false });
+      } else throw new Error()
+
+    } else throw new Error();
+
+  } catch (err) {
+    console.log('err.message', err.message)
     res.json({ err: true });
   }
 });

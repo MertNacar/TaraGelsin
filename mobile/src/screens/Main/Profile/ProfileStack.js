@@ -45,19 +45,7 @@ export default createStackNavigator({
   Payment: {
     screen: PaymentStack,
     navigationOptions: {
-      headerTitle: "Payment Methods",
-      headerLeftContainerStyle: {
-        backgroundColor: Colors.COLOR_SECONDARY
-      },
-      headerTitleStyle: {
-        flex: 1,
-        color: Colors.COLOR_SECONDARY,
-        textAlign: "center",
-        marginRight: 56
-      },
-      headerStyle: {
-        backgroundColor: Colors.COLOR_BACKGROUND,
-      },
+      header: null
     }
   },
   ChangePass: {

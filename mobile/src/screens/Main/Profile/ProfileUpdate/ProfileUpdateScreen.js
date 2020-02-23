@@ -153,7 +153,7 @@ const ProfileUpdateScreen = props => {
               withAlphaFilter={true}
               withFilter={true}
               onSelect={value => changeText(value, 'country')}
-              visible
+              visible={false}
             />
           </View>
 

@@ -11,6 +11,15 @@ export const nameRegex = new RegExp("^[A-Za-zöçşığü]{3,20}$");
 export const phoneRegex = new RegExp(
   "^[0-9]{7,14}$"
 );
+export const cardNumberRegex = new RegExp(
+  "^[0-9]{16}$"
+);
+export const cardDateRegex = new RegExp(
+  "^[0-9]{4}$"
+);
+export const cardCvvRegex = new RegExp(
+  "^[0-9]{3}$"
+);
 export const validateRegex = (typeRegex, input) => {
   return typeRegex.test(input);
 };

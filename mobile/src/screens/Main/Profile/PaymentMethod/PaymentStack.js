@@ -7,7 +7,16 @@ export default createStackNavigator({
   PaymentMethod: {
     screen: PaymentMethodScreen,
     navigationOptions: {
-      header: null
+      headerTitle: "Payment Methods",
+      headerTitleStyle: {
+        flex: 1,
+        color: Colors.COLOR_SECONDARY,
+        textAlign: "center",
+        marginLeft: 16
+      },
+      headerStyle: {
+        backgroundColor: Colors.COLOR_BACKGROUND,
+      }
     }
   },
   AddPaymentMethod: {
@@ -21,7 +30,7 @@ export default createStackNavigator({
         flex: 1,
         color: Colors.COLOR_SECONDARY,
         textAlign: "center",
-        marginLeft: 56
+        marginRight: 56
       },
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,

@@ -99,7 +99,7 @@ const LoginScreen = props => {
                 withAlphaFilter={true}
                 withFilter={true}
                 onSelect={value => onSelectCountry(value)}
-                visible
+                visible={false}
               />
 
             </View>
