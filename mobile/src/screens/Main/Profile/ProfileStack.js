@@ -2,7 +2,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import ProfileScreen from './Profile/ProfileScreen'
 import ProfileUpdateScreen from './ProfileUpdate/ProfileUpdateScreen'
 import PaymentStack from './PaymentMethod/PaymentStack'
-import ChangePassStack from './ChangePass/ChangePassStack'
+import ChangePassScreen from './ChangePass/ChangePassScreen'
 import InformationScreen from './Informations/InformationScreen'
 import LanguageScreen from './Languages/LanguageScreen'
 import NotificationScreen from './Notifications/NotificationScreen'
@@ -49,7 +49,7 @@ export default createStackNavigator({
     }
   },
   ChangePass: {
-    screen: ChangePassStack,
+    screen: ChangePassScreen,
     navigationOptions: {
       headerTitle: "Change Password",
       headerLeftContainerStyle: {

@@ -13,7 +13,7 @@ export default StyleSheet.create({
     flex: 1,
     width: screenWidth,
     paddingHorizontal: 8,
-    paddingTop: 40
+    paddingTop: 30
   },
   orderTitle: {
     fontSize: 18,
@@ -39,12 +39,37 @@ export default StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 30
   },
+  row: {
+    flex: 6,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center"
+  },
+  rowFirst: {
+    flex: 6,
+    alignItems: "flex-start",
+    justifyContent: "center",
+  },
+  rowSecond: {
+    flex: 6,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    marginRight: 5
+  },
   divider: {
-    height: 2,
-    marginVertical: 10
+    height: 2
   },
   summaryText: {
     fontSize: 16,
-    fontWeight: "700"
+    fontWeight: "700",
+    marginRight: 3
+  },
+  containerCheck: {
+    flex: 4,
+    marginVertical: 15,
+    width: "100%",
+    justifyContent: "center",
+    alignSelf: "center"
   }
 })

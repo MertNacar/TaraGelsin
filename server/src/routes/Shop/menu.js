@@ -94,19 +94,18 @@ router.get("/categories/foods/foodDetails", async (req, res) => {
         },
         include: [{
           model: models.Ingredients,
-          through: { attributes: [] },
+          through: { attributes: [] }
         },
         {
-          through: { attributes: [] },
           model: models.Extras,
+          through: { attributes: [] }
         }]
       });
       if (data !== null) {
-        data.dataValues.ingredients = [...data.tblIngredients]
-        data.dataValues.extras = [...data.tblExtras]
-        delete data.dataValues.tblIngredients
-        delete data.dataValues.tblExtras
-        res.json({ err: false, food: data });
+        let ingredients = data.dataValues.tblIngredients
+        let extras = data.dataValues.tblExtras
+        let response = { foodID: data.dataValues.foodID, extras: [...extras], ingredients: [...ingredients] }
+        res.json({ err: false, food: response });
 
       } else throw new Error()
     } else throw new Error()

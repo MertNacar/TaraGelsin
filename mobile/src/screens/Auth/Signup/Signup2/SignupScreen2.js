@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, SafeAreaView } from 'react-native'
 import { Input, Text, Button } from 'react-native-elements'
 import styles from './style'
+import { otpRegex, validateRegex } from '../../../../regex/regex'
 import { removeUser } from '../../../../store/user/actionCreator'
 import * as Http from '../../../../utils/httpHelper'
 import { connect } from 'react-redux'
@@ -11,18 +12,22 @@ import * as Colors from '../../../../constStyle/colors'
 const SignupScreen2 = props => {
   const [err, setErr] = useState("")
   const [sentCode, setSentCode] = useState(null)
-  const [count, setCount] = useState(0)
   const [errMessage, setErrMessage] = useState("")
   const [showSendButton, setShowSendButton] = useState(true)
   const [showVerifyButton, setShowVerifyButton] = useState(false)
   const [disable, setDisable] = useState(false)
 
-  sendSms = () => {
-    setCount(0)
-    setShowSendButton(false)
-    setShowVerifyButton(true)
-    setErr(false)
-    setErrMessage("")
+  sendSms = async () => {
+    try {
+      await Http.postWithoutToken("auth/signup/send-otp", { phone: props.getUser.phone })
+      setShowSendButton(false)
+      setShowVerifyButton(true)
+      setErr(false)
+      setErrMessage("")
+    } catch {
+      setErrMessage("Kod yollanırken bir hatayla karşılaştık")
+      setErr(true)
+    }
   }
 
   changeNumber = (value) => {
@@ -34,12 +39,14 @@ const SignupScreen2 = props => {
       setErr(false)
       setErrMessage("")
       setDisable(true)
-      setCount(count + 1)
-      let validate = (sentCode == 120120)
 
-      if (count <= 3) {
+      let codeValid = validateRegex(otpRegex, sentCode)
 
-        if (validate) {
+      if (codeValid) {
+
+        let check = await Http.postWithoutToken('auth/signup/check-otp', { phone: props.getUser.phone, code: sentCode })
+
+        if (!check.err) {
           deviceID = getUniqueId()
           let res = await Http.postWithoutToken('auth/signup', { ...props.getUser, deviceID })
 
@@ -51,11 +58,7 @@ const SignupScreen2 = props => {
 
         } else throw new Error("Tek seferlik kod yanlış girildi")
 
-      } else {
-        setShowSendButton(true)
-        setShowVerifyButton(false)
-        throw new Error("Tek seferlik kod hakkınız bitmiştir. Lütfen tekrar kod yolla butonuna tıklayınız.")
-      }
+      } else throw new Error("Yanlış 6 haneli kod girilmiştir, tekrar deneyiniz.")
     } catch (err) {
       setDisable(false)
       setErrMessage(err.message)

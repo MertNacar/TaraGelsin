@@ -11,9 +11,7 @@ import CountryPicker from 'react-native-country-picker-modal'
 import * as Colors from '../../../../constStyle/colors'
 const ProfileUpdateScreen = props => {
 
-  const [countryName, setCountryName] = useState(props.getUser.countryName)
-  const [country, setCountry] = useState({ callingCode: props.getUser.phoneCode })
-  const [user, setUser] = useState({ phone: "", email: "", firstname: "", surname: "", });
+  const [user, setUser] = useState({ phone: "", email: "", firstname: "", surname: "", countryName: "", phoneCode: "", });
   const [err, setErr] = useState(false)
   const [errMessage, setErrMessage] = useState("")
   const [disable, setDisable] = useState(true)
@@ -30,9 +28,12 @@ const ProfileUpdateScreen = props => {
     let full = props.getUser.fullname.split(" ")
     let phone = props.getUser.phone.substr(props.getUser.phoneCode.length)
     let newUser = {
-      phone: phone, email: props.getUser.email,
-      firstname: full[0], surname: full[1],
-      countryName: props.getUser.countryName, phoneCode: props.getUser.phoneCode
+      phone: phone,
+      email: props.getUser.email,
+      firstname: full[0],
+      surname: full[1],
+      countryName: props.getUser.countryName,
+      phoneCode: props.getUser.phoneCode
     }
     setUser(newUser)
     setInitial(newUser)
@@ -61,10 +62,7 @@ const ProfileUpdateScreen = props => {
 
   updateInfos = async () => {
     try {
-      console.log('user', user)
-      console.log('initialr', initial)
       let unchanging = Object.values(initial) === Object.values(user)
-      console.log('unchanging', unchanging)
       setBorders(true, true, true, true)
       setDisable(true)
       setErrMessage("")
@@ -82,7 +80,7 @@ const ProfileUpdateScreen = props => {
       if (unchanging) props.navigation.goBack()
       else {
         if (validation) {
-          let res = await Http.put(`main/profile/update-user`, { user, initial }, props.getUser.token)
+          let res = await Http.put("main/profile/update-user", { user, initial }, props.getUser.token)
 
           if (res.err) throw new Error("Girdiğiniz bilgiler kullanılmaktadır.")
           else {
@@ -147,7 +145,7 @@ const ProfileUpdateScreen = props => {
           <View style={styles.inputCountry}>
             <CountryPicker
               containerButtonStyle={{ alignItems: "center", paddingTop: "7%" }}
-              countryCode={countryName}
+              countryCode={user.countryName}
               withCallingCodeButton={true}
               withCallingCode={true}
               withAlphaFilter={true}

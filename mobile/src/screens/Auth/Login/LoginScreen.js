@@ -24,7 +24,7 @@ const LoginScreen = props => {
 
   changeText = (value, type) => {
     if (type === 'phone') {
-      setPhone(country.callingCode + value)
+      setPhone(value)
     }
     else setPassword(value);
   };
@@ -54,15 +54,15 @@ const LoginScreen = props => {
       setDisable(true)
       setErrMessage("")
       setErr(false)
-      let validatePhone = validateRegex(phoneRegex, phone)
+      let validatePhone = validateRegex(phoneRegex, country.callingCode + phone)
       let validatePassword = validateRegex(passwordRegex, password)
       setBorders(validatePhone, validatePassword)
 
       if (validatePhone && validatePassword) {
-        let result = await Http.postWithoutToken('auth/login', { phone, password })
+        let result = await Http.postWithoutToken('auth/login', { phone: country.callingCode + phone, password })
 
         if (!result.err) {
-          await storePhoneStorage(phone)
+          await storePhoneStorage(country.callingCode + phone)
           await storeTokenStorage(result.user.token)
           props.updateUser(result.user)
           setDisable(false)

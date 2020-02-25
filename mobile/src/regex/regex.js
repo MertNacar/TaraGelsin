@@ -20,6 +20,9 @@ export const cardDateRegex = new RegExp(
 export const cardCvvRegex = new RegExp(
   "^[0-9]{3}$"
 );
+export const otpRegex = new RegExp(
+  "^[0-9]{6}$"
+);
 export const validateRegex = (typeRegex, input) => {
   return typeRegex.test(input);
 };

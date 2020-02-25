@@ -27,8 +27,13 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingTop: 15,
-    paddingHorizontal: 10
+    marginVertical: 10,
+    marginHorizontal: 10
+  },
+  ingExtraMain: {
+    flex: 1,
+    marginVertical: 20,
+    marginHorizontal: 10
   },
   rowSecond: {
     flex: 1,
@@ -52,7 +57,7 @@ export default StyleSheet.create({
     flex: 1,
     width: screenWidth,
     paddingHorizontal: 4,
-    paddingTop: 15
+    marginVertical: 15
   },
   buttonSmallContainer: {
     flex: 1,

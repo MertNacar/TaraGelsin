@@ -6,7 +6,7 @@ import { COLOR_BACKGROUND } from '../../constStyle/colors'
 import moment from 'moment'
 
 const OrderCard = props => {
-  let date = moment(props.item.createdAt).format("MMMM Do YYYY")
+  let date = moment(props.item.createdAt).format("DD MM YY")
   return (
     <View>
       <ListItem

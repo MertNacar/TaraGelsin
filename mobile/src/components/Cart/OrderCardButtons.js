@@ -1,14 +1,14 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Button, Text } from 'react-native-elements'
-import Icon from 'react-native-vector-icons/FontAwesome5'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 const OrderCardButton = props => {
   return (
     <View style={styles.container}>
 
       <View style={{ flex: 1 }}>
-        <Button buttonStyle={styles.buttonSmall} containerStyle={styles.buttonSmallContainer} title="-" onPress={props.decrementQuantity} />
+        <Button buttonStyle={styles.buttonSmall} icon={<Icon name="md-remove" size={16} color="white" />} containerStyle={styles.buttonSmallContainer} onPress={props.decrementQuantity} />
       </View>
 
       <View style={{ flex: 1 }}>
@@ -16,7 +16,7 @@ const OrderCardButton = props => {
       </View>
 
       <View style={{ flex: 1 }}>
-        <Button buttonStyle={styles.buttonSmall} containerStyle={styles.buttonSmallContainer} title="+" onPress={props.incrementQuantity} />
+        <Button buttonStyle={styles.buttonSmall} icon={<Icon name="md-add" size={16} color="white" />} containerStyle={styles.buttonSmallContainer} onPress={props.incrementQuantity} />
       </View>
 
     </View>
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   buttonSmall: {
-    width: 25,
+    width: 30,
   },
 })
 

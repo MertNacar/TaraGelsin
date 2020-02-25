@@ -31,7 +31,6 @@ const SignupScreen = props => {
     })
 
   changeText = (value, type) => {
-    if (type === 'phone') value = country.callingCode + value
     let newUser = Object.assign({}, user, { [type]: value })
     setUser(newUser)
   };
@@ -69,7 +68,7 @@ const SignupScreen = props => {
 
       let firstValidation = validateRegex(nameRegex, user.firstname)
       let surValidation = validateRegex(nameRegex, user.surname)
-      let phoneValidation = validateRegex(phoneRegex, user.phone)
+      let phoneValidation = validateRegex(phoneRegex, country.callingCode + user.phone)
       let passValidation = validateRegex(passwordRegex, user.password)
       let emailValidation = validateRegex(emailRegex, user.email)
       setBorders(firstValidation, surValidation, phoneValidation, passValidation,
@@ -79,11 +78,11 @@ const SignupScreen = props => {
         && passValidation && emailValidation && conditions && informations
 
       if (validation) {
-        let checking = await Http.postWithoutToken(`auth/signup/validate-phone-email`, { phone: user.phone, email: user.email })
+        let checking = await Http.postWithoutToken(`auth/signup/validate-phone-email`, { phone: country.callingCode + user.phone, email: user.email })
 
         if (checking.err) throw new Error("Girdiğiniz bilgiler kullanılmaktadır.")
         else {
-          props.updateUser({ ...user, countryName: countryCode })
+          props.updateUser({ ...user, phone: country.callingCode + user.phone, countryName: countryCode })
           setDisable(false)
           props.navigation.navigate("Signup2")
         }

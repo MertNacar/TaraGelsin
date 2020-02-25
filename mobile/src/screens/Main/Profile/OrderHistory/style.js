@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   image: {
-    flex: 1,
+    flex: 3,
     width: "100%",
     height: "100%",
     resizeMode: "contain"
@@ -36,7 +36,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: "center"
   },
-
+  text: {
+    flex: 1,
+    fontSize: 16,
+    fontWeight: "700"
+  },
   button: {
     width: "50%"
   },

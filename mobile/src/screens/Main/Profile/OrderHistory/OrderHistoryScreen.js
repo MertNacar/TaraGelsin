@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, SafeAreaView, ActivityIndicator, Image, FlatList, RefreshControl } from 'react-native'
+import { View, SafeAreaView, ActivityIndicator, Image, FlatList, RefreshControl, Text } from 'react-native'
 import empty from '../../../../assets/images/empty.png'
 import OrderCard from '../../../../components/Profile/OrderCard'
 import * as Http from '../../../../utils/httpHelper'
@@ -45,6 +45,7 @@ const OrderHistoryScreen = props => {
     return (
       <SafeAreaView style={styles.container}>
         <Image source={empty} style={styles.image} />
+        <Text style={styles.text}>Geçmiş herhangi bir siparişiniz bulunamamıştır</Text>
       </SafeAreaView>
     )
   } else {

@@ -54,13 +54,22 @@ const FoodDetailScreen = props => {
     setUpdate(Math.random())
   }
 
+  concatFoodExtra = () => {
+    let newFoodID = food.foodID
+    let selectedExtras = extras.filter(item => {
+      if (item.disable === true) {
+        newFoodID += ":" + item.extraID
+        return item
+      } else return null
+    })
+    return selectedExtras, newFoodID
+  }
+
   addCart = () => {
     setDisable(true)
-    let selectedExtras = extras.filter(item => {
-      return item.disable === true
-    })
-    let newFood = Object.assign({}, food, { extras: selectedExtras }, { foodQuantity })
-    props.updateCart([newFood])
+    let selectedExtras, newID = concatFoodExtra()
+    let newFood = Object.assign({}, food, { foodID: newID, extras: selectedExtras, foodQuantity })
+    props.updateCart(newFood)
     props.navigation.goBack()
   }
 
@@ -78,19 +87,19 @@ const FoodDetailScreen = props => {
       </SafeAreaView>
     )
   } else {
-
     let ingredientList = ingredients.map(item => {
       return (
         <View key={item.ingredientID}>
           <IngredientCard item={item} />
-        </View>)
+        </View>
+      )
     })
-
     let extraList = extras.map(item => {
       return (
         <View key={item.extraID}>
           <ExtraCard item={item} disable={item.disable} addExtra={() => addExtra(item.extraID, item.disable)} />
-        </View>)
+        </View>
+      )
     })
     return (
       <SafeAreaView style={styles.container}>
@@ -101,7 +110,7 @@ const FoodDetailScreen = props => {
 
             <View style={styles.rowMain}>
 
-              <Text h4>{food.foodName}</Text>
+              <Text h4 h4Style={{ flex: 3 }}>{food.foodName}</Text>
               <View style={styles.rowSecond}>
                 <Text h4>{food.foodCost} </Text>
                 <IconAwe name="lira-sign" size={22} />
@@ -115,7 +124,7 @@ const FoodDetailScreen = props => {
 
             <View style={styles.rowMain}>
 
-              <Text h4>{food.foodCal} calorie</Text>
+              <Text h4 h4Style={{ flex: 3 }}>{food.foodCal} calorie</Text>
               <View style={styles.rowSecond}>
                 <Text h4>{food.foodPreperationTime} min </Text>
                 <Icon name="md-time" size={26}></Icon>
@@ -123,23 +132,34 @@ const FoodDetailScreen = props => {
 
             </View>
 
-          </View>
-
-          <View style={{ flex: 1 }}>
             <Divider style={{ height: 2 }} />
 
-            <Text h4Style={{ marginLeft: 10 }} h4>Ingredients</Text>
+          </View>
 
-            <View style={styles.list}>
-              {ingredientList}
-            </View>
+          <View style={styles.ingExtraMain}>
+
+            <Text h4Style={{ textAlign: "center" }} h4>Ingredients</Text>
+
+            {
+              ingredientList.length === 0 ?
+                <Text>İçindekiler hakkında bir bilgi bulunamadı.</Text>
+                :
+                <View style={styles.list}>
+                  {ingredientList}
+                </View>
+            }
 
 
-            <Text h4Style={{ marginLeft: 10, marginTop: 10 }} h4>Extras</Text>
+            <Text h4Style={{ marginTop: 20, textAlign: "center" }} h4>Extras</Text>
 
-            <View style={styles.list}>
-              {extraList}
-            </View>
+            {
+              extraList.length === 0 ?
+                <Text>Herhangi bir eklenecek extra bulunamadı.</Text>
+                :
+                <View style={styles.list}>
+                  {extraList}
+                </View>
+            }
 
 
           </View>
@@ -174,6 +194,7 @@ mapStateToProps = state => {
   return {
     getUser: state.user,
     getFoods: state.foods,
+    getCart: state.cart
   };
 };
 

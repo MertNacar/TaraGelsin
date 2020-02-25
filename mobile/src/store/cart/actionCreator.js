@@ -13,6 +13,13 @@ const removeCart = () => {
   };
 };
 
+const removeItem = foodID => {
+  return {
+    type: actions.REMOVE_ITEM,
+    payload: { foodID }
+  };
+};
+
 const successCart = data => {
   return {
     type: actions.CART_SUCCEEDED,
@@ -27,4 +34,4 @@ const failCart = error => {
   };
 };
 
-export { updateCart, removeCart, successCart, failCart };
+export { updateCart, removeCart, removeItem, successCart, failCart };

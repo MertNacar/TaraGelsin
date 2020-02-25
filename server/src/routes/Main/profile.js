@@ -164,7 +164,89 @@ router.get("/order-history", async (req, res) => {
       res.json({ err: false, orders });
     } else throw new Error();
   } catch (err) {
+    res.json({ err: true });
+  }
+});
+
+router.put("/change-password", async (req, res) => {
+  try {
+    let { phone, oldPassword, newPassword } = req.body.data;
+
+    let phoneValid = regex.validateRegex(regex.phoneRegex, phone)
+    let oldPassValid = regex.validateRegex(regex.passwordRegex, oldPassword)
+    let newPassValid = regex.validateRegex(regex.passwordRegex, newPassword)
+
+    let token = req.headers.authorization.split(" ")[1];
+    let tokenValid = jwt.validateToken(token);
+    console.log('object', phoneValid && oldPassValid && newPassValid && tokenValid)
+    if (phoneValid && oldPassValid && newPassValid && tokenValid) {
+      let data = await models.Users.findOne({
+        attributes: ["userID", "password"],
+        where: {
+          phone
+        }
+      });
+      console.log('data', data)
+      if (data !== null) {
+        let validate = verifyPassword(oldPassword, data.password)
+
+        if (validate) {
+          let newHash = await hashPassword(newPassword)
+          await data.update({ password: newHash }, { where: { userID: data.userID } });
+          res.json({ err: false });
+
+        } else throw new Error()
+
+      } else throw new Error()
+
+    } else throw new Error()
+  } catch (err) {
     console.log('err.message', err.message)
+    res.json({ err: true });
+  }
+});
+
+router.post("/send-otp", async (req, res) => {
+  try {
+    let { phone } = req.body.data
+    let phoneValid = regex.validateRegex(regex.phoneRegex, phone)
+
+    let token = req.headers.authorization.split(" ")[1];
+    let tokenValid = jwt.validateToken(token);
+
+    if (phoneValid && tokenValid) {
+      await client.verify.services(serviceSID)
+        .verifications
+        .create({ to: "+" + phone, channel: 'sms', locale: "tr" })
+
+      res.json({ err: false })
+    } else throw new Error()
+  } catch (err) {
+    res.json({ err: true });
+  }
+});
+
+router.post("/check-otp", async (req, res) => {
+  try {
+    let { phone, code } = req.body.data
+    let phoneValid = regex.validateRegex(regex.phoneRegex, phone)
+    let codeValid = regex.validateRegex(regex.otpRegex, code)
+
+    let token = req.headers.authorization.split(" ")[1];
+    let tokenValid = jwt.validateToken(token);
+
+    if (phoneValid && codeValid && tokenValid) {
+
+      let verify = await client.verify.services(serviceSID)
+        .verificationChecks
+        .create({ to: "+" + phone, code })
+
+      if (verify.status === "approved") {
+        res.json({ err: false });
+
+      } else throw new Error()
+    } else throw new Error()
+  } catch {
     res.json({ err: true });
   }
 });

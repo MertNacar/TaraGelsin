@@ -62,4 +62,42 @@ router.put("/change-password", async (req, res) => {
   }
 });
 
+router.post("/send-otp", async (req, res) => {
+  try {
+    let { phone } = req.body.data
+    let phoneValid = regex.validateRegex(regex.phoneRegex, phone)
+
+    if (phoneValid) {
+      await client.verify.services(serviceSID)
+        .verifications
+        .create({ to: "+" + phone, channel: 'sms', locale: "tr" })
+
+      res.json({ err: false })
+    } else throw new Error()
+  } catch (err) {
+    res.json({ err: true });
+  }
+});
+
+router.post("/check-otp", async (req, res) => {
+  try {
+    let { phone, code } = req.body.data
+    let phoneValid = regex.validateRegex(regex.phoneRegex, phone)
+    let codeValid = regex.validateRegex(regex.otpRegex, code)
+    if (phoneValid && codeValid) {
+
+      let verify = await client.verify.services(serviceSID)
+        .verificationChecks
+        .create({ to: "+" + phone, code })
+
+      if (verify.status === "approved") {
+        res.json({ err: false });
+
+      } else throw new Error()
+    } else throw new Error()
+  } catch {
+    res.json({ err: true });
+  }
+});
+
 export default router;

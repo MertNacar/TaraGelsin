@@ -22,7 +22,7 @@ const ForgetPasswordScreen = props => {
 
   changeText = (value, type) => {
     if (type === 'phone') {
-      setPhone(country.callingCode + value)
+      setPhone(value)
     }
     else setEmail(value);
   };
@@ -31,7 +31,7 @@ const ForgetPasswordScreen = props => {
     props.navigation.navigate("Login")
   };
 
-  const onSelectCountry = (country) => {
+  onSelectCountry = (country) => {
     setCountryCode(country.cca2)
     setCountry(country)
   }
@@ -50,11 +50,11 @@ const ForgetPasswordScreen = props => {
       setErr(false)
 
       let emailValidation = validateRegex(emailRegex, email)
-      let phoneValidation = validateRegex(phoneRegex, phone)
+      let phoneValidation = validateRegex(phoneRegex, country.callingCode + phone)
       setBorders(phoneValidation, emailValidation)
 
       if (emailValidation && phoneValidation) {
-        let checkUser = await Http.postWithoutToken("auth/forget/password", { email, phone })
+        let checkUser = await Http.postWithoutToken("auth/forget/password", { email, phone: country.callingCode + phone })
 
         if (checkUser.err) throw new Error("Böyle bir telefon kullanılmamaktadır.")
         else {

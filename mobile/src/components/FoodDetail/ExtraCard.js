@@ -16,6 +16,7 @@ const ExtraCard = props => {
       checkedIcon='clear'
       uncheckedIcon='add'
       checkedColor='red'
+      uncheckedColor={Colors.COLOR_BACKGROUND}
       checked={props.item.disable}
       onPress={props.addExtra}
     />

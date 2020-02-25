@@ -8,6 +8,7 @@ import { CheckBox } from 'react-native-elements'
 import * as Http from '../../../../utils/httpHelper'
 import { validateRegex, commentRegex } from '../../../../regex/regex'
 import Icon from 'react-native-vector-icons/Ionicons'
+import IconAwe from 'react-native-vector-icons/FontAwesome5'
 import * as Colors from '../../../../constStyle/colors'
 
 const PaymentScreen = props => {
@@ -105,36 +106,57 @@ const PaymentScreen = props => {
             </View>
           </View>
 
-
-
-          <Overlay
-            isVisible={isVisible}
-            windowBackgroundColor="rgba(255, 255, 255, .5)"
-            overlayBackgroundColor="red"
-            width="auto"
-            height="auto"
-          >
-            <Text>Hello from Overlay!</Text>
-          </Overlay>
-
         </View>
 
         <View style={styles.orderSummary}>
 
-          <Text style={styles.summaryText}>Sepette indirim yüzdesi {props.getCafe.cafeDiscount}</Text>
+          <View style={styles.row}>
+            <View style={styles.rowFirst}>
+              <Text style={styles.summaryText}>Sepette indirim yüzdesi</Text>
+            </View>
+
+            <View style={styles.rowSecond}>
+              <Text style={styles.summaryText}>{props.getCafe.cafeDiscount}</Text>
+              <IconAwe name="percentage" size={14} />
+            </View>
+
+          </View>
 
           <Divider style={styles.divider} />
 
-          <Text style={styles.summaryText}>İndirim miktarı {discountAmount}</Text>
+          <View style={styles.row}>
+
+            <View style={styles.rowFirst}>
+              <Text style={styles.summaryText}>İndirim miktarı</Text>
+            </View>
+
+            <View style={styles.rowSecond}>
+              <Text style={styles.summaryText}>{discountAmount}</Text>
+              <IconAwe name="lira-sign" size={14} />
+            </View>
+
+          </View>
 
           <Divider style={styles.divider} />
 
-          <Text style={styles.summaryText}>Ödenecek net tutar {netSum} </Text>
+          <View style={styles.row}>
+
+            <View style={styles.rowFirst}>
+              <Text style={styles.summaryText}>Ödenecek net tutar</Text>
+            </View>
+
+            <View style={styles.rowSecond}>
+              <Text style={styles.summaryText}>{netSum}</Text>
+              <IconAwe name="lira-sign" size={14} />
+            </View>
+
+          </View>
 
           <Divider style={styles.divider} />
 
           <CheckBox
-            containerStyle={{ width: "100%", alignSelf: "center" }}
+            containerStyle={styles.containerCheck}
+            wrapperStyle={{}}
             textStyle={{ color: borderColors.condBorder }}
             title="Satış sözlemesini okudum ve onaylıyorum."
             checkedIcon={<Icon name="md-checkbox" size={24} color={Colors.COLOR_BACKGROUND} />}
@@ -144,7 +166,7 @@ const PaymentScreen = props => {
           />
 
           <Button
-            containerStyle={{ flex: 1, marginTop: 10 }} buttonStyle={{ width: "100%", backgroundColor: Colors.COLOR_BACKGROUND }}
+            containerStyle={{ flex: 4, marginTop: 10 }} buttonStyle={{ width: "100%", backgroundColor: Colors.COLOR_BACKGROUND }}
             titleStyle={{ textAlign: "center" }} title="Sipariş Ver" onPress={() => giveOrder()} />
 
         </View>

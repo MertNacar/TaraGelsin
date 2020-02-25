@@ -3,7 +3,7 @@ import { SafeAreaView, View, FlatList, Image } from 'react-native'
 import { Text, Button } from 'react-native-elements'
 import OrderCard from '../../../../components/Cart/OrderCard'
 import { connect } from 'react-redux'
-import { updateCart, removeCart } from '../../../../store/cart/actionCreator'
+import { updateCart, removeItem } from '../../../../store/cart/actionCreator'
 import { COLOR_PRIMARY } from '../../../../constStyle/colors'
 import cartImage from '../../../../assets/images/cartImage.png'
 
@@ -14,9 +14,10 @@ const CartScreen = props => {
 
   const [isEmpty, setIsEmpty] = useState(true)
   const [totalCost, setTotalCost] = useState(0)
-  const [update, setUpdate] = useState("")
+  const [render, setRender] = useState("")
 
   useEffect(() => {
+    console.log('props.getCart', props.getCart)
     if (props.getCart.length === 0) {
       setIsEmpty(true)
       setTotalCost(0)
@@ -25,22 +26,16 @@ const CartScreen = props => {
       setIsEmpty(false)
       changeTotalCost()
     }
-  }, [props.getCart.length, update])
+  }, [props.getCart.length, render])
 
-  incQuantity = (id, quantity) => {
-    props.getCart.find(item => item.foodID === id).foodQuantity = quantity + 1
-    setUpdate(quantity)
+  incQuantity = (food) => {
+    props.updateCart({ ...food, foodQuantity: 1 })
+    setRender(Math.random())
   }
 
-  decQuantity = (id, quantity) => {
-    if (quantity === 1) {
-      props.removeCart()
-      let newCart = props.getCart.filter(item => item.foodID !== id)
-      props.updateCart(newCart)
-    } else {
-      props.getCart.find(item => item.foodID === id).foodQuantity = quantity - 1
-    }
-    setUpdate(quantity)
+  decQuantity = (id) => {
+    props.removeItem(id)
+    setRender(Math.random())
   }
 
   goPayment = () => {
@@ -76,8 +71,8 @@ const CartScreen = props => {
           renderItem={({ item }) =>
             <OrderCard
               item={item}
-              incrementQuantity={() => incQuantity(item.foodID, item.foodQuantity)}
-              decrementQuantity={() => decQuantity(item.foodID, item.foodQuantity)}
+              incrementQuantity={() => incQuantity(item)}
+              decrementQuantity={() => decQuantity(item.foodID)}
             />
           }
         />
@@ -98,7 +93,7 @@ mapStateToProps = state => {
 mapDispatchToProps = dispatch => {
   return {
     updateCart: food => dispatch(updateCart(food)),
-    removeCart: () => dispatch(removeCart()),
+    removeItem: id => dispatch(removeItem(id)),
   };
 };
 
