@@ -2,6 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ListItem, Text } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
+import IconAwe from 'react-native-vector-icons/FontAwesome5'
 import { COLOR_BACKGROUND } from '../../constStyle/colors'
 import moment from 'moment'
 
@@ -15,7 +16,7 @@ const OrderCard = props => {
         rightElement={
           <View style={styles.rightContainer}>
             <Text style={styles.text}>{props.item.orderCost}</Text>
-            <Icon name="md-trash" size={24} color="red" />
+            <IconAwe name="lira-sign" size={18} color={COLOR_BACKGROUND} />
           </View>
         }
         title={props.item.tblCafe.cafeName}

@@ -24,6 +24,7 @@ const PaymentScreen = props => {
     })
 
   useEffect(() => {
+    console.log('props', props)
     setTotalCost(props.navigation.state.params.totalCost)
     fetchCreditCards()
   }, [])
@@ -76,6 +77,10 @@ const PaymentScreen = props => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
+
+        <View><Text> Cafe: {props.getCafe.cafeName}</Text></View>
+
+        <View><Text> Table: {props.getCafe.tableName}</Text></View>
 
         <View style={styles.orderNote}>
 

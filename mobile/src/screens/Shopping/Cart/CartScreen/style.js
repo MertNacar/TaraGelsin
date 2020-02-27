@@ -8,9 +8,9 @@ export default StyleSheet.create({
     alignItems: "center"
   },
   orderList: {
-    flex: 8,
+    flex: 12,
     width: screenWidth,
-    paddingHorizontal: 7
+    marginBottom: "15%"
   },
   image: {
     flex: 3,

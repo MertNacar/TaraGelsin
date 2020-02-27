@@ -7,6 +7,7 @@ import OrderCardButtons from './OrderCardButtons'
 const screenWidth = Math.round(Dimensions.get('window').width);
 
 const OrderCard = props => {
+  let itemTotalCost = props.item.foodCost * props.item.foodQuantity
   return (
     <View style={styles.cardContainer}>
       <ListItem
@@ -21,7 +22,7 @@ const OrderCard = props => {
         titleStyle={styles.titleText}
         subtitle={
           <View style={styles.cost}>
-            <Text style={styles.costText}>{props.item.foodCost}</Text>
+            <Text style={styles.costText}>{itemTotalCost}</Text>
             <Icon name="lira-sign" size={14} />
           </View>
         }

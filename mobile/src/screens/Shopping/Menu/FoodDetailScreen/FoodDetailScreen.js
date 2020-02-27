@@ -54,21 +54,20 @@ const FoodDetailScreen = props => {
     setUpdate(Math.random())
   }
 
-  concatFoodExtra = () => {
-    let newFoodID = food.foodID
-    let selectedExtras = extras.filter(item => {
-      if (item.disable === true) {
-        newFoodID += ":" + item.extraID
-        return item
-      } else return null
-    })
-    return selectedExtras, newFoodID
-  }
 
   addCart = () => {
     setDisable(true)
-    let selectedExtras, newID = concatFoodExtra()
-    let newFood = Object.assign({}, food, { foodID: newID, extras: selectedExtras, foodQuantity })
+    let newFoodID = food.foodID
+    let newCost = parseFloat(food.foodCost)
+    let selectedExtras = extras.filter(item => {
+      if (item.disable === true) {
+        newFoodID += ":" + item.extraID
+        newCost += parseFloat(item.extraCost)
+        return item
+      } else return null
+    })
+
+    let newFood = Object.assign({}, food, { foodID: newFoodID, foodCost: newCost, extras: selectedExtras, foodQuantity })
     props.updateCart(newFood)
     props.navigation.goBack()
   }

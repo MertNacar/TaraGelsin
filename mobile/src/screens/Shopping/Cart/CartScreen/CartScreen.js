@@ -17,12 +17,10 @@ const CartScreen = props => {
   const [render, setRender] = useState("")
 
   useEffect(() => {
-    console.log('props.getCart', props.getCart)
     if (props.getCart.length === 0) {
       setIsEmpty(true)
       setTotalCost(0)
-    }
-    else {
+    } else {
       setIsEmpty(false)
       changeTotalCost()
     }
@@ -45,7 +43,7 @@ const CartScreen = props => {
   changeTotalCost = () => {
     let total = 0;
     props.getCart.map(item => {
-      total += +(item.foodCost) * item.foodQuantity
+      total += item.foodCost * item.foodQuantity
     })
     setTotalCost(total)
   }
