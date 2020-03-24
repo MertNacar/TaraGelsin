@@ -1,6 +1,4 @@
 import {
-  Sequelize,
-  Op,
   jwt,
   verifyPassword,
   models,
@@ -25,6 +23,7 @@ router.post("/immediately", async (req, res) => {
           "fullname",
           "email",
           "phone",
+          "deviceID"
         ],
         where: {
           phone

@@ -1,8 +1,4 @@
 import {
-  Sequelize,
-  Op,
-  jwt,
-  verifyPassword,
   hashPassword,
   models,
   regex

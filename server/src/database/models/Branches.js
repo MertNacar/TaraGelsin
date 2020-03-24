@@ -39,10 +39,6 @@ const Branches = db.define(
   }
 );
 
-
-Cafes.hasMany(Branches, { foreignKey: 'cafeID' });
-Branches.belongsTo(Cafes, { foreignKey: 'cafeID' });
-
 Cities.hasMany(Branches, { foreignKey: 'cityID' });
 Branches.belongsTo(Cities, { foreignKey: 'cityID' });
 

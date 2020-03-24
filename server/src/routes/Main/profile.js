@@ -1,6 +1,4 @@
 import {
-  Sequelize,
-  Op,
   jwt,
   verifyPassword,
   hashPassword,
@@ -62,7 +60,7 @@ router.put("/update-user", async (req, res) => {
       res.json({ err: false, user });
     } else throw new Error();
 
-  } catch (err) {
+  } catch {
     res.json({ err: true });
   }
 });
@@ -78,7 +76,7 @@ router.get("/credit-cards", async (req, res) => {
     if (firstValid && tokenValid) {
 
       let credCards = await models.CredCards.findAll({
-        attributes: ["cardID", "cardName", "cardNumber"],
+        attributes: ["cardID", "name", "number"],
         includeIgnoreAttributes: false,
         include: [{
           required: true,
@@ -92,42 +90,41 @@ router.get("/credit-cards", async (req, res) => {
       res.json({ err: false, credCards });
     } else throw new Error();
 
-  } catch (err) {
-    res.json({ err: true, mess: err.message });
+  } catch {
+    res.json({ err: true });
   }
 });
 
 router.post("/add-credit-card", async (req, res) => {
   try {
-    let { cardName, cardNumber, cardCvv, cardDate, userID } = req.body.data;
-    let nameValid = regex.validateRegex(regex.nameRegex, cardName)
-    let numberValid = regex.validateRegex(regex.cardNumberRegex, cardNumber)
-    let dateValid = regex.validateRegex(regex.cardDateRegex, cardDate)
-    let cvvValid = regex.validateRegex(regex.cardCvvRegex, cardCvv)
+    let { name, number, date, cvv, userID } = req.body.data;
+    let userValid = regex.validateRegex(regex.uuidRegex, userID)
+    let nameValid = regex.validateRegex(regex.nameRegex, name)
+    let numberValid = regex.validateRegex(regex.cardNumberRegex, number)
+    let dateValid = regex.validateRegex(regex.cardDateRegex, date)
+    let cvvValid = regex.validateRegex(regex.cardCvvRegex, cvv)
 
     let token = req.headers.authorization.split(" ")[1];
     let tokenValid = jwt.validateToken(token);
 
-    if (nameValid && numberValid && dateValid && cvvValid && tokenValid) {
+    if (userValid && nameValid && numberValid && dateValid && cvvValid && tokenValid) {
 
       let credCard = await models.CredCards.findOne({
         attributes: ["cardID"],
         where: {
-          cardNumber
+          number
         }
       })
-
-      console.log('credCard', credCard)
       if (credCard == null) {
         await models.CredCards.create({
-          cardName, cardNumber, cardDate, cardCvv, userID
+          name, number, date, cvv, userID
         })
         res.json({ err: false });
       } else throw new Error()
 
     } else throw new Error();
 
-  } catch (err) {
+  } catch {
     res.json({ err: true });
   }
 });
@@ -143,7 +140,7 @@ router.get("/order-history", async (req, res) => {
 
     if (userValid && pageValid && tokenValid) {
       let orders = await models.Orders.findAll({
-        attributes: ["orderID", "orderCost", "createdAt"],
+        attributes: ["orderID", "cost", "createdAt"],
         limit: 10,
         offset: page * 10,
         order: [['createdAt', 'DESC']],
@@ -158,12 +155,12 @@ router.get("/order-history", async (req, res) => {
         {
           required: true,
           model: models.Cafes,
-          attributes: ["cafeName"]
+          attributes: ["name"]
         }]
       })
       res.json({ err: false, orders });
     } else throw new Error();
-  } catch (err) {
+  } catch {
     res.json({ err: true });
   }
 });
@@ -178,7 +175,7 @@ router.put("/change-password", async (req, res) => {
 
     let token = req.headers.authorization.split(" ")[1];
     let tokenValid = jwt.validateToken(token);
-    console.log('object', phoneValid && oldPassValid && newPassValid && tokenValid)
+
     if (phoneValid && oldPassValid && newPassValid && tokenValid) {
       let data = await models.Users.findOne({
         attributes: ["userID", "password"],
@@ -186,7 +183,7 @@ router.put("/change-password", async (req, res) => {
           phone
         }
       });
-      console.log('data', data)
+
       if (data !== null) {
         let validate = verifyPassword(oldPassword, data.password)
 
@@ -200,8 +197,7 @@ router.put("/change-password", async (req, res) => {
       } else throw new Error()
 
     } else throw new Error()
-  } catch (err) {
-    console.log('err.message', err.message)
+  } catch {
     res.json({ err: true });
   }
 });
@@ -221,7 +217,7 @@ router.post("/send-otp", async (req, res) => {
 
       res.json({ err: false })
     } else throw new Error()
-  } catch (err) {
+  } catch {
     res.json({ err: true });
   }
 });

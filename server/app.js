@@ -41,7 +41,7 @@ app.get("/test", async (req, res) => {
     let Tables = await models.Tables.findAll();
     let Users = await models.Users.findAll();
     let SubscriberTypes = await models.SubscriberTypes.findAll();
-    let BranchSectionTables = await models.BranchSectionTables.findAll();
+    let CafeBranchSectionTables = await models.CafeBranchSectionTables.findAll();
     let Countries = await models.Countries.findAll();
     let Cities = await models.Cities.findAll();
     let Branches = await models.Branches.findAll();
@@ -72,7 +72,7 @@ app.get("/test", async (req, res) => {
       FoodExtras,
       FoodIngredients,
       SubscriberTypes,
-      BranchSectionTables,
+      CafeBranchSectionTables,
       Branches,
       CategoryNames,
       BranchFoods,

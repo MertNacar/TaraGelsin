@@ -14,7 +14,7 @@ import Countries from './Countries'
 import CategoryNames from './CategoryNames'
 import SubscriberTypes from './SubscriberTypes'
 import OrderDetailExtras from './OrderDetailExtras'
-import BranchSectionTables from './BranchSectionTables'
+import CafeBranchSectionTables from './CafeBranchSectionTables'
 import FoodExtras from './FoodExtras'
 import FoodNames from './FoodNames'
 import FoodIngredients from './FoodIngredients'
@@ -41,7 +41,7 @@ const models = {
   OrderDetailExtras,
   FoodExtras,
   FoodIngredients,
-  BranchSectionTables,
+  CafeBranchSectionTables,
   FoodNames,
   BranchFoods,
   Plans,

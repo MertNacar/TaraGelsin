@@ -21,7 +21,8 @@ const Tables = db.define(
     }
   },
   {
-    timestamps: false
+    timestamps: false,
+    freezeTableName:true
   }
 );
 

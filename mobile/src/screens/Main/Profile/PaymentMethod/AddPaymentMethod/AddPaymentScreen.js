@@ -11,7 +11,7 @@ import * as Colors from '../../../../../constStyle/colors'
 
 const AddPaymentScreen = props => {
 
-  const [credCard, setCredCard] = useState({ cardName: "", cardNumber: "", cardCvv: "", cardDate: "" });
+  const [credCard, setCredCard] = useState({ name: "", number: "", cvv: "", date: "" });
   const [err, setErr] = useState(false);
   const [errMessage, setErrMessage] = useState("")
   const [disable, setDisable] = useState(false)
@@ -27,11 +27,11 @@ const AddPaymentScreen = props => {
     setCredCard({ ...credCard, [type]: value })
   };
 
-  setBorders = (verifyCardName, verifyCardNumber, verifyCardDate, verifyCardCvv) => {
-    let nameBorder = verifyCardName ? Colors.COLOR_BACKGROUND : "red"
-    let numberBorder = verifyCardNumber ? Colors.COLOR_BACKGROUND : "red"
-    let dateBorder = verifyCardDate ? Colors.COLOR_BACKGROUND : "red"
-    let cvvBorder = verifyCardCvv ? Colors.COLOR_BACKGROUND : "red"
+  setBorders = (verifyName, verifyNumber, verifyDate, verifyCvv) => {
+    let nameBorder = verifyName ? Colors.COLOR_BACKGROUND : "red"
+    let numberBorder = verifyNumber ? Colors.COLOR_BACKGROUND : "red"
+    let dateBorder = verifyDate ? Colors.COLOR_BACKGROUND : "red"
+    let cvvBorder = verifyCvv ? Colors.COLOR_BACKGROUND : "red"
     setBorderColors({ nameBorder, numberBorder, dateBorder, cvvBorder })
   }
 
@@ -41,10 +41,10 @@ const AddPaymentScreen = props => {
       setDisable(true)
       setErrMessage("")
       setErr(false)
-      let validateName = validateRegex(nameRegex, credCard.cardName)
-      let validateNumber = validateRegex(cardNumberRegex, credCard.cardNumber)
-      let validateDate = validateRegex(cardDateRegex, credCard.cardDate)
-      let validateCvv = validateRegex(cardCvvRegex, credCard.cardCvv)
+      let validateName = validateRegex(nameRegex, credCard.name)
+      let validateNumber = validateRegex(cardNumberRegex, credCard.number)
+      let validateDate = validateRegex(cardDateRegex, credCard.date)
+      let validateCvv = validateRegex(cardCvvRegex, credCard.cvv)
       setBorders(validateName, validateNumber, validateDate, validateCvv)
 
       if (validateName && validateNumber && validateDate && validateCvv) {
@@ -85,7 +85,7 @@ const AddPaymentScreen = props => {
             inputStyle={{ marginLeft: 5 }}
             containerStyle={[styles.cardContainer, { borderColor: borderColors.nameBorder }]}
             leftIcon={<Icon name="md-person" size={24} color={Colors.COLOR_BACKGROUND} />}
-            onChangeText={value => changeText(value, 'cardName')}
+            onChangeText={value => changeText(value, 'name')}
           />
 
           <Input
@@ -98,7 +98,7 @@ const AddPaymentScreen = props => {
             inputStyle={{ marginLeft: 5 }}
             containerStyle={[styles.cardContainer, { borderColor: borderColors.numberBorder }]}
             leftIcon={<Icon name="md-card" size={24} color={Colors.COLOR_BACKGROUND} />}
-            onChangeText={value => changeText(value, 'cardNumber')}
+            onChangeText={value => changeText(value, 'number')}
           />
 
 
@@ -113,7 +113,7 @@ const AddPaymentScreen = props => {
               keyboardType="numeric"
               containerStyle={[styles.dateContainer, { borderColor: borderColors.dateBorder }]}
               leftIcon={<Icon name="md-calendar" size={24} color={Colors.COLOR_BACKGROUND} />}
-              onChangeText={value => changeText(value, 'cardDate')}
+              onChangeText={value => changeText(value, 'date')}
             />
 
             <Input
@@ -123,7 +123,7 @@ const AddPaymentScreen = props => {
               maxLength={3}
               keyboardType="numeric"
               containerStyle={[styles.cvvContainer, { borderColor: borderColors.cvvBorder }]}
-              onChangeText={value => changeText(value, 'cardCvv')}
+              onChangeText={value => changeText(value, 'cvv')}
             />
 
           </View>
