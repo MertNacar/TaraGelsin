@@ -40,16 +40,19 @@ app.get("/test", async (req, res) => {
     let Orders = await models.Orders.findAll();
     let Tables = await models.Tables.findAll();
     let Users = await models.Users.findAll();
-    let Subscriptions = await models.Subscriptions.findAll();
-    let PaymentMethods = await models.PaymentMethods.findAll();
+    let SubscriberTypes = await models.SubscriberTypes.findAll();
+    let BranchSectionTables = await models.BranchSectionTables.findAll();
     let Countries = await models.Countries.findAll();
     let Cities = await models.Cities.findAll();
-    let CafeOwners = await models.CafeOwners.findAll();
+    let Branches = await models.Branches.findAll();
     let OrderDetailExtras = await models.OrderDetailExtras.findAll();
-    let CafeTables = await models.CafeTables.findAll();
+    let CategoryNames = await models.CategoryNames.findAll();
     let FoodExtras = await models.FoodExtras.findAll();
     let FoodIngredients = await models.FoodIngredients.findAll();
-    let Devices = await models.Devices.findAll();
+    let BranchFoods = await models.BranchFoods.findAll();
+    let FoodNames = await models.FoodNames.findAll();
+    let Plans = await models.Plans.findAll();
+    let Sections = await models.Sections.findAll();
 
     res.send({
       err: false,
@@ -63,16 +66,19 @@ app.get("/test", async (req, res) => {
       Orders,
       Tables,
       Users,
-      Subscriptions,
-      PaymentMethods,
       Countries,
       Cities,
-      CafeOwners,
       OrderDetailExtras,
-      CafeTables,
       FoodExtras,
       FoodIngredients,
-      Devices
+      SubscriberTypes,
+      BranchSectionTables,
+      Branches,
+      CategoryNames,
+      BranchFoods,
+      FoodNames,
+      Plans,
+      Sections
     });
   } catch (err) {
     res.send({ err: true, err: err.message });

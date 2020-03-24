@@ -8,16 +8,19 @@ import Ingredients from './Ingredients'
 import OrderDetails from './OrderDetails'
 import Orders from './Orders'
 import Tables from './Tables'
-import CafeOwners from './CafeOwners'
+import Branches from './Branches'
 import Cities from './Cities'
 import Countries from './Countries'
-import PaymentMethods from './PaymentMethods'
-import Subscriptions from './Subscriptions'
+import CategoryNames from './CategoryNames'
+import SubscriberTypes from './SubscriberTypes'
 import OrderDetailExtras from './OrderDetailExtras'
-import CafeTables from './CafeTables'
+import BranchSectionTables from './BranchSectionTables'
 import FoodExtras from './FoodExtras'
+import FoodNames from './FoodNames'
 import FoodIngredients from './FoodIngredients'
-import Devices from './Devices'
+import BranchFoods from './BranchFoods'
+import Plans from './Plans'
+import Sections from './Sections'
 
 const models = {
   Users,
@@ -30,16 +33,19 @@ const models = {
   OrderDetails,
   Orders,
   Tables,
-  CafeOwners,
+  Branches,
   Cities,
   Countries,
-  PaymentMethods,
-  Subscriptions,
+  CategoryNames,
+  SubscriberTypes,
   OrderDetailExtras,
-  CafeTables,
   FoodExtras,
   FoodIngredients,
-  Devices
+  BranchSectionTables,
+  FoodNames,
+  BranchFoods,
+  Plans,
+  Sections
 }
 
 export default models

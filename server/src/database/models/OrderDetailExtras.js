@@ -1,5 +1,4 @@
 import db from "../connection"
-import Sequelize from "sequelize"
 import Extras from './Extras'
 import OrderDetails from './OrderDetails'
 

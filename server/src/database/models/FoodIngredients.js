@@ -1,5 +1,4 @@
 import db from "../connection"
-import Sequelize from "sequelize"
 import Foods from './Foods'
 import Ingredients from './Ingredients'
 

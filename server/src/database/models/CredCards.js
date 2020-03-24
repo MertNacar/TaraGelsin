@@ -11,25 +11,30 @@ const CredCards = db.define(
       defaultValue: Sequelize.UUIDV4
     },
 
-    cardName: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    cardNumber: {
+    number: {
       type: Sequelize.STRING,
       allowNull: false,
       unique: true
     },
 
-    cardCvv: {
+    cvv: {
       type: Sequelize.CHAR(3),
       allowNull: false
     },
 
-    cardDate: {
+    date: {
       type: Sequelize.CHAR(4),
       allowNull: false
+    },
+
+    active: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: true
     },
 
   }

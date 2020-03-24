@@ -10,12 +10,12 @@ const Cities = db.define(
       type: Sequelize.INTEGER
     },
 
-    cityName: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    cityZipCode: {
+    zipCode: {
       type: Sequelize.STRING(16),
       allowNull: false
     },

@@ -9,15 +9,17 @@ const Countries = db.define(
       type: Sequelize.SMALLINT,
     },
 
-    countryName: {
+    name: {
       type: Sequelize.CHAR(2),
       allowNull: false
     },
+    
     language: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING(2),
       allowNull: false
     },
-    countryPhoneCode: {
+
+    phoneCode: {
       type: Sequelize.STRING(5),
       allowNull: false
     }

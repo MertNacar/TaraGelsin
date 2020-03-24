@@ -1,26 +1,21 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 
-const CafeOwners = db.define(
-  "tblCafeOwners",
+const Sections = db.define(
+  "tblSections",
   {
-    cafeOwnerID: {
+    sectionID: {
       primaryKey: true,
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4
     },
 
-    fullname: {
+    name_en: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    phone: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-
-    email: {
+    name_tr: {
       type: Sequelize.STRING,
       allowNull: false
     }
@@ -30,4 +25,4 @@ const CafeOwners = db.define(
   }
 );
 
-export default CafeOwners
+export default Sections

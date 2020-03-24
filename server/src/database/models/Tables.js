@@ -10,12 +10,19 @@ const Tables = db.define(
       defaultValue: Sequelize.UUIDV4
     },
 
-    tableName: {
+    name_en: {
       type: Sequelize.STRING,
       allowNull: false
     },
+
+    name_tr: {
+      type: Sequelize.STRING,
+      allowNull: false
+    }
   },
-  { timestamps: false }
+  {
+    timestamps: false
+  }
 );
 
 export default Tables

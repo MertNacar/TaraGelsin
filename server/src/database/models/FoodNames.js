@@ -1,15 +1,16 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 
-const PaymentMethods = db.define(
-  "tblPaymentMethods",
+const FoodNames = db.define(
+  "tblFoodNames",
   {
-    methodID: {
+    foodNameID: {
       primaryKey: true,
-      type: Sequelize.SMALLINT
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4
     },
 
-    methodName: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false
     }
@@ -19,4 +20,4 @@ const PaymentMethods = db.define(
   }
 );
 
-export default PaymentMethods
+export default FoodNames

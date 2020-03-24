@@ -12,16 +12,15 @@ const OrderDetails = db.define(
       defaultValue: Sequelize.UUIDV4
     },
 
-    foodQuantity: {
-      type: Sequelize.SMALLINT,
+    cost: {
+      type: Sequelize.DECIMAL(8, 2),
       allowNull: false
     },
 
-    foodDiscount: {
+    quantity: {
       type: Sequelize.SMALLINT,
       allowNull: false
-    },
-
+    }
   },
   {
     timestamps: false

@@ -1,10 +1,10 @@
 import db from "../connection"
 import Sequelize from "sequelize"
 
-const Ingredients = db.define(
-  "tblIngredients",
+const CategoryNames = db.define(
+  "tblCategoryNames",
   {
-    ingredientID: {
+    categoryNameID: {
       primaryKey: true,
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4
@@ -13,11 +13,11 @@ const Ingredients = db.define(
     name: {
       type: Sequelize.STRING,
       allowNull: false
-    },
+    }
   },
   {
     timestamps: false
   }
 );
 
-export default Ingredients
+export default CategoryNames

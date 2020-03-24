@@ -10,12 +10,12 @@ const Extras = db.define(
       defaultValue: Sequelize.UUIDV4
     },
 
-    extraName: {
+    name: {
       type: Sequelize.STRING,
       allowNull: false
     },
 
-    extraCost: {
+    cost: {
       type: Sequelize.DECIMAL(6, 2),
       allowNull: false
     },
