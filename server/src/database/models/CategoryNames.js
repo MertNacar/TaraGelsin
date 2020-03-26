@@ -2,7 +2,7 @@ import db from "../connection"
 import Sequelize from "sequelize"
 
 const CategoryNames = db.define(
-  "tblCategoryNames",
+  "CategoryNames",
   {
     categoryNameID: {
       primaryKey: true,
@@ -16,7 +16,7 @@ const CategoryNames = db.define(
     }
   },
   {
-    timestamps: false
+    tableName: "tblCategoryNames"
   }
 );
 

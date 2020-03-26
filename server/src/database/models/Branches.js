@@ -4,7 +4,7 @@ import Cafes from './Cafes'
 import Cities from './Cities'
 
 const Branches = db.define(
-  "tblBranches",
+  "Branches",
   {
     branchID: {
       primaryKey: true,
@@ -36,6 +36,10 @@ const Branches = db.define(
       type: Sequelize.BOOLEAN,
       defaultValue: true
     }
+  },
+  {
+    timestamps:true,
+    tableName: "tblBranches"
   }
 );
 

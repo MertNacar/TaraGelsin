@@ -5,8 +5,11 @@ import Tables from './Tables'
 import Cafes from './Cafes'
 
 const CafeBranchSectionTables = db.define(
-  "tblCafeBranchSectionTables",
-  {}
+  "CafeBranchSectionTables",
+  {},
+  {
+    tableName: "tblCafeBranchSectionTables"
+  }
 );
 
 CafeBranchSectionTables.removeAttribute('id');

@@ -4,7 +4,7 @@ import Branches from './Branches'
 import Foods from './Foods'
 
 const BranchFoods = db.define(
-  "tblBranchFoods",
+  "BranchFoods",
   {
     cost: {
       type: Sequelize.DECIMAL(8,2),
@@ -15,6 +15,10 @@ const BranchFoods = db.define(
       type: Sequelize.BOOLEAN,
       defaultValue: true
     }
+  },
+  {
+    timestamps:true,
+    tableName: "tblBranchFoods"
   }
 );
 

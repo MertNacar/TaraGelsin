@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView, View, FlatList, Image } from 'react-native'
-import { Text, Button } from 'react-native-elements'
+import { Text } from 'react-native-elements'
 import OrderCard from '../../../../components/Cart/OrderCard'
 import { connect } from 'react-redux'
 import { updateCart, removeItem } from '../../../../store/cart/actionCreator'
-import { COLOR_PRIMARY } from '../../../../constStyle/colors'
 import cartImage from '../../../../assets/images/cartImage.png'
 
 import styles from './style'
@@ -43,7 +42,7 @@ const CartScreen = props => {
   changeTotalCost = () => {
     let total = 0;
     props.getCart.map(item => {
-      total += item.foodCost * item.foodQuantity
+      total += item.Branches[0].BranchFoods.cost * item.foodQuantity
     })
     setTotalCost(total)
   }

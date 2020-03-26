@@ -4,7 +4,7 @@ import Orders from './Orders'
 import Foods from './Foods'
 
 const OrderDetails = db.define(
-  "tblOrderDetails",
+  "OrderDetails",
   {
     orderDetailID: {
       primaryKey: true,
@@ -23,7 +23,7 @@ const OrderDetails = db.define(
     }
   },
   {
-    timestamps: false
+    tableName: "tblOrderDetails"
   }
 );
 

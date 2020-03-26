@@ -2,7 +2,7 @@ import db from "../connection"
 import Sequelize from "sequelize"
 
 const Extras = db.define(
-  "tblExtras",
+  "Extras",
   {
     extraID: {
       primaryKey: true,
@@ -21,7 +21,7 @@ const Extras = db.define(
     },
   },
   {
-    timestamps: false
+    tableName: "tblExtras"
   }
 );
 

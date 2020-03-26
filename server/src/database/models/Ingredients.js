@@ -2,7 +2,7 @@ import db from "../connection"
 import Sequelize from "sequelize"
 
 const Ingredients = db.define(
-  "tblIngredients",
+  "Ingredients",
   {
     ingredientID: {
       primaryKey: true,
@@ -16,7 +16,7 @@ const Ingredients = db.define(
     },
   },
   {
-    timestamps: false
+    tableName: "tblIngredients"
   }
 );
 

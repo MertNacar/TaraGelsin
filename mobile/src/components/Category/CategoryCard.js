@@ -9,10 +9,10 @@ const CategoryCard = (props) => {
     <View style={styles.cardContainer}>
       <Tile
         containerStyle={styles.tileContainer}
-        imageSrc={{ uri: PREFIX_IMAGEURL + props.item.categoryImagePath }}
+        imageSrc={{ uri: PREFIX_IMAGEURL + props.item.imagePath }}
         imageProps={{ resizeMode: "cover" }}
         featured
-        title={props.item.categoryName}
+        title={props.item.CategoryName.name}
         onPress={props.goFood}
         width={screenWidth - 15}
       />

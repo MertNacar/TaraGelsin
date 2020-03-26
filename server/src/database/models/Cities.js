@@ -3,7 +3,7 @@ import Sequelize from "sequelize"
 import Countries from './Countries'
 
 const Cities = db.define(
-  "tblCities",
+  "Cities",
   {
     cityID: {
       primaryKey: true,
@@ -21,7 +21,7 @@ const Cities = db.define(
     },
   },
   {
-    timestamps: false
+    tableName: "tblCities"
   }
 );
 

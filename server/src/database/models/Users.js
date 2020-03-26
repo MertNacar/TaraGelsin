@@ -3,7 +3,7 @@ import Sequelize from "sequelize"
 import Countries from './Countries'
 
 const Users = db.define(
-  "tblUsers",
+  "Users",
   {
     userID: {
       primaryKey: true,
@@ -41,7 +41,11 @@ const Users = db.define(
     taraPoint: {
       type: Sequelize.SMALLINT,
       defaultValue: 0
-    },
+    }
+  },
+  {
+    timestamps: true,
+    tableName: "tblUsers"
   }
 );
 

@@ -3,10 +3,10 @@ import Extras from './Extras'
 import OrderDetails from './OrderDetails'
 
 const OrderDetailExtras = db.define(
-  "tblOrderDetailExtras",
+  "OrderDetailExtras",
   {},
   {
-    timestamps: false
+    tableName: "tblOrderDetailExtras"
   }
 );
 

@@ -4,7 +4,7 @@ import Sequelize from "sequelize"
 //connection
 const db = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
   dialect: 'postgres',
-  define: { freezeTableName: true }
+  define: { timestamps: false }
 });
 
 //conversion date to string

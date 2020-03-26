@@ -23,7 +23,7 @@ const InitialScreen = props => {
 
         if (result.err) throw new Error()
         else {
-          props.updateUser(result.user)
+          props.updateUser({ ...result.user, token: token.value })
           props.navigation.navigate("Main")
         }
 

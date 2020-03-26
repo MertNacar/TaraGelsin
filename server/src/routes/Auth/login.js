@@ -28,20 +28,21 @@ router.post("/immediately", async (req, res) => {
         where: {
           phone
         },
+
         include: [{
           required: true,
           model: models.Countries,
-          attributes: ["countryPhoneCode", "countryName"],
+          attributes: ["phoneCode", "name"],
         }]
       });
 
       if (data !== null) {
+        console.log('data', data)
         let user = data.dataValues;
-        user.countryName = data.dataValues.tblCountry.countryName
-        user.phoneCode = data.dataValues.tblCountry.countryPhoneCode
-        user.token = token;
+        user.countryName = data.dataValues.Country.name
+        user.phoneCode = data.dataValues.Country.phoneCode
         user.loginDate = Date(Date.now()).toString();
-        delete data.dataValues.tblCountry
+        delete user.Country
         res.json({ err: false, user });
 
       } else throw new Error();
@@ -75,7 +76,7 @@ router.post("", async (req, res) => {
         include: [{
           required: true,
           model: models.Countries,
-          attributes: ["countryPhoneCode", "countryName"],
+          attributes: ["phoneCode", "name"],
         }]
       });
 
@@ -85,11 +86,11 @@ router.post("", async (req, res) => {
         if (confirm) {
           let token = jwt.createToken(data.phone);
           let user = data.dataValues;
-          user.countryName = data.dataValues.tblCountry.countryName
-          user.phoneCode = data.dataValues.tblCountry.countryPhoneCode
+          user.countryName = data.dataValues.Country.name
+          user.phoneCode = data.dataValues.Country.phoneCode
           user.token = token;
           user.loginDate = Date(Date.now()).toString();
-          delete data.dataValues.tblCountry
+          delete user.Country
           delete user.password;
           res.json({ err: false, user });
 

@@ -4,7 +4,7 @@ import FoodNames from './FoodNames'
 import Categories from './Categories'
 
 const Foods = db.define(
-  "tblFoods",
+  "Foods",
   {
     foodID: {
       primaryKey: true,
@@ -40,7 +40,7 @@ const Foods = db.define(
     }
   },
   {
-    timestamps: false
+    tableName: "tblFoods"
   }
 );
 

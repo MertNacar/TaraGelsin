@@ -24,14 +24,17 @@ router.get("/scan", async (req, res) => {
     const now = moment().format("YYYY-MM-DD")
 
     if (cafeValid && branchValid && sectionValid && tableValid && tokenValid) {
-      let data = await models.CafeBranchSectionTables.findOne({
-        attributes: ["cafeID", "branchID", "sectionID", "tableID"],
+      let cafe = await models.CafeBranchSectionTables.findOne({
+        attributes: {
+          exclude: ["cafeID", "branchID", "sectionID", "tableID", "createdAt", "updatedAt"]
+        },
+        plain: true,
         include: [{
           required: true,
           model: models.Cafes,
-          attributes: ["name", "description", "imagePath", "discount"],
+          attributes: ["cafeID", "name", "description", "imagePath", "discount"],
           where: {
-            cafeID: qrCode[0], 
+            cafeID: qrCode[0],
             subscriptionEndDate: {
               [Op.gt]: now
             }
@@ -40,7 +43,7 @@ router.get("/scan", async (req, res) => {
         {
           required: true,
           model: models.Branches,
-          attributes: ["name", "point", "discount"],
+          attributes: ["branchID", "name", "point", "address", "discount"],
           where: {
             branchID: qrCode[1],
             active: true
@@ -49,31 +52,28 @@ router.get("/scan", async (req, res) => {
         {
           required: true,
           model: models.Sections,
-          attributes: ["name_en", "name_tr"],
+          attributes: ["sectionID", "name_en", "name_tr"],
           where: {
             sectionID: qrCode[2]
           },
         },
         {
+          alias: "table",
           required: true,
           model: models.Tables,
-          attributes: ["name_en", "name_tr"],
+          attributes: ["tableID", "name_en", "name_tr"],
           where: {
             tableID: qrCode[3]
           },
         }]
       });
 
-      console.log(data)
-      if (data !== null) {
-        //delete data.dataValues.tblTables
-        //let cafe = { ...data.dataValues, tableName: data.tblTables[0].tableName }
-        res.json({ err: false, data });
+      if (cafe !== null) res.json({ err: false, cafe });
+      else throw new Error()
 
-      } else throw new Error()
     } else throw new Error()
-  } catch (err) {
-    res.json({ err: true, mess: err.message });
+  } catch {
+    res.json({ err: true });
   }
 });
 

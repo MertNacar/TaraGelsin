@@ -6,7 +6,7 @@ import Sections from './Sections'
 import Tables from './Tables'
 
 const Orders = db.define(
-  "tblOrders",
+  "Orders",
   {
     orderID: {
       primaryKey: true,
@@ -29,6 +29,10 @@ const Orders = db.define(
     comment: Sequelize.STRING(120),
 
     point: Sequelize.DECIMAL(2, 1)
+  },
+  {
+    timestamps: true,
+    tableName: "tblOrders"
   }
 );
 

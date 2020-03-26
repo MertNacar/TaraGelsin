@@ -2,7 +2,7 @@ import db from "../connection"
 import Sequelize from "sequelize"
 
 const Sections = db.define(
-  "tblSections",
+  "Sections",
   {
     sectionID: {
       primaryKey: true,
@@ -21,7 +21,7 @@ const Sections = db.define(
     }
   },
   {
-    timestamps: false
+    tableName: "tblSections"
   }
 );
 

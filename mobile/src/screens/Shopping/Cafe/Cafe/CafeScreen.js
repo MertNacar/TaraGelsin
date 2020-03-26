@@ -11,15 +11,15 @@ const CafeScreen = props => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Image style={styles.image} source={{ uri: PREFIX_IMAGEURL + cafe.cafeImagePath }} />
+      <Image style={styles.image} source={{ uri: PREFIX_IMAGEURL + cafe.Cafe.imagePath }} />
 
       <View style={styles.row}>
         <Text h4>
-          {cafe.cafeName}
+          {cafe.Cafe.name}
         </Text>
         <View>
           <Text h4>
-            {cafe.cafePoint}
+            {cafe.Branch.point}
           </Text>
           <Icon name="md-star" size={30} color="orange" />
         </View>
@@ -27,13 +27,13 @@ const CafeScreen = props => {
 
       <View style={styles.row}>
         <Text style={{ fontWeight: "bold" }}>
-          {cafe.cafeDescription}
+          {cafe.Cafe.description}
         </Text>
       </View>
 
       <View style={styles.row}>
         <Text style={{ fontWeight: "bold" }}>
-          {cafe.cafeAddress}
+          {cafe.Branch.address}
         </Text>
       </View>
 

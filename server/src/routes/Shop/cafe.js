@@ -12,7 +12,7 @@ var express = require("express");
 var router = express.Router();
 
 //validate for inputs
-router.get("/categories", async (req, res) => {
+router.get("/detail", async (req, res) => {
   try {
     let cafeID = req.query.cafeID;
     let data = await models.Categories.findAll({

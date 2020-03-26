@@ -2,7 +2,7 @@ import db from "../connection"
 import Sequelize from "sequelize"
 
 const Tables = db.define(
-  "tblTables",
+  "Tables",
   {
     tableID: {
       primaryKey: true,
@@ -21,8 +21,7 @@ const Tables = db.define(
     }
   },
   {
-    timestamps: false,
-    freezeTableName:true
+    tableName: "tblTables"
   }
 );
 

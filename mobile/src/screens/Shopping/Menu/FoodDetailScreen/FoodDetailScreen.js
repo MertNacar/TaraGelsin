@@ -34,11 +34,11 @@ const FoodDetailScreen = props => {
 
       if (!res.err) {
         let selectedFood = props.getFoods.filter(item => item.foodID === foodID)
-        let extras = res.food.extras.map(item => {
+        let extras = res.food.Extras.map(item => {
           return { ...item, disable: false }
         })
         setExtras(extras)
-        setIngredients(res.food.ingredients)
+        setIngredients(res.food.Ingredients)
         setFood(selectedFood[0])
         setLoading(false)
 
@@ -58,11 +58,11 @@ const FoodDetailScreen = props => {
   addCart = () => {
     setDisable(true)
     let newFoodID = food.foodID
-    let newCost = parseFloat(food.foodCost)
+    let newCost = parseFloat(food.Branches[0].BranchFoods.cost)
     let selectedExtras = extras.filter(item => {
       if (item.disable === true) {
         newFoodID += ":" + item.extraID
-        newCost += parseFloat(item.extraCost)
+        newCost += parseFloat(item.cost)
         return item
       } else return null
     })
@@ -105,27 +105,27 @@ const FoodDetailScreen = props => {
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollView}>
 
           <View style={styles.card}>
-            <Image style={styles.images} source={{ uri: PREFIX_IMAGEURL + food.foodImagePath }} />
+            <Image style={styles.images} source={{ uri: PREFIX_IMAGEURL + food.imagePath }} />
 
             <View style={styles.rowMain}>
 
-              <Text h4 h4Style={{ flex: 3 }}>{food.foodName}</Text>
+              <Text h4 h4Style={{ flex: 3 }}>{food.FoodName.name}</Text>
               <View style={styles.rowSecond}>
-                <Text h4>{food.foodCost} </Text>
+                <Text h4>{food.Branches[0].BranchFoods.cost} </Text>
                 <IconAwe name="lira-sign" size={22} />
               </View>
 
             </View>
 
             <View style={styles.rowMain}>
-              <Text style={{ fontWeight: "bold" }}>{food.foodDescription}}</Text>
+              <Text style={{ fontWeight: "bold" }}>{food.description}}</Text>
             </View>
 
             <View style={styles.rowMain}>
 
-              <Text h4 h4Style={{ flex: 3 }}>{food.foodCal} calorie</Text>
+              <Text h4 h4Style={{ flex: 3 }}>{food.calorie} calorie</Text>
               <View style={styles.rowSecond}>
-                <Text h4>{food.foodPreperationTime} min </Text>
+                <Text h4>{food.preperationTime} min </Text>
                 <Icon name="md-time" size={26}></Icon>
               </View>
 

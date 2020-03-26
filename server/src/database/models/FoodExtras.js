@@ -3,9 +3,11 @@ import Foods from './Foods'
 import Extras from './Extras'
 
 const FoodExtras = db.define(
-  "tblFoodExtras",
+  "FoodExtras",
   {},
-  { timestamps: false }
+  {
+    tableName: "tblFoodExtras"
+  }
 );
 
 Foods.belongsToMany(Extras, { through: FoodExtras, foreignKey: 'foodID', otherKey: 'extraID' });

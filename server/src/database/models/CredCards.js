@@ -3,7 +3,7 @@ import Sequelize from "sequelize"
 import Users from './Users'
 
 const CredCards = db.define(
-  "tblCredCards",
+  "CredCards",
   {
     cardID: {
       primaryKey: true,
@@ -35,8 +35,11 @@ const CredCards = db.define(
     active: {
       type: Sequelize.BOOLEAN,
       defaultValue: true
-    },
-
+    }
+  },
+  {
+    timestamps: true,
+    tableName: "tblCredCards"
   }
 );
 

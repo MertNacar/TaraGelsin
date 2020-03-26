@@ -14,11 +14,11 @@ const OrderCard = props => {
 
         leftElement={
           <Image
-            source={{ uri: PREFIX_IMAGEURL + props.item.foodImagePath }}
+            source={{ uri: PREFIX_IMAGEURL + props.item.imagePath }}
             style={styles.image} />
         }
 
-        title={props.item.foodName}
+        title={props.item.FoodName.name}
         titleStyle={styles.titleText}
         subtitle={
           <View style={styles.cost}>

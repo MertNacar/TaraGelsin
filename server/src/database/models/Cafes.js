@@ -3,7 +3,7 @@ import Sequelize from "sequelize"
 import SubscriberTypes from './SubscriberTypes'
 import Plans from './Plans'
 const Cafes = db.define(
-  "tblCafes",
+  "Cafes",
   {
     cafeID: {
       primaryKey: true,
@@ -48,6 +48,10 @@ const Cafes = db.define(
     subscriptionStartDate: Sequelize.DATE,
 
     subscriptionEndDate: Sequelize.DATE,
+  },
+  {
+    timestamps: true,
+    tableName: "tblCafes"
   }
 );
 

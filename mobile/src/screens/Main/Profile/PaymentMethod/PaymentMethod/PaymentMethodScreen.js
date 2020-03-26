@@ -86,8 +86,8 @@ const PaymentMethodScreen = props => {
         keyExtractor={item => item.cardID}
         renderItem={({ item }) =>
           <CreditCard
-            titleText={item.cardName}
-            subTitleText={item.cardNumber}
+            titleText={item.name}
+            subTitleText={item.number}
             removeClick={() => removeCard(item.cardID)} />
         }
         refreshControl={

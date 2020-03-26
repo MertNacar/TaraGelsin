@@ -12,10 +12,10 @@ const FoodCard = props => {
   return (
     <View style={styles.cardContainer}>
       <Tile
-        imageSrc={{ uri: PREFIX_IMAGEURL + props.food.foodImagePath }}
+        imageSrc={{ uri: PREFIX_IMAGEURL + props.food.imagePath }}
         imageContainerStyle={{ marginHorizontal: 7 }}
         imageProps={{ resizeMode: "cover" }}
-        title={props.food.foodName}
+        title={props.food.FoodName.name}
         onPress={props.goFoodDetails}
         titleStyle={styles.titleStyle}
       >
@@ -23,7 +23,7 @@ const FoodCard = props => {
           <View style={styles.rowCost}>
 
             <Text h4>
-              {props.food.foodCost}
+              {props.food.Branches[0].BranchFoods.cost}
             </Text>
             <Text> </Text>
             <IconAwe name="lira-sign" size={20} />
@@ -31,7 +31,7 @@ const FoodCard = props => {
 
           <View style={styles.rowTime}>
             <Text h4>
-              {props.food.foodPreperationTime} min
+              {props.food.preperationTime} min
             </Text>
             <Text> </Text>
             <Icon name="md-time" size={26} />

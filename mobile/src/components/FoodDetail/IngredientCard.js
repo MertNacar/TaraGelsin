@@ -8,7 +8,7 @@ const IngredientCard = props => {
   return (
     <CheckBox
       center
-      title={props.item.ingredientName}
+      title={props.item.name}
       textStyle={styles.textTitle}
       checked={true}
     />

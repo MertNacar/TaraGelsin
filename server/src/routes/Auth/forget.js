@@ -15,7 +15,7 @@ router.post("/password", async (req, res) => {
     let emailValid = regex.validateRegex(regex.emailRegex, email)
 
     if (phoneValid && emailValid) {
-      let data = await models.Users.findOne({
+      let user = await models.Users.findOne({
         attributes: ["userID", "fullname", "phone", "deviceID", "email"],
         where: {
           email,
@@ -23,7 +23,7 @@ router.post("/password", async (req, res) => {
         }
       });
 
-      if (data !== null) res.json({ err: false, user: data });
+      if (user !== null) res.json({ err: false, user });
       else throw new Error()
 
     } else throw new Error()
@@ -39,16 +39,16 @@ router.put("/change-password", async (req, res) => {
     let passValid = regex.validateRegex(regex.passwordRegex, password)
 
     if (phoneValid && passValid) {
-      let data = await models.Users.findOne({
+      let user = await models.Users.findOne({
         attributes: ["userID"],
         where: {
           phone
         }
       });
 
-      if (data !== null) {
+      if (user !== null) {
         let hash = await hashPassword(password)
-        await data.update({ password: hash }, { where: { userID: data.userID } });
+        await user.update({ password: hash }, { where: { userID: user.userID } });
         res.json({ err: false });
       } else throw new Error()
 

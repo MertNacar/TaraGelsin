@@ -2,7 +2,7 @@ import db from "../connection"
 import Sequelize from "sequelize"
 
 const SubscriberTypes = db.define(
-  "tblSubscriberTypes",
+  "SubscriberTypes",
   {
     subscriberTypeID: {
       primaryKey: true,
@@ -15,7 +15,7 @@ const SubscriberTypes = db.define(
     },
   },
   {
-    timestamps: false
+    tableName: "tblSubscriberTypes"
   }
 );
 

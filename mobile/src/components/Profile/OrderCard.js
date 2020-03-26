@@ -15,11 +15,11 @@ const OrderCard = props => {
         leftIcon={<Icon name="md-cart" size={46} color={COLOR_BACKGROUND} />}
         rightElement={
           <View style={styles.rightContainer}>
-            <Text style={styles.text}>{props.item.orderCost}</Text>
+            <Text style={styles.text}>{props.item.cost}</Text>
             <IconAwe name="lira-sign" size={18} color={COLOR_BACKGROUND} />
           </View>
         }
-        title={props.item.tblCafe.cafeName}
+        title={props.item.Cafe.name}
         subtitle={date}
       />
     </View>

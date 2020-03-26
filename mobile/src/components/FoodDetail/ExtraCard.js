@@ -9,7 +9,7 @@ const ExtraCard = props => {
     <CheckBox
       key={props.key}
       center
-      title={props.item.extraName + "  " + props.item.extraCost + "  "}
+      title={props.item.name + "  " + props.item.cost + "  "}
       iconRight
       textStyle={styles.textTitle}
       iconType='material'

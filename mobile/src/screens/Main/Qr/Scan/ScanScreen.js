@@ -10,8 +10,10 @@ import { connect } from 'react-redux'
 const ScanScreen = props => {
   onSuccess = async (e) => {
     try {
-      let qrCodeString = "04b304c9-3298-4d29-94dd-aeae409b8aa3/6c6b11f8-1cf5-497d-aaff-b513558338b1"
-      let res = await Http.get(`main/qrCode/scan?qrCode=${qrCodeString}`, props.getUser.token)
+      let qrCodeString = "04b304c9-3298-4d29-94dd-aeae409b8aa3/c7abbcae-efc1-469e-a29c-51b4f8d22026/" +
+        "05f684c5-5c2b-4744-a033-000c192ac262/a4257993-0dd0-4aa5-933a-4f8408172118"
+    
+        let res = await Http.get(`main/qrCode/scan?qrCode=${qrCodeString}`, props.getUser.token)
 
       if (!res.err) {
         props.updateCafe(res.cafe)

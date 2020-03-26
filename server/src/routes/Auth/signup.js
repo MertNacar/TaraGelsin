@@ -30,7 +30,7 @@ router.post("", async (req, res) => {
       let country = await models.Countries.findOne({
         attributes: ["countryID"],
         where: {
-          countryName: user.countryName
+          name: user.countryName
         }
       })
       delete user.countryName
