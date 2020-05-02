@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native'
-
+import * as Colors from '../../../../constStyle/colors'
 const screenWidth = Math.round(Dimensions.get('window').width);
 export default StyleSheet.create({
   container: {
@@ -26,7 +26,8 @@ export default StyleSheet.create({
   },
   creditCard: {
     marginTop: 10,
-    flex: 1
+    flex: 1,
+    borderWidth:1
   },
   cardList: {
     flex: 1
@@ -71,5 +72,34 @@ export default StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignSelf: "center"
+  },
+  form: {
+    marginTop: 15,
+    alignItems:"center"
+  },
+  cardContainer: {
+    width: "90%",
+    marginBottom: 15,
+    paddingLeft: 5,
+    borderWidth: 1,
+    borderRadius: 10
+  },
+  dateContainer: {
+    width: "90%",
+    marginBottom: 15,
+    paddingLeft: 5,
+    borderWidth: 1,
+    borderRadius: 10
+  },
+
+  cvvContainer: {
+    width: "90%",
+    marginBottom: 15,
+    paddingLeft: 5,
+    borderWidth: 1,
+    borderRadius: 10
+  },
+  addButton: {
+    backgroundColor: Colors.COLOR_BACKGROUND
   }
 })

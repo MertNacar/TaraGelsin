@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Button } from 'react-native-elements'
 import IconAwe from 'react-native-vector-icons/FontAwesome5'
+import { COLOR_BACKGROUND } from '../../constStyle/colors'
 
 const PaymentFooter = props => {
   return (
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 2,
   },
   buttonStyle: {
-
+    backgroundColor: COLOR_BACKGROUND
   },
 })
 

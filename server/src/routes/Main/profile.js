@@ -77,6 +77,7 @@ router.get("/credit-cards", async (req, res) => {
 
       let credCards = await models.CredCards.findAll({
         attributes: ["cardID", "name", "number"],
+        where: { active: true },
         includeIgnoreAttributes: false,
         include: [{
           required: true,
@@ -110,7 +111,7 @@ router.post("/add-credit-card", async (req, res) => {
     if (userValid && nameValid && numberValid && dateValid && cvvValid && tokenValid) {
 
       let credCard = await models.CredCards.findOne({
-        attributes: ["cardID"],
+        attributes: ["cardID", "active"],
         where: {
           number
         }
@@ -120,11 +121,15 @@ router.post("/add-credit-card", async (req, res) => {
           name, number, date, cvv, userID
         })
         res.json({ err: false });
-      } else throw new Error()
+      } else if (credCard != null && credCard.active === false) {
+        await credCard.update({ active: true }, { where: { userID } });
+        res.json({ err: false });
+      }
+      else throw new Error()
 
     } else throw new Error();
 
-  } catch {
+  } catch{
     res.json({ err: true });
   }
 });

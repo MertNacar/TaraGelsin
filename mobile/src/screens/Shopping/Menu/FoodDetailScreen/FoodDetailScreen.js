@@ -17,7 +17,7 @@ const FoodDetailScreen = props => {
   const [extras, setExtras] = useState([])
   const [ingredients, setIngredients] = useState([])
   const [disable, setDisable] = useState(false)
-  const [foodQuantity, setFoodQuantity] = useState(1)
+  const [quantity, SetQuantity] = useState(1)
   const [update, setUpdate] = useState(null)
 
   useEffect(() => {
@@ -67,16 +67,16 @@ const FoodDetailScreen = props => {
       } else return null
     })
 
-    let newFood = Object.assign({}, food, { foodID: newFoodID, foodCost: newCost, extras: selectedExtras, foodQuantity })
+    let newFood = Object.assign({}, food, { foodID: newFoodID, Branches: [{BranchFoods: { cost: newCost }}], extras: selectedExtras, quantity: quantity })
     props.updateCart(newFood)
     props.navigation.goBack()
   }
 
   changeQuantity = (type) => {
     if (type === "decrement") {
-      if (foodQuantity > 1) setFoodQuantity(foodQuantity - 1)
+      if (quantity > 1) SetQuantity(quantity - 1)
     }
-    else setFoodQuantity(foodQuantity + 1)
+    else SetQuantity(quantity + 1)
   }
 
   if (loading) {
@@ -172,7 +172,7 @@ const FoodDetailScreen = props => {
             </View>
 
             <View style={{ flex: 1 }}>
-              <Text h4 h4Style={{ textAlign: "center" }}>{foodQuantity} Adet</Text>
+              <Text h4 h4Style={{ textAlign: "center" }}>{quantity} Adet</Text>
             </View>
 
 

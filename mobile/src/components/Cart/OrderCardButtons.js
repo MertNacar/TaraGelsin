@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Button, Text } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
-
+import { COLOR_BACKGROUND } from '../../constStyle/colors'
 const OrderCardButton = props => {
   return (
     <View style={styles.container}>
@@ -12,7 +12,7 @@ const OrderCardButton = props => {
       </View>
 
       <View style={{ flex: 1 }}>
-        <Text style={styles.quantityText}>{props.foodQuantity}</Text>
+        <Text style={styles.quantityText}>{props.quantity}</Text>
       </View>
 
       <View style={{ flex: 1 }}>
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   },
   buttonSmall: {
     width: 30,
+    backgroundColor: COLOR_BACKGROUND
   },
 })
 

@@ -19,10 +19,22 @@ export default StyleSheet.create({
     resizeMode: "contain"
   },
   row: {
-    flex: 2
+    flex: 2,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
   },
   text: {
+    textAlign: "center",
+    fontSize: 16
+  },
+  h4Text: {
     textAlign: "center"
+  },
+  overlayImage: {
+    width: "100%",
+    height: 250,
+    resizeMode: "contain"
   },
 
   loading: {

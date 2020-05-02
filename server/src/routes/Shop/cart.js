@@ -12,16 +12,17 @@ var express = require("express");
 var router = express.Router();
 
 //validate for inputs
-router.get("/credit-card", async (req, res) => {
+router.get("/get-credit-cards", async (req, res) => {
   try {
     let userID = req.query.userID;
     let userValid = regex.validateRegex(regex.uuidRegex, userID)
+    
     let token = req.headers.authorization.split(" ")[1];
-    let validate = jwt.validateToken(token);
+    let tokenValid = jwt.validateToken(token);
 
-    if (validate && userValid) {
-      let data = await models.CredCards.findAll({
-        attributes: ["cardName", "cardNumber", "cardCvv", "cardDate", "cardPinNumber"],
+    if (userValid && tokenValid) {
+      let cards = await models.CredCards.findAll({
+        attributes: ["name", "number", "cvv", "date"],
         includeIgnoreAttributes: false,
         include: [{
           required: true,
@@ -32,7 +33,7 @@ router.get("/credit-card", async (req, res) => {
         }]
       });
 
-      if (data !== null) res.json({ err: false, cards: data.dataValues });
+      if (cards !== null) res.json({ err: false, cards });
       else throw new Error()
 
     } else throw new Error()

@@ -39,7 +39,7 @@ const CafeScreen = props => {
 
       <View style={styles.row}>
         <Text style={{ fontWeight: "bold" }}>
-          Oy VER
+         {""}
         </Text>
       </View>
 
