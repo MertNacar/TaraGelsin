@@ -82,7 +82,7 @@ const ForgetPasswordScreen = props => {
 
       <View style={styles.form}>
         <Input
-          placeholder="Email"
+          placeholder="E-posta"
           textContentType="emailAddress"
           underlineColorAndroid="transparent"
           maxLength={40}

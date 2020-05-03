@@ -108,14 +108,14 @@ const PaymentMethodScreen = props => {
         containerStyle={styles.buttonContainer}
         buttonStyle={styles.buttonStyle}
         titleStyle={styles.titleStyle}
-        title="Add Credit Card"
+        title="Kredi Kartı Ekle"
         onPress={() => goAddCardScreen()}
         iconRight
       />
 
       <Button
         buttonStyle={{ backgroundColor: "red" }} containerStyle={styles.backButtonContainer}
-        title="Go back" onPress={() => goProfileMenu()} />
+        title="Geri Git" onPress={() => goProfileMenu()} />
 
 
     </SafeAreaView>

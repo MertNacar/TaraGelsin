@@ -40,7 +40,7 @@ export default createStackNavigator({
   Waiter: {
     screen: WaiterScreen,
     navigationOptions: ({ navigation }) => ({
-      headerTitle: "Waiter",
+      headerTitle: "Garson",
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,

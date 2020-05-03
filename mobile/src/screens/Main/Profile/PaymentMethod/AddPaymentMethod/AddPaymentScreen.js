@@ -78,7 +78,7 @@ const AddPaymentScreen = props => {
         <View style={styles.inputs}>
 
           <Input
-            placeholder="Card Name"
+            placeholder="Kart Sahibi İsim Soyad"
             underlineColorAndroid="transparent"
             inputContainerStyle={{ borderBottomWidth: 0 }}
             maxLength={20}
@@ -89,7 +89,7 @@ const AddPaymentScreen = props => {
           />
 
           <Input
-            placeholder="Card Number"
+            placeholder="Kart Numarası"
             underlineColorAndroid="transparent"
             inputContainerStyle={{ borderBottomWidth: 0 }}
             textContentType="creditCardNumber"
@@ -105,7 +105,7 @@ const AddPaymentScreen = props => {
           <View style={styles.row}>
 
             <Input
-              placeholder="Card Date"
+              placeholder="Son Kullanma Tarihi"
               underlineColorAndroid="transparent"
               inputContainerStyle={{ borderBottomWidth: 0 }}
               inputStyle={{ marginLeft: 5 }}
@@ -117,7 +117,7 @@ const AddPaymentScreen = props => {
             />
 
             <Input
-              placeholder="Card Cvv"
+              placeholder="Cvv"
               underlineColorAndroid="transparent"
               inputContainerStyle={{ borderBottomWidth: 0 }}
               maxLength={3}
@@ -133,7 +133,7 @@ const AddPaymentScreen = props => {
         <Button
           disabled={disable} disabledStyle={{ opacity: 0.8 }}
           buttonStyle={styles.addButton}
-          title="Add Credit Card" onPress={() => addCredCard()} />
+          title="Kredi Kartı Ekle" onPress={() => addCredCard()} />
 
       </View>
 

@@ -150,7 +150,7 @@ const SignupScreen = props => {
             />
           </View>
           <Input
-            placeholder="Phone"
+            placeholder="555 454 45 45"
             textContentType="telephoneNumber"
             inputContainerStyle={{ borderBottomWidth: 0 }}
             containerStyle={[styles.phone, { borderColor: borderColors.phoneBorder }]}
@@ -176,7 +176,7 @@ const SignupScreen = props => {
         />
 
         <Input
-          placeholder="Email"
+          placeholder="E-posta"
           textContentType="emailAddress"
           containerStyle={[styles.password, { borderColor: borderColors.mailBorder }]}
           maxLength={40}

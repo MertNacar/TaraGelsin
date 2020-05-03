@@ -8,7 +8,7 @@ export default createStackNavigator({
   Login: {
     screen: LoginScreen,
     navigationOptions: {
-      headerTitle: "Login",
+      headerTitle: "Giriş Yap",
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,

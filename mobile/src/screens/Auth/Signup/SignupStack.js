@@ -8,7 +8,7 @@ export default createStackNavigator({
   Signup: {
     screen: SignupScreen,
     navigationOptions: {
-      headerTitle: "Signup",
+      headerTitle: "Kayıt Ol",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
@@ -25,7 +25,7 @@ export default createStackNavigator({
   Signup2: {
     screen: SignupScreen2,
     navigationOptions: {
-      headerTitle: "Verify Phone",
+      headerTitle: "Telefonunu Doğrula",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
@@ -43,7 +43,7 @@ export default createStackNavigator({
   Signup3: {
     screen: SignupScreen3,
     navigationOptions: {
-      headerTitle: "Verified Phone",
+      headerTitle: "Telefon Doğrulandı",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },

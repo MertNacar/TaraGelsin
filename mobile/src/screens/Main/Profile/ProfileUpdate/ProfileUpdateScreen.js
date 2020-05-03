@@ -156,7 +156,7 @@ const ProfileUpdateScreen = props => {
           </View>
 
           <Input
-            placeholder="Phone"
+            placeholder="555 454 45 45"
             textContentType="telephoneNumber"
             defaultValue={user.phone}
             inputContainerStyle={{ borderBottomWidth: 0 }}
@@ -172,7 +172,7 @@ const ProfileUpdateScreen = props => {
 
         <View style={styles.row}>
           <Input
-            placeholder="Email"
+            placeholder="E-posta"
             textContentType="emailAddress"
             defaultValue={user.email}
             containerStyle={[styles.password, { borderColor: borderColors.mailBorder }]}

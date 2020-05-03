@@ -12,7 +12,7 @@ export default createStackNavigator({
   Cafe: {
     screen: CafeScreen,
     navigationOptions: ({ navigation }) => ({
-      headerTitle: "Cafe",
+      headerTitle: "Mekân",
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,

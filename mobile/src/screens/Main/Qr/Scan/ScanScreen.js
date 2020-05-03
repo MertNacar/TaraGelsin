@@ -36,7 +36,7 @@ const ScanScreen = props => {
         </Text>
       }
       bottomContent={
-        <Button title="QrCode Tarandı" type="clear" onPress={(e) => onSuccess(e)} />
+        <Button title="Kare Kod Tarandı" type="clear" onPress={(e) => onSuccess(e)} />
 
       }
     />

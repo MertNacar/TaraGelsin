@@ -104,7 +104,7 @@ const LoginScreen = props => {
 
             </View>
             <Input
-              placeholder="Phone"
+              placeholder="555 454 45 45"
               textContentType="telephoneNumber"
               underlineColorAndroid="transparent"
               inputContainerStyle={{ borderBottomWidth: 0 }}

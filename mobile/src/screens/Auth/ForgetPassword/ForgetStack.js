@@ -9,7 +9,7 @@ export default createStackNavigator({
   Forget: {
     screen: ForgetPasswordScreen,
     navigationOptions: {
-      headerTitle: "Forget Password",
+      headerTitle: "Şifremi Unuttum",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
@@ -26,7 +26,7 @@ export default createStackNavigator({
   Forget2: {
     screen: ForgetPasswordScreen2,
     navigationOptions: {
-      headerTitle: "Validate Phone",
+      headerTitle: "Telefonumu Onayla",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
@@ -44,7 +44,7 @@ export default createStackNavigator({
   Forget3: {
     screen: ForgetPasswordScreen3,
     navigationOptions: {
-      headerTitle: "Change Password",
+      headerTitle: "Şifremi Değiştir",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
@@ -62,7 +62,7 @@ export default createStackNavigator({
   Forget4: {
     screen: SignupScreen3,
     navigationOptions: {
-      headerTitle: "Forget Password",
+      headerTitle: "Şifremi Unuttum",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },

@@ -10,6 +10,7 @@ export default createBottomTabNavigator({
   Menu: {
     screen: MenuStack,
     navigationOptions: {
+      title:"Menü",
       tabBarIcon: ({ tintColor }) => (
         <Icon name='md-book' color={tintColor} size={30} />
       )
@@ -19,6 +20,7 @@ export default createBottomTabNavigator({
   Cafe: {
     screen: CafeScreen,
     navigationOptions: {
+      title:"Mekân",
       tabBarIcon: ({ tintColor }) => (
         <Icon name='md-cafe' color={tintColor} size={30} />
       )
@@ -27,6 +29,7 @@ export default createBottomTabNavigator({
   Waiter: {
     screen: WaiterScreen,
     navigationOptions: {
+      title:"Garson",
       tabBarIcon: ({ tintColor }) => (
         <Icon name='md-notifications' color={tintColor} size={30} />
       )
@@ -36,10 +39,11 @@ export default createBottomTabNavigator({
   Cart: {
     screen: CartStack,
     navigationOptions: {
+      title:"Sepet",
       tabBarIcon: ({ tintColor }) => (
         <Icon name='md-cart' color={tintColor} size={30} />
       ),
-    }
+    },
   }
 }, {
   initialRouteName: 'Menu',

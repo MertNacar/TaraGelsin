@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, ScrollView } from 'react-native'
+import { View, SafeAreaView, ScrollView } from 'react-native'
 import { Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { removeTokenStorage, removePhoneStorage } from '../../../../AsyncStorage/index'
 import { removeUser } from '../../../../store/user/actionCreator'
-import { removeCafe } from '../../../../store/cafe/actionCreator'
-import { removeCart } from '../../../../store/cart/actionCreator'
-import { removeCategories } from '../../../../store/category/actionCreator'
-import { removeFoods } from '../../../../store/food/actionCreator'
 import { connect } from 'react-redux'
-import * as Colors from '../../../../constStyle/colors'
 import profileInfos from './data'
 import ProfileCard from '../../../../components/Profile/ProfileCard'
 import styles from './style'
-import moment from 'moment'
+
 const ProfileScreen = props => {
 
   const [user, setUser] = useState({ phone: "", fullname: "", email: "" })

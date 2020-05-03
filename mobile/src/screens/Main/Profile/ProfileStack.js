@@ -13,7 +13,7 @@ export default createStackNavigator({
   Profile: {
     screen: ProfileScreen,
     navigationOptions: {
-      headerTitle: "Profile",
+      headerTitle: "Profil",
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,
@@ -27,7 +27,7 @@ export default createStackNavigator({
   UpdateProfile: {
     screen: ProfileUpdateScreen,
     navigationOptions: {
-      headerTitle: "Update Profile",
+      headerTitle: "Profili Güncelle",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
@@ -51,7 +51,7 @@ export default createStackNavigator({
   ChangePass: {
     screen: ChangePassScreen,
     navigationOptions: {
-      headerTitle: "Change Password",
+      headerTitle: "Şifre Değiştir",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
@@ -69,7 +69,7 @@ export default createStackNavigator({
   Informations: {
     screen: InformationScreen,
     navigationOptions: {
-      headerTitle: "Informations",
+      headerTitle: "Bilgilendirmeler",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
@@ -87,7 +87,7 @@ export default createStackNavigator({
   Languages: {
     screen: LanguageScreen,
     navigationOptions: {
-      headerTitle: "Choose Language",
+      headerTitle: "Dil Seç",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
@@ -105,7 +105,7 @@ export default createStackNavigator({
   Notifications: {
     screen: NotificationScreen,
     navigationOptions: {
-      headerTitle: "Notifications",
+      headerTitle: "Bildirimler",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
@@ -123,7 +123,7 @@ export default createStackNavigator({
   OrderHistory: {
     screen: OrderHistoryScreen,
     navigationOptions: {
-      headerTitle: "Order History",
+      headerTitle: "Sipariş Geçmişim",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },

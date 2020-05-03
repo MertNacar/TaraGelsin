@@ -18,5 +18,20 @@
     "text": "Şifre Değiştir",
     "iconName": "md-lock",
     "onPress": "ChangePass"
+  },
+  {
+    "text": "İletişim Tercihleri",
+    "iconName": "md-notifications",
+    "onPress": "Notifications"
+  },
+  {
+    "text": "Bilgilendirmeler",
+    "iconName": "md-paper",
+    "onPress": "Informations"
+  },
+  {
+    "text": "Dil - Language",
+    "iconName": "md-globe",
+    "onPress": "Languages"
   }
 ]

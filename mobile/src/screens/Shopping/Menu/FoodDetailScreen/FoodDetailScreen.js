@@ -123,9 +123,9 @@ const FoodDetailScreen = props => {
 
             <View style={styles.rowMain}>
 
-              <Text h4 h4Style={{ flex: 3 }}>{food.calorie} calorie</Text>
+              <Text h4 h4Style={{ flex: 3 }}>{food.calorie} kalori</Text>
               <View style={styles.rowSecond}>
-                <Text h4>{food.preperationTime} min </Text>
+                <Text h4>{food.preperationTime} dk </Text>
                 <Icon name="md-time" size={26}></Icon>
               </View>
 
@@ -137,7 +137,7 @@ const FoodDetailScreen = props => {
 
           <View style={styles.ingExtraMain}>
 
-            <Text h4Style={{ textAlign: "center" }} h4>Ingredients</Text>
+            <Text h4Style={{ textAlign: "center" }} h4>İçindekiler</Text>
 
             {
               ingredientList.length === 0 ?
@@ -149,11 +149,11 @@ const FoodDetailScreen = props => {
             }
 
 
-            <Text h4Style={{ marginTop: 20, textAlign: "center" }} h4>Extras</Text>
+            <Text h4Style={{ marginTop: 20, textAlign: "center" }} h4>Ekstralar</Text>
 
             {
               extraList.length === 0 ?
-                <Text>Herhangi bir eklenecek extra bulunamadı.</Text>
+                <Text>Herhangi bir eklenecek ekstra bulunamadı.</Text>
                 :
                 <View style={styles.list}>
                   {extraList}

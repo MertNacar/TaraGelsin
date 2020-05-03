@@ -7,7 +7,7 @@ export default createStackNavigator({
   Qr: {
     screen: QrScreen,
     navigationOptions: {
-      headerTitle: "Qr Screen",
+      headerTitle: "Kare Kod Ekranı",
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,
@@ -21,7 +21,7 @@ export default createStackNavigator({
   Scan: {
     screen: ScanScreen,
     navigationOptions: {
-      headerTitle: "Scan Qr Code",
+      headerTitle: "Kare Kodu Tara",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },

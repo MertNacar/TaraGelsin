@@ -31,7 +31,7 @@ const FoodCard = props => {
 
           <View style={styles.rowTime}>
             <Text h4>
-              {props.food.preperationTime} min
+              {props.food.preperationTime} dk
             </Text>
             <Text> </Text>
             <Icon name="md-time" size={26} />

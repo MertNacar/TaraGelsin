@@ -7,7 +7,7 @@ export default createStackNavigator({
   PaymentMethod: {
     screen: PaymentMethodScreen,
     navigationOptions: {
-      headerTitle: "Payment Methods",
+      headerTitle: "Ödeme Yöntemleri",
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,
@@ -22,7 +22,7 @@ export default createStackNavigator({
   AddPaymentMethod: {
     screen: AddPaymentScreen,
     navigationOptions: {
-      headerTitle: "Add Payment Method",
+      headerTitle: "Ödeme Yöntemi Ekle",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
