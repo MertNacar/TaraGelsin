@@ -389,7 +389,7 @@ const PaymentScreen = props => {
           />
 
           <Button
-            containerStyle={{ flex: 4, marginTop: 10 }} buttonStyle={{ width: "100%", backgroundColor: Colors.COLOR_BACKGROUND }}
+            containerStyle={{ flex: 4, marginVertical: 12 }} buttonStyle={{ width: "100%", backgroundColor: Colors.COLOR_BACKGROUND }}
             titleStyle={{ textAlign: "center" }} title="Sipariş Ver" onPress={() => giveOrder()} />
 
         </View>

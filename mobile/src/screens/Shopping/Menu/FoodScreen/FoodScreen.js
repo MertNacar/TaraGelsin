@@ -10,7 +10,6 @@ import { updateFoods, removeFoods } from '../../../../store/food/actionCreator'
 const FoodScreen = props => {
 
   const [loading, setLoading] = useState(true)
-  //const [page, setPage] = useState(0)
 
   useEffect(() => {
     if (loading) {
@@ -27,18 +26,8 @@ const FoodScreen = props => {
         setLoading(false)
       } else throw new Error("Beklenmedik bir hatayla karşılaştık.")
     } catch {
-      //Pop up olabilir
     }
   }
-
-  /*renderFooter = () => {
-    return (<ActivityIndicator size="small" />)
-  }*/
-
-  onRefresh = () => {
-    props.removeFoods()
-    setLoading(true)
-  };
 
   goFoodDetails = (foodID) => {
     props.navigation.navigate("FoodDetails", { foodID })
@@ -57,7 +46,6 @@ const FoodScreen = props => {
           data={props.getFoods}
           style={styles.foodList}
           showsVerticalScrollIndicator={false}
-          //ListFooterComponent={renderFooter}
           renderItem={({ item }) =>
             <FoodCard
               food={item}
@@ -65,11 +53,6 @@ const FoodScreen = props => {
             />
           }
           keyExtractor={item => item.foodID}
-          refreshControl={
-            <RefreshControl
-              refreshing={loading}
-              onRefresh={onRefresh}
-            />}
         />
       </SafeAreaView>
     )

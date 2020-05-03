@@ -1,6 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native'
 
-const screenWidth = Math.round(Dimensions.get('window').width);
 export default StyleSheet.create({
   container: {
     flex: 1,
@@ -9,7 +8,7 @@ export default StyleSheet.create({
   },
   foodList: {
     flex: 1,
-    padding: 5
+    marginTop: 20
   },
   loading: {
     flex: 1,

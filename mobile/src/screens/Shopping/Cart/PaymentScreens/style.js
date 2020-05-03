@@ -62,7 +62,7 @@ export default StyleSheet.create({
     height: 2
   },
   summaryText: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "700",
     marginRight: 3
   },

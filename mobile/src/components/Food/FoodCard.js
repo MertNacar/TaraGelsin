@@ -7,16 +7,19 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import IconAwe from 'react-native-vector-icons/FontAwesome5'
 import * as Colors from '../../constStyle/colors';
 
+const screenWidth = Math.round(Dimensions.get('window').width);
 const FoodCard = props => {
 
   return (
     <View style={styles.cardContainer}>
       <Tile
         imageSrc={{ uri: PREFIX_IMAGEURL + props.food.imagePath }}
-        imageContainerStyle={{ marginHorizontal: 7 }}
         imageProps={{ resizeMode: "cover" }}
+        imageContainerStyle={{ marginHorizontal: 2 }}
         title={props.food.FoodName.name}
         onPress={props.goFoodDetails}
+        contentContainerStyle={{ borderTopWidth: 1 }}
+        containerStyle={{ width: screenWidth * 0.92 }}
         titleStyle={styles.titleStyle}
       >
         <View style={styles.row}>
@@ -46,8 +49,10 @@ const styles = StyleSheet.create({
   cardContainer: {
     justifyContent: "center",
     alignItems: "center",
+    width: screenWidth * 0.92,
     borderWidth: 2,
-    marginBottom: 30
+    marginBottom: 30,
+
   },
   titleStyle: {
     color: Colors.COLOR_BACKGROUND,

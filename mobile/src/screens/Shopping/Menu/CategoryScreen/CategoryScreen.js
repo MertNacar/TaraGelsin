@@ -11,8 +11,6 @@ import { removeFoods } from '../../../../store/food/actionCreator'
 const CategoryScreen = props => {
 
   const [loading, setLoading] = useState(true)
-  const [page, setPage] = useState(0)
-  const [threshold, setThreshold] = useState(0.25)
 
   useEffect(() => {
     if (loading) {
@@ -20,39 +18,16 @@ const CategoryScreen = props => {
     }
   }, [loading])
 
-  handleLoadMore = () => {
-    setPage(page + 1)
-    setLoading(true)
-  }
- 
-  stopFetching = () => {
-    setLoading(false)
-    setThreshold(0)
-    setPage(null)
-  }
-
   getCategories = async () => {
     try {
       let res = await Http.get(`shop/menu/categories?cafeID=${props.getCafe.Cafe.cafeID}&page=${0}#`, props.getUser.token)
       if (!res.err) {
-
-        if (res.categories != null) {
-          props.updateCategories(res.categories)
-          setLoading(false)
-        }
-        else stopFetching()
-
+        props.updateCategories(res.categories)
+        setLoading(false)
       } else throw new Error("Beklenmedik bir hatayla karşılaştık.")
     } catch {
-      //Pop up olabilir
     }
   }
-
-  onRefresh = () => {
-    props.removeCategories()
-    setPage(0)
-    setLoading(true)
-  };
 
   goFood = (categoryID) => {
     props.removeFoods()
@@ -79,13 +54,6 @@ const CategoryScreen = props => {
               goFood={() => goFood(item.categoryID)}
             />
           }
-          onEndReached={handleLoadMore}
-          onEndReachedThreshold={threshold}
-          refreshControl={
-            <RefreshControl
-              refreshing={loading}
-              onRefresh={onRefresh}
-            />}
         />
       </View>
     )

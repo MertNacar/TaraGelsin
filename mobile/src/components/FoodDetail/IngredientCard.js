@@ -1,13 +1,12 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { Button, CheckBox } from 'react-native-elements'
-import * as Colors from '../../constStyle/colors'
-import Icon from 'react-native-vector-icons/Ionicons'
+import { StyleSheet } from 'react-native'
+import { CheckBox } from 'react-native-elements'
 
 const IngredientCard = props => {
   return (
     <CheckBox
       center
+      activeOpacity={1}
       title={props.item.name}
       textStyle={styles.textTitle}
       checked={true}

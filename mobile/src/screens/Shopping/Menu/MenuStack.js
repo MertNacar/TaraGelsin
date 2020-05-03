@@ -11,7 +11,7 @@ export default createStackNavigator({
   Categories: {
     screen: CategoryScreen,
     navigationOptions: ({ navigation }) => ({
-      headerTitle: "Kategoriler",
+      headerTitle: "Menü",
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,
@@ -47,7 +47,7 @@ export default createStackNavigator({
   FoodDetails: {
     screen: FoodDetailScreen,
     navigationOptions: {
-      headerTitle: "Ürün Detayı",
+      headerTitle: "Ürün Detay",
       headerLeftContainerStyle: {
         backgroundColor: Colors.COLOR_SECONDARY
       },
