@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, SafeAreaView } from 'react-native'
+import { View, SafeAreaView, ScrollView } from 'react-native'
 import { CheckBox, Input, Text, Button, Overlay } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { validateRegex, nameRegex, phoneRegex, passwordRegex, emailRegex } from '../../../../regex/regex'

@@ -146,27 +146,34 @@ router.get("/order-history", async (req, res) => {
     if (userValid && pageValid && tokenValid) {
       let orders = await models.Orders.findAll({
         attributes: ["orderID", "cost", "createdAt"],
-        limit: 10,
-        offset: page * 10,
+        /*limit: 10,
+        offset: page * 10,*/
         order: [['createdAt', 'DESC']],
-        include: [{
-          required: true,
-          model: models.Users,
-          attributes: [],
-          where: {
-            userID
+        include: [
+          {
+            required: true,
+            model: models.Users,
+            attributes: [],
+            where: {
+              userID
+            }
+          },
+          {
+            required: true,
+            model: models.Branches,
+            attributes: ["name"],
+          },
+          {
+            required: true,
+            model: models.Cafes,
+            attributes: ["name"]
           }
-        },
-        {
-          required: true,
-          model: models.Cafes,
-          attributes: ["name"]
-        }]
+        ]
       })
       res.json({ err: false, orders });
     } else throw new Error();
-  } catch {
-    res.json({ err: true });
+  } catch (err) {
+    res.json({ err: true, mess: err.message });
   }
 });
 

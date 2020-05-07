@@ -21,11 +21,13 @@ const OrderHistoryScreen = props => {
     setLoading(true)
     //setPage(0)
   }
+  
   getHistory = async () => {
     try {
       let res = await Http.get(
         `main/profile/order-history?userID=${props.getUser.userID}&page=${0}#`,
         props.getUser.token)
+        console.log('res', res)
       if (!res.err) {
         setOrders(res.orders)
         setLoading(false)

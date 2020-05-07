@@ -19,8 +19,8 @@ router.get("/categories", async (req, res) => {
     if (validate && cafeValid && pageValid) {
       let categories = await models.Categories.findAll({
         attributes: ["categoryID", "imagePath"],
-        limit: 3,
-        offset: page * 3,
+        /*limit: 3,
+        offset: page * 3,*/
         where: {
           active: true
         },
@@ -60,8 +60,8 @@ router.get("/categories/foods", async (req, res) => {
     if (validate && categoryValid && pageValid) {
       let foods = await models.Foods.findAll({
         attributes: ["foodID", "description", "isNewFood", "preperationTime", "imagePath", "calorie"],
-        limit: 3,
-        offset: page * 3,
+        /*limit: 3,
+        offset: page * 3,*/
         include: [{
           required: true,
           model: models.Categories,

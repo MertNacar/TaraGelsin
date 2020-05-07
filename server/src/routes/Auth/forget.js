@@ -1,7 +1,9 @@
 import {
   hashPassword,
   models,
-  regex
+  regex,
+  client,
+  serviceSID
 } from "../imports"
 
 var express = require("express");
@@ -62,7 +64,6 @@ router.post("/send-otp", async (req, res) => {
   try {
     let { phone } = req.body.data
     let phoneValid = regex.validateRegex(regex.phoneRegex, phone)
-
     if (phoneValid) {
       await client.verify.services(serviceSID)
         .verifications

@@ -7,7 +7,7 @@ import { COLOR_BACKGROUND } from '../../constStyle/colors'
 import moment from 'moment'
 
 const OrderCard = props => {
-  let date = moment(props.item.createdAt).format("DD MM YY")
+  let date = moment(props.item.createdAt).format("DD / MM / YYYY")
   return (
     <View>
       <ListItem
@@ -15,11 +15,12 @@ const OrderCard = props => {
         leftIcon={<Icon name="md-cart" size={46} color={COLOR_BACKGROUND} />}
         rightElement={
           <View style={styles.rightContainer}>
-            <Text style={styles.text}>{props.item.cost}</Text>
-            <IconAwe name="lira-sign" size={18} color={COLOR_BACKGROUND} />
+            <Text style={styles.text}>{parseFloat(props.item.cost)}</Text>
+            <IconAwe name="lira-sign" size={16} color={COLOR_BACKGROUND} />
           </View>
         }
-        title={props.item.Cafe.name}
+        titleStyle={{fontWeight:"700"}}
+        title={props.item.Cafe.name + " / " + props.item.Branch.name}
         subtitle={date}
       />
     </View>
@@ -32,7 +33,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   rightContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
+    alignItems:"center"
   },
   text: {
     marginRight: 3,

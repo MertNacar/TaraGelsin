@@ -67,7 +67,7 @@ const FoodDetailScreen = props => {
       } else return null
     })
 
-    let newFood = Object.assign({}, food, { foodID: newFoodID, Branches: [{BranchFoods: { cost: newCost }}], extras: selectedExtras, quantity: quantity })
+    let newFood = Object.assign({}, food, { foodID: newFoodID, Branches: [{ BranchFoods: { cost: newCost } }], extras: selectedExtras, quantity: quantity })
     props.updateCart(newFood)
     props.navigation.goBack()
   }
@@ -137,11 +137,11 @@ const FoodDetailScreen = props => {
 
           <View style={styles.ingExtraMain}>
 
-            <Text h4Style={{ textAlign: "center" }} h4>İçindekiler</Text>
+            <Text h4Style={{ marginTop: 20, textAlign: "center" }} h4>İçindekiler</Text>
 
             {
               ingredientList.length === 0 ?
-                <Text>İçindekiler hakkında bir bilgi bulunamadı.</Text>
+                <Text style={{ textAlign: "center" }}>İçindekiler hakkında bir bilgi bulunamadı.</Text>
                 :
                 <View style={styles.list}>
                   {ingredientList}
@@ -153,7 +153,7 @@ const FoodDetailScreen = props => {
 
             {
               extraList.length === 0 ?
-                <Text>Herhangi bir eklenecek ekstra bulunamadı.</Text>
+                <Text style={{ textAlign: "center" }}>Herhangi bir eklenecek ekstra bulunamadı.</Text>
                 :
                 <View style={styles.list}>
                   {extraList}

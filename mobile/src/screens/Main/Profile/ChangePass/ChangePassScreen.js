@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { View, SafeAreaView } from 'react-native'
-import { CheckBox, Input, Text, Button } from 'react-native-elements'
+import { Input, Text, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { validateRegex, passwordRegex } from '../../../../regex/regex'
 import styles from './style'
@@ -10,12 +10,6 @@ import * as Http from '../../../../utils/httpHelper'
 import * as Colors from '../../../../constStyle/colors'
 
 const ChangePassScreen = props => {
-
-  useEffect(() => {
-    return () => {
-      setDisable(false)
-    };
-  }, [])
 
   const [oldPassword, setOldPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
