@@ -52,7 +52,7 @@ const CartScreen = props => {
   }
 
   goPayment = () => {
-    props.navigation.navigate("Payment", { totalCost })
+    props.navigation.navigate("Payment")
   }
 
   changeTotalCost = () => {

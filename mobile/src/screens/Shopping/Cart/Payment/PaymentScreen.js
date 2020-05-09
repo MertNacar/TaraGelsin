@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, ScrollView, TextInput, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, ScrollView, TextInput, SafeAreaView } from 'react-native'
 import { Text, Button, Overlay, Divider } from 'react-native-elements'
 import { connect } from 'react-redux'
 import styles from './style'
@@ -10,7 +10,7 @@ import { validateRegex, commentRegex } from '../../../../regex/regex'
 import Icon from 'react-native-vector-icons/Ionicons'
 import IconAwe from 'react-native-vector-icons/FontAwesome5'
 import * as Colors from '../../../../constStyle/colors'
-import { withNavigationFocus, FlatList } from 'react-navigation'
+import { withNavigationFocus } from 'react-navigation'
 import CardForm from '../../../../components/Cart/CardForm'
 
 const PaymentScreen = props => {
@@ -21,6 +21,8 @@ const PaymentScreen = props => {
   const [cards, setCards] = useState([])
   const [orderNote, setOrderNote] = useState(null)
   const [condition, setCondition] = useState(false)
+  const [err, setErr] = useState(false)
+  const [errMessage, setErrMessage] = useState("")
   const [disable, setDisable] = useState(false)
   const [visibleOverlay, setVisibleOverlay] = useState(false)
 
@@ -104,12 +106,28 @@ const PaymentScreen = props => {
       let validateNote = validateRegex(commentRegex, orderNote)
 
       if (validateNote && validateCard && condition) {
-        let res = await Http.post('main/profile/add-credit-card', { ...credCard, userID: props.getUser.userID }, props.getUser.token)
+
+        let foods = props.getCart.map(item => {
+          return { foodID: item.foodID, quantity: item.quantity }
+        })
+
+        let place = {
+          cafeID: props.getCafe.Cafe.cafeID,
+          branchID: props.getCafe.Branch.branchID,
+          sectionID: props.getCafe.Section.sectionID,
+          tableID: props.getCafe.Table.tableID,
+        }
+
+        let userID = props.getUser.userID
+        let cardID = selectedCard[0].cardID
+
+        let res = await Http.post('shop/cart/make-payment', { place, cost: netCost, note: orderNote, foods, userID, cardID }, props.getUser.token)
 
         if (!res.err) {
           setDisable(false)
+          props.navigation.navigate("PaymentFinish")
 
-        } else throw new Error("Kredi kartı eklenirken bir hatayla karşılaştık")
+        } else throw new Error("Ödeme işlemimde bir hatayla karşılaştık")
 
       } else throw new Error("Bilgileri eksiksiz olarak doldurunuz.")
     } catch (err) {
@@ -140,12 +158,18 @@ const PaymentScreen = props => {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
 
+        <View style={{ display: err ? "flex" : "none" }}>
+          <Text style={{ color: "red" }}>
+            {errMessage}
+          </Text>
+        </View>
+
         <View style={styles.orderNote}>
 
           <Text style={styles.orderTitle}>Not Ekle</Text>
 
           <TextInput
-            style={{ height: 80, borderColor: borderColors.noteBorder, borderWidth: 1 }}
+            style={{ height: 80, borderWidth: 1 }}
             maxLength={120}
             placeholder="Sipariş notunu hemen ekle (en fazla 120 karakter / !?., geçerlidir)"
             onChangeText={text => onChangeText(text)}
@@ -156,7 +180,7 @@ const PaymentScreen = props => {
 
         <View style={styles.orderNote}>
 
-          <Text style={styles.orderTitle}>Ödeme yöntemi seçiniz</Text>
+          <Text style={[styles.orderTitle, { color: borderColors.payBorder }]}>Ödeme yöntemi seçiniz</Text>
 
           <View style={styles.cardList}>
             {cardList}
@@ -292,11 +316,6 @@ mapStateToProps = state => {
 };
 
 
-/*mapDispatchToProps = dispatch => {
-  return {
-    
-  };
-};*/
 
 export default connect(mapStateToProps)(withNavigationFocus(PaymentScreen));
 
