@@ -66,7 +66,7 @@ const CartScreen = props => {
   openFoodOverlay = (item) => {
     let overlayExtra = item.extras.map((item, i) => {
       return (
-        <View style={styles.row}>
+        <View key={i} style={styles.row}>
           <Text style={styles.text}>
             {(i + 1) + " - " + item.name}
           </Text>
@@ -120,6 +120,7 @@ const CartScreen = props => {
         >
           <View>
             <ScrollView>
+
               <View style={styles.row}>
                 <Image
                   source={{ uri: PREFIX_IMAGEURL + overlayFood.imagePath }}

@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { View, ScrollView, TextInput, TouchableOpacity, SafeAreaView } from 'react-native'
-import { Text, Button, Overlay, Divider, Input } from 'react-native-elements'
+import { Text, Button, Overlay, Divider } from 'react-native-elements'
 import { connect } from 'react-redux'
 import styles from './style'
 import CreditCard from '../../../../components/Payment/CreditCard'
 import { CheckBox } from 'react-native-elements'
 import * as Http from '../../../../utils/httpHelper'
-import { validateRegex, nameRegex, cardNumberRegex, cardDateRegex, cardCvvRegex, commentRegex } from '../../../../regex/regex'
+import { validateRegex, commentRegex } from '../../../../regex/regex'
 import Icon from 'react-native-vector-icons/Ionicons'
 import IconAwe from 'react-native-vector-icons/FontAwesome5'
 import * as Colors from '../../../../constStyle/colors'
-import { withNavigationFocus } from 'react-navigation';
+import { withNavigationFocus, FlatList } from 'react-navigation'
+import CardForm from '../../../../components/Cart/CardForm'
 
 const PaymentScreen = props => {
   const [totalCost, setTotalCost] = useState(0)
@@ -20,27 +21,12 @@ const PaymentScreen = props => {
   const [cards, setCards] = useState([])
   const [orderNote, setOrderNote] = useState(null)
   const [condition, setCondition] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
   const [disable, setDisable] = useState(false)
-
   const [visibleOverlay, setVisibleOverlay] = useState(false)
-  const [credCard, setCredCard] = useState({ name: "", number: "", cvv: "", date: "" });
-  const [cardErr, setCardErr] = useState(false);
-  const [cardErrMessage, setCardErrMessage] = useState("")
-  const [cardDisable, setCardDisable] = useState(false)
-
-  const [cardBorderColors, setCardBorderColors] = useState(
-    {
-      nameBorder: Colors.COLOR_BACKGROUND,
-      numberBorder: Colors.COLOR_BACKGROUND,
-      cvvBorder: Colors.COLOR_BACKGROUND,
-      dateBorder: Colors.COLOR_BACKGROUND
-    })
 
   const [borderColors, setBorderColors] = useState(
     {
       payBorder: Colors.COLOR_BACKGROUND,
-      noteBorder: Colors.COLOR_BACKGROUND,
       condBorder: Colors.COLOR_BACKGROUND,
     })
 
@@ -53,54 +39,16 @@ const PaymentScreen = props => {
 
   fetchCreditCards = async () => {
     try {
-      let res = await Http.get(`shop/cart/get-credit-cards?userID=${user.userID}`, user.token)
-      if (!res.err) setCards(res.cards)
+      let res = await Http.get(`main/profile/credit-cards?userID=${user.userID}`, user.token)
+      if (!res.err) {
+        let cards = res.cards.map(item => {
+          return { ...item, selected: false }
+        })
+        setCards(cards)
+      }
       else throw new Error()
     } catch {
       //bir hatayla karşılaştık
-    }
-  }
-
-  setCardBorders = (verifyName, verifyNumber, verifyDate, verifyCvv) => {
-    let nameBorder = verifyName ? Colors.COLOR_BACKGROUND : "red"
-    let numberBorder = verifyNumber ? Colors.COLOR_BACKGROUND : "red"
-    let dateBorder = verifyDate ? Colors.COLOR_BACKGROUND : "red"
-    let cvvBorder = verifyCvv ? Colors.COLOR_BACKGROUND : "red"
-    setCardBorderColors({ nameBorder, numberBorder, dateBorder, cvvBorder })
-  }
-
-  changeCard = (value, type) => {
-    setCredCard({ ...credCard, [type]: value })
-  };
-
-  addCredCard = async () => {
-    try {
-      setCardBorders(true, true, true, true)
-      setCardDisable(true)
-      setCardErrMessage("")
-      setCardErr(false)
-      let validateName = validateRegex(nameRegex, credCard.name)
-      let validateNumber = validateRegex(cardNumberRegex, credCard.number)
-      let validateDate = validateRegex(cardDateRegex, credCard.date)
-      let validateCvv = validateRegex(cardCvvRegex, credCard.cvv)
-
-      setCardBorders(validateName, validateNumber, validateDate, validateCvv)
-
-      if (validateName && validateNumber && validateDate && validateCvv) {
-        let res = await Http.post('main/profile/add-credit-card', { ...credCard, userID: props.getUser.userID }, props.getUser.token)
-
-        if (!res.err) {
-          setCardDisable(false)
-          setCards([...cards, credCard])
-          closeCardOverlay()
-
-        } else throw new Error("Kredi kartı eklenirken bir hatayla karşılaştık")
-
-      } else throw new Error("Girdiğiniz bilgiler uygun değildir.")
-    } catch (err) {
-      setCardDisable(false)
-      setCardErrMessage(err.message)
-      setCardErr(true)
     }
   }
 
@@ -110,6 +58,7 @@ const PaymentScreen = props => {
 
   closeCardOverlay = () => {
     setVisibleOverlay(false)
+    fetchCreditCards()
   }
 
   calculateCosts = () => {
@@ -134,23 +83,25 @@ const PaymentScreen = props => {
     setOrderNote(text)
   }
 
-  setBorders = (verifyNote, verifyCond, verifyPay) => {
-    let noteBorder = verifyNote ? Colors.COLOR_BACKGROUND : "red"
+  setBorders = (verifyPay, verifyCond) => {
     let payBorder = verifyPay ? Colors.COLOR_BACKGROUND : "red"
     let condBorder = verifyCond ? Colors.COLOR_BACKGROUND : "red"
-    setBorderColors({ noteBorder, condBorder, payBorder })
+    setBorderColors({ payBorder, condBorder })
   }
 
   giveOrder = async () => {
     try {
-      setBorders(true, true, true)
+      setBorders(true, true)
       setDisable(true)
       setErrMessage("")
       setErr(false)
 
-      let validateNote = validateRegex(commentRegex, credCard.name)
+      let selectedCard = cards.filter(item => item.selected === true)
+      console.log('selectedCard', selectedCard)
+      let validateCard = selectedCard.length === 1
+      setBorders(validateCard, condition)
 
-      setBorders(validateNote, validateCard)
+      let validateNote = validateRegex(commentRegex, orderNote)
 
       if (validateNote && validateCard && condition) {
         let res = await Http.post('main/profile/add-credit-card', { ...credCard, userID: props.getUser.userID }, props.getUser.token)
@@ -160,7 +111,7 @@ const PaymentScreen = props => {
 
         } else throw new Error("Kredi kartı eklenirken bir hatayla karşılaştık")
 
-      } else throw new Error("Girdiğiniz bilgiler uygun değildir.")
+      } else throw new Error("Bilgileri eksiksiz olarak doldurunuz.")
     } catch (err) {
       setDisable(false)
       setErrMessage(err.message)
@@ -168,19 +119,25 @@ const PaymentScreen = props => {
     }
   }
 
+  selectCard = (id) => {
+    let newCards = cards.map(item => {
+      if (id === item.cardID)
+        return { ...item, selected: true }
+      else
+        return { ...item, selected: false }
+    })
+    setCards(newCards)
+  }
+
   let cardList = cards.map((item, i) => {
     return (
-      <TouchableOpacity key={i}>
-        <View style={styles.creditCard}>
-          <Divider style={styles.divider} />
-          <CreditCard name={item.name} number={item.number} />
-        </View>
-      </TouchableOpacity>
+      <CreditCard key={i} item={item} selectCard={() => selectCard(item.cardID)} />
     )
   })
 
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
 
         <View style={styles.orderNote}>
@@ -204,6 +161,7 @@ const PaymentScreen = props => {
           <View style={styles.cardList}>
             {cardList}
             <View>
+
               <Button
                 type="clear"
                 icon={<Icon name="md-add" size={26} color={Colors.COLOR_BACKGROUND} />}
@@ -219,87 +177,11 @@ const PaymentScreen = props => {
         <Overlay
           isVisible={visibleOverlay}
           windowBackgroundColor="rgba(255, 255, 255, .5)"
-          width="80%"
-          height="80%"
+          width="75%"
+          height="65%"
           onBackdropPress={() => closeCardOverlay()}
         >
-          <SafeAreaView>
-            <ScrollView>
-              <View style={{ display: cardErr ? "flex" : "none" }}>
-                <Text style={{ color: "red" }}>
-                  {cardErrMessage}
-                </Text>
-              </View>
-
-              <View style={styles.form}>
-
-                <View style={styles.row}>
-
-                  <Input
-                    placeholder="Kart Sahibi İsim Soyad"
-                    underlineColorAndroid="transparent"
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    maxLength={20}
-                    inputStyle={{ marginLeft: 5 }}
-                    containerStyle={[styles.cardContainer, { borderColor: cardBorderColors.nameBorder }]}
-                    leftIcon={<Icon name="md-person" size={24} color={Colors.COLOR_BACKGROUND} />}
-                    onChangeText={value => changeCard(value, 'name')}
-                  />
-                </View>
-                <View style={styles.row}>
-
-                  <Input
-                    placeholder="Kart Numarası"
-                    underlineColorAndroid="transparent"
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    textContentType="creditCardNumber"
-                    maxLength={16}
-                    keyboardType="numeric"
-                    inputStyle={{ marginLeft: 5 }}
-                    containerStyle={[styles.cardContainer, { borderColor: cardBorderColors.numberBorder }]}
-                    leftIcon={<Icon name="md-card" size={24} color={Colors.COLOR_BACKGROUND} />}
-                    onChangeText={value => changeCard(value, 'number')}
-                  />
-
-                </View>
-
-                <View style={styles.row}>
-
-                  <Input
-                    placeholder="Son Kullanma Tarihi"
-                    underlineColorAndroid="transparent"
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    inputStyle={{ marginLeft: 5 }}
-                    maxLength={4}
-                    keyboardType="numeric"
-                    containerStyle={[styles.dateContainer, { borderColor: cardBorderColors.dateBorder }]}
-                    leftIcon={<Icon name="md-calendar" size={24} color={Colors.COLOR_BACKGROUND} />}
-                    onChangeText={value => changeCard(value, 'date')}
-                  />
-
-                </View>
-
-                <View style={styles.row}>
-
-                  <Input
-                    placeholder="Cvv"
-                    underlineColorAndroid="transparent"
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    maxLength={3}
-                    keyboardType="numeric"
-                    containerStyle={[styles.cvvContainer, { borderColor: cardBorderColors.cvvBorder }]}
-                    onChangeText={value => changeCard(value, 'cvv')}
-                  />
-                </View>
-
-                <Button
-                  disabled={cardDisable} disabledStyle={{ opacity: 0.8 }}
-                  buttonStyle={styles.addButton}
-                  title="Kredi Kartı Ekle" onPress={() => addCredCard()} />
-
-              </View>
-            </ScrollView>
-          </SafeAreaView>
+          <CardForm />
         </Overlay>
 
         <View style={styles.orderSummary}>
@@ -395,7 +277,7 @@ const PaymentScreen = props => {
         </View>
 
       </ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 

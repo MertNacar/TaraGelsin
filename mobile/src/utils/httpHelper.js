@@ -105,4 +105,19 @@ const putWithoutToken = async (endpoint, body = {}, token) => {
   }
 };
 
-export { get, getWithoutToken, post, postWithoutToken, put, putWithoutToken };
+const deleteWithToken = async (endpoint, token) => {
+  try {
+    let res = await fetch(url(endpoint), {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token
+      },
+    });
+    if (res.status === 200) return await res.json();
+    else throw new Error()
+  } catch {
+    return { err: true };
+  }
+};
+
+export { get, getWithoutToken, post, postWithoutToken, put, putWithoutToken, deleteWithToken };

@@ -27,7 +27,7 @@ const PaymentMethodScreen = props => {
       let res = await Http.get(`main/profile/credit-cards?userID=${props.getUser.userID}`, props.getUser.token)
 
       if (!res.err) {
-        setCredCards(res.credCards)
+        setCredCards(res.cards)
         setLoading(false)
       }
       else throw new Error("Bir hatayla karşılaştık. Lütfen sayfayı yenileyiniz.")
@@ -55,7 +55,7 @@ const PaymentMethodScreen = props => {
     try {
       setErr(false)
       setErrMessage("")
-      let res = await Http.delete(`main/profile/delete-credit-card?cardID=${cardID}`)
+      let res = await Http.deleteWithToken(`main/profile/delete-credit-card?cardID=${cardID}`, props.getUser.token)
 
       if (!res.err) {
         setLoading(true)

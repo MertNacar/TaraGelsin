@@ -7,7 +7,7 @@ export const passwordRegex = new RegExp(
 export const commentRegex = new RegExp(
   "^[A-Za-z0-9öçşığü!?.,]{0,120}$"
 );
-export const nameRegex = new RegExp("^[A-Za-zöçşığü]{3,20}$");
+export const nameRegex = new RegExp("^[A-Za-zöçşığü ]{3,20}$");
 export const phoneRegex = new RegExp(
   "^[0-9]{7,14}$"
 );
