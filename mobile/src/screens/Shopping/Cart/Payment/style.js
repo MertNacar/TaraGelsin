@@ -13,7 +13,7 @@ export default StyleSheet.create({
     flex: 1,
     width: screenWidth,
     paddingHorizontal: 8,
-    paddingTop: 30
+    paddingTop: 15
   },
   orderTitle: {
     fontSize: 18,

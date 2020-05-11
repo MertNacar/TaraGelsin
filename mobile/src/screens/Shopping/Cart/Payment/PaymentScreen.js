@@ -4,6 +4,7 @@ import { Text, Button, Overlay, Divider } from 'react-native-elements'
 import { connect } from 'react-redux'
 import styles from './style'
 import CreditCard from '../../../../components/Payment/CreditCard'
+import TermUse from '../../../../components/TermUse'
 import { CheckBox } from 'react-native-elements'
 import * as Http from '../../../../utils/httpHelper'
 import { validateRegex, commentRegex } from '../../../../regex/regex'
@@ -24,8 +25,8 @@ const PaymentScreen = props => {
   const [err, setErr] = useState(false)
   const [errMessage, setErrMessage] = useState("")
   const [disable, setDisable] = useState(false)
+  const [visibleCardOverlay, setVisibleCardOverlay] = useState(false)
   const [visibleOverlay, setVisibleOverlay] = useState(false)
-
   const [borderColors, setBorderColors] = useState(
     {
       payBorder: Colors.COLOR_BACKGROUND,
@@ -55,11 +56,11 @@ const PaymentScreen = props => {
   }
 
   openCardOverlay = () => {
-    setVisibleOverlay(true)
+    setVisibleCardOverlay(true)
   }
 
   closeCardOverlay = () => {
-    setVisibleOverlay(false)
+    setVisibleCardOverlay(false)
     fetchCreditCards()
   }
 
@@ -137,6 +138,14 @@ const PaymentScreen = props => {
     }
   }
 
+  openOverlay = () => {
+    setVisibleOverlay(true)
+  }
+
+  closeOverlay = () => {
+    setVisibleOverlay(false)
+  }
+
   selectCard = (id) => {
     let newCards = cards.map(item => {
       if (id === item.cardID)
@@ -156,10 +165,10 @@ const PaymentScreen = props => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <ScrollView contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
 
-        <View style={{ display: err ? "flex" : "none" }}>
-          <Text style={{ color: "red" }}>
+        <View style={{ display: err ? "flex" : "none", paddingVertical: 20 }}>
+          <Text style={{ color: "red", fontSize: 16, textAlign: "center" }}>
             {errMessage}
           </Text>
         </View>
@@ -195,21 +204,9 @@ const PaymentScreen = props => {
               />
             </View>
           </View>
-
         </View>
 
-        <Overlay
-          isVisible={visibleOverlay}
-          windowBackgroundColor="rgba(255, 255, 255, .5)"
-          width="75%"
-          height="65%"
-          onBackdropPress={() => closeCardOverlay()}
-        >
-          <CardForm />
-        </Overlay>
-
         <View style={styles.orderSummary}>
-
           <View style={styles.row}>
             <View style={styles.rowFirst}>
               <Text style={styles.summaryText}>Sepette indirim</Text>
@@ -294,11 +291,35 @@ const PaymentScreen = props => {
             onPress={() => changeCondition()}
           />
 
+          <Button titleStyle={{ fontSize: 12 }} style={{}} type="clear" onPress={() => openOverlay()} title="Satış sözleşmesi metinini görüntülemek için tıklayınız." />
+
+
           <Button
             containerStyle={{ flex: 4, marginVertical: 12 }} buttonStyle={{ width: "100%", backgroundColor: Colors.COLOR_BACKGROUND }}
             disabled={disable} disabledStyle={{ opacity: 0.8 }} titleStyle={{ textAlign: "center" }} title="Sipariş Ver" onPress={() => giveOrder()} />
 
         </View>
+
+
+        <Overlay
+          isVisible={visibleCardOverlay}
+          windowBackgroundColor="rgba(255, 255, 255, .5)"
+          width="75%"
+          height="65%"
+          onBackdropPress={() => closeCardOverlay()}
+        >
+          <CardForm />
+        </Overlay>
+
+        <Overlay
+          isVisible={visibleOverlay}
+          windowBackgroundColor="rgba(255, 255, 255, .5)"
+          width="75%"
+          height="65%"
+          onBackdropPress={() => closeOverlay()}
+        >
+          <TermUse />
+        </Overlay>
 
       </ScrollView>
     </SafeAreaView>

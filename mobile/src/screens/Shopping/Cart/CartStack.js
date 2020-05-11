@@ -54,9 +54,9 @@ export default createStackNavigator({
       headerTitleStyle: {
         flex: 1,
         color: Colors.COLOR_SECONDARY,
-        textAlign: "center",
-        marginRight: 56
+        textAlign: "center",  
       },
+      headerLeft: null,
       headerStyle: {
         backgroundColor: Colors.COLOR_BACKGROUND,
       },
