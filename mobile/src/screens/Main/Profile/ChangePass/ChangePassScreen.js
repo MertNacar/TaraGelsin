@@ -29,7 +29,7 @@ const ChangePassScreen = props => {
   setBorder = (verifyOldPass, verifyNewPass) => {
     let oldPassBorder = verifyOldPass ? Colors.COLOR_BACKGROUND : "red"
     let newPassborder = verifyNewPass ? Colors.COLOR_BACKGROUND : "red"
-    setPassBorder(oldPassBorder, newPassborder)
+    setPassBorder({ oldPassBorder, newPassborder })
   }
 
   getNewPassword = async () => {
@@ -43,7 +43,7 @@ const ChangePassScreen = props => {
       newPassValid = validateRegex(passwordRegex, newPassword)
       setBorder(oldPassValid, newPassValid)
 
-      if (oldPassValid, newPassValid) {
+      if (oldPassValid && newPassValid) {
         let user = { phone: props.getUser.phone, oldPassword, newPassword }
         let changingPassword = await Http.put("main/profile/change-password", user, props.getUser.token)
 

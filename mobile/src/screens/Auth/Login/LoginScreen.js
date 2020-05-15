@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { Button, Text, Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -9,6 +9,7 @@ import { updateUser } from '../../../store/user/actionCreator'
 import { connect } from 'react-redux'
 import styles from './style'
 import * as Colors from '../../../constStyle/colors'
+import { withNavigationFocus } from 'react-navigation'
 import CountryPicker from 'react-native-country-picker-modal'
 
 const LoginScreen = props => {
@@ -21,6 +22,13 @@ const LoginScreen = props => {
   const [errMessage, setErrMessage] = useState("")
   const [disable, setDisable] = useState(false)
   const [borderColors, setBorderColors] = useState({ phoneBorder: Colors.COLOR_BACKGROUND, passBorder: Colors.COLOR_BACKGROUND })
+
+  useEffect(() => {
+    if (props.isFocused === true) {
+      setPhone(phone)
+      setPassword(password)
+    }
+  }, [props.isFocused])
 
   changeText = (value, type) => {
     if (type === 'phone') {
@@ -153,4 +161,4 @@ mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(LoginScreen);
+export default connect(null, mapDispatchToProps)(withNavigationFocus(LoginScreen));

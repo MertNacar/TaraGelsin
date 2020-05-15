@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, SafeAreaView } from 'react-native'
 import { Input, Text, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -19,7 +19,7 @@ const ForgetPasswordScreen = props => {
   const [errMessage, setErrMessage] = useState("")
   const [disable, setDisable] = useState(false)
   const [borderColors, setBorderColors] = useState({ phoneBorder: Colors.COLOR_BACKGROUND, mailBorder: Colors.COLOR_BACKGROUND })
-
+  
   changeText = (value, type) => {
     if (type === 'phone') {
       setPhone(value)
