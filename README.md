@@ -1,5 +1,5 @@
 # TaraGelsin
-This app offers QR-Code ordering system for cafes and restaurants.
+## This app offers QR-Code ordering system for cafes and restaurants.
 
 Many people prefer cafes and restaurants both for socializing and eating and beverage
 consumption with their relatives. People lose their time by reaching the waiter 
